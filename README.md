@@ -1,8 +1,5 @@
 2DV401
 ======
-
--- test 
-
 Mjukvaruprojekt 2 - 2DV401
 
 
