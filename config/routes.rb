@@ -1,4 +1,8 @@
 Wp102dv401::Application.routes.draw do
+  get "dashboard/index"
+
+  get "home/index"
+
   devise_for :users
 
   # The priority is based upon order of creation:
