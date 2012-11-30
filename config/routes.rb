@@ -9,6 +9,14 @@ Wp102dv401::Application.routes.draw do
 
   get "maps/delete"
 
+  get "dashboard/index"
+
+  get "home/index"
+
+  devise_for :users
+  resources :dashboard
+  root :to => "home#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

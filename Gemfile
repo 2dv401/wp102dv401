@@ -8,6 +8,7 @@ gem "geocoder", "~> 1.1.5" # http://www.rubygeocoder.com/
 
 gem 'sqlite3'
 
+gem 'devise'
 
 # Gems used only for assets and not required
 # in production environments by default.
