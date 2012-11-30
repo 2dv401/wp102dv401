@@ -1,5 +1,16 @@
 class MapsController < ApplicationController
+  def index
+  end
 
-#testkommentar
+  def new
+  end
 
+  def edit
+  end
+
+  def update
+  end
+
+  def delete
+  end
 end
