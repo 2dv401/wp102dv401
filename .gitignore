@@ -30,6 +30,6 @@ Thumbs.db
 #################
 .idea
 
-# Rail files #
+# Rails files #
 ##############
 Gemfile.lock
