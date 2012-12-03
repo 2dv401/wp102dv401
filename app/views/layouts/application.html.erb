@@ -13,13 +13,18 @@
 				<p class="logging_info">
 			  <% if user_signed_in? %>
 			     Inloggad som <%= current_user.email %>
+
+                      <%= gravatar_image_tag(current_user.email,  :alt => current_user.email, :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' })
+                      %>
+
 			    <%= link_to "Logga ut", destroy_user_session_path, :method => :delete %>
 
 
                 <hr />
 
                 <ul>
-                  <li><%= link_to 'Change Password', edit_user_registration_path %>
+                  <li>
+                    <%= link_to 'Byt lösenord', edit_user_registration_path %>
                   </li>
                 </ul>
 
@@ -33,6 +38,7 @@
 			  <%= content_tag :div, msg, :id => "flash_#{name}" %>
 			<% end %>
 		</header>
+
 		<section class="content">
 			<%= yield %>
 		</section>
