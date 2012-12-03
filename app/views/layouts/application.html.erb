@@ -13,7 +13,21 @@
 				<p class="logging_info">
 			  <% if user_signed_in? %>
 			     Inloggad som <%= current_user.email %>
+
+                      <%= gravatar_image_tag(current_user.email,  :alt => current_user.email, :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' })
+                      %>
+
 			    <%= link_to "Logga ut", destroy_user_session_path, :method => :delete %>
+
+
+                <hr />
+
+                <ul>
+                  <li>
+                    <%= link_to 'Byt lösenord', edit_user_registration_path %>
+                  </li>
+                </ul>
+
 			  <% else %>
 			    <%= link_to "Registrera dig", new_user_registration_path %> or <%= link_to "Logga in", new_user_session_path %>
 			  <% end %>
@@ -24,12 +38,13 @@
 			  <%= content_tag :div, msg, :id => "flash_#{name}" %>
 			<% end %>
 		</header>
+
 		<section class="content">
 			<%= yield %>
 		</section>
 		<footer>
 			<p>
-				Ruby on Rails har använta för att skapa denna tjänst.
+				Ruby on Rails har använts för att skapa denna tjänst.
 			</p>
 		</footer>
 	</div>
