@@ -13,14 +13,14 @@
 
 
 	<div class="container">
-		<div class="row" id="header">
-			<header class="twelve columns">
+		<header class="row" id="header">
+			<div class="twelve columns">
 				<h1>Kartr.se</h1>
-			</header>
-		</div>
+			</div>
+		</header>
 
-		<div class="row" id="navigation">
-			<nav class="twelve columns">
+		<nav class="row" id="navigation">
+			<div class="twelve columns">
 				<% if user_signed_in? %>
 			    	Inloggad som <%= current_user.email %>
                 	<%= gravatar_image_tag(current_user.email,  :alt => current_user.email, :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
@@ -29,8 +29,8 @@
 			  		<%= link_to "Registrera dig", new_user_registration_path %> or <%= link_to "Logga in", new_user_session_path %>
 					<%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
 			  	<% end %>
-			</nav>
-		</div>
+			</div>
+		</nav>
 
 		<div class="row" id="flash">
 			<div class="twelve columns">
