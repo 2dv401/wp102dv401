@@ -3,7 +3,7 @@
 Mjukvaruprojekt 2 - 2DV401
 
 
-# Icke namngiven karttjänst
+# Kartr.se
 ## Beskrivning
 
 En tjänst där man som användare kan skapa en karta som får sin egna sida, med kartan i fokus. På sin kartsida kan användaren sätta ut markeringar med tillhörande beskrivning på en karta. Kartan kan sen delas till andra genom en genererad webbadress eller delas via sociala medier. Kartsidan ska ha ett slags nyhetsflöde där användaren kan skriva kortare statusuppdateringar ala twitter.
