@@ -33,3 +33,4 @@ Thumbs.db
 # Rails files #
 ##############
 Gemfile.lock
+.rbenv-version
