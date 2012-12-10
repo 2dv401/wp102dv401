@@ -12,8 +12,15 @@ Wp102dv401::Application.routes.draw do
   get "dashboard/index"
 
   get "home/index"
+  
+  
+  devise_scope :user do
+    get '/users/auth/:provider' => 'authentications#passthru'
+  end
 
-  devise_for :users
+  # Tell Devise in which controller we will implement Omniauth callbacks
+  devise_for :users, :controllers => { :omniauth_callbacks => "authentications" }
+
   resources :dashboard
 
   root :to => "home#index"
