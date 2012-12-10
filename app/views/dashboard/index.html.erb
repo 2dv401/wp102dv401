@@ -4,4 +4,5 @@
 <h3>Alla användare</h3>
 <% (@User).each do |u| %>
 	<p>E-Post: <%= u.email %></p>
+	<p>Användarnamn: <%= u.username%></p>
 <% end %>
