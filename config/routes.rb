@@ -19,7 +19,13 @@ Wp102dv401::Application.routes.draw do
   end
 
   # Tell Devise in which controller we will implement Omniauth callbacks
-  devise_for :users, :controllers => { :omniauth_callbacks => "authentications" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "authentications" }, 
+                     :path_names => { 
+                                      :sign_up => "register", 
+                                      :sign_in => "sign-in",
+                                      :sign_out => "sign-out"
+                                    }
+
 
   resources :dashboard
 
