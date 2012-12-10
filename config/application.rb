@@ -58,5 +58,9 @@ module Wp102dv401
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Ställer in språket till Svenska.
+    config.i18n.default_locale = :sv
+
   end
 end

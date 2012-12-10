@@ -1,4 +1,30 @@
 Wp102dv401::Application.routes.draw do
+  get "maps/index"
+
+  get "maps/new"
+
+  get "maps/edit"
+
+  get "maps/update"
+
+  get "maps/delete"
+
+  get "dashboard/index"
+
+  get "home/index"
+  
+  
+  devise_scope :user do
+    get '/users/auth/:provider' => 'authentications#passthru'
+  end
+
+  # Tell Devise in which controller we will implement Omniauth callbacks
+  devise_for :users, :controllers => { :omniauth_callbacks => "authentications" }
+
+  resources :dashboard
+
+  root :to => "home#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -14,7 +14,6 @@
 /log/*.log
 /tmp
 
-
 # OS generated files #
 ######################
 .DS_Store
@@ -25,3 +24,14 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+
+
+# Project files #
+#################
+.idea
+
+# Rails files #
+##############
+Gemfile.lock
+.rbenv-version
