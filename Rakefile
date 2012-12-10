@@ -5,3 +5,6 @@
 require File.expand_path('../config/application', __FILE__)
 
 Wp102dv401::Application.load_tasks
+
+##require 'jammit'
+##Jammit.package!

@@ -2,50 +2,60 @@
 <html>
 <head>
   <title>Kartr - <%=	yield(:title) || "Välkommen" %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ 
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+
+ <%= csrf_meta_tags %>
 </head>
 <body>
+
+
 	<div class="container">
-		<header>
-			<nav class="user_nav">
-				<p class="logging_info">
-			  <% if user_signed_in? %>
-			     Inloggad som <%= current_user.email %>
+		<div class="row" id="header">
+			<header class="twelve columns">
+				<h1>Kartr.se</h1>
+			</header>
+		</div>
 
-                      <%= gravatar_image_tag(current_user.email,  :alt => current_user.email, :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' })
-                      %>
-
-			    <%= link_to "Logga ut", destroy_user_session_path, :method => :delete %>
-                <hr />
-
-                <ul>
-                  <li>
-                    <%= link_to 'Byt lösenord', edit_user_registration_path %>
-                  </li>
-                </ul>
-
-			  <% else %>
-			    <%= link_to "Registrera dig", new_user_registration_path %> or <%= link_to "Logga in", new_user_session_path %>
-			    <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
-			  <% end %>
-			  </p>
+		<div class="row" id="navigation">
+			<nav class="twelve columns">
+				<% if user_signed_in? %>
+			    	Inloggad som <%= current_user.email %>
+                	<%= gravatar_image_tag(current_user.email,  :alt => current_user.email, :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
+			    	<%= link_to "Logga ut", destroy_user_session_path, :method => :delete %> | <%= link_to 'Byt lösenord', edit_user_registration_path %>
+			  	<% else %>
+			  		<%= link_to "Registrera dig", new_user_registration_path %> or <%= link_to "Logga in", new_user_session_path %>
+					<%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
+			  	<% end %>
 			</nav>
-			<h1>Kartr.se</h1>
-			<% flash.each do |name, msg| %>
-			  <%= content_tag :div, msg, :id => "flash_#{name}" %>
-			<% end %>
-		</header>
+		</div>
 
-		<section class="content">
-			<%= yield %>
+		<div class="row" id="flash">
+			<div class="twelve columns">
+				<% flash.each do |name, msg| %>
+					<%= content_tag :div, msg, :id => "flash_#{name}" %>
+				<% end %>
+			</div>
+		</div>
+
+		<section class="row" id="content">
+			<div class="twelve columns">
+				<%= yield %>
+			</div>
 		</section>
-		<footer>
-			<p>
-				Ruby on Rails har använts för att skapa denna tjänst.
-			</p>
+
+		<footer class="row" id="footer">
+			<div class="twelve columns">
+				&copy; kartr.se
+			</div>
 		</footer>
 	</div>
+
+
+
+
+
 </body>
 </html>

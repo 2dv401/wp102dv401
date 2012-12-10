@@ -1,2 +1,7 @@
 <h1>Dashboard#index</h1>
 <p>Find me in app/views/dashboard/index.html.erb</p>
+
+<h3>Alla användare</h3>
+<% (@User).each do |u| %>
+	<p>E-Post: <%= u.email %></p>
+<% end %>
