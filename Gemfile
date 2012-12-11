@@ -30,6 +30,7 @@ gem 'jquery-rails'
 gem 'gmaps4rails'
 gem 'gravatar_image_tag'
 
+## Gem för HTTP-anrop
 gem 'httparty'
 gem 'multi_json'
 gem 'multi_xml'
