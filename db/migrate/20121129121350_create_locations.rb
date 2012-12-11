@@ -7,7 +7,7 @@ class CreateLocations < ActiveRecord::Migration
       t.float :latitude, :null => false
       t.datetime :date
       t.boolean :private, :default => false, :null => false
-      t.int :place_type_id, :null => false
+      t.integer :place_type_id, :null => false
       t.timestamps
     end
   end
