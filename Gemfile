@@ -32,6 +32,8 @@ gem 'jquery-rails'
 gem 'gmaps4rails'
 gem 'gravatar_image_tag'
 
+gem 'httparty'
+
 #gem "jammit", :git => "git://github.com/documentcloud/jammit.git"
 #gem "yui-compressor"
 
