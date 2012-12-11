@@ -33,7 +33,7 @@ gem 'gmaps4rails'
 gem 'gravatar_image_tag'
 
 #gem "jammit", :git => "git://github.com/documentcloud/jammit.git"
-gem "yui-compressor"
+#gem "yui-compressor"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

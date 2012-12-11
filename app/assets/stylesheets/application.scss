@@ -1,6 +1,7 @@
 
 @import "foundation";
 
+@import "foundation_icons_general/sass/general_foundicons";
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -14,3 +15,11 @@
  *= require_self
  *= require_tree .
  */
+
+.gravatar-small {
+	width: 24px;
+	height: 24px;
+	margin-bottom: -6px;
+	margin-right: 4px;
+}
+

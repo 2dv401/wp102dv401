@@ -13,18 +13,52 @@
 
 
 	<div class="container">
-		<header class="row" id="header">
-			<div class="twelve columns">
-				<h1>Kartr.se</h1>
-			</div>
-		</header>
+
+		<nav class="top-bar fixed">
+			<ul>
+				<li class="name">
+					<h1><a href="#">Kartr.se</a></h1>
+				</li>
+				<li class="toggle-topbar">
+					<a href="#"></a>
+				</li>
+			</ul>
+
+			<section>
+				<ul class="left">
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+				</ul>
+				<% if user_signed_in? %>
+					<ul class="right">
+						<li class="has-dropdown">
+
+							<a href="#">
+								<%= gravatar_image_tag(current_user.email,  :alt => current_user.email, 
+							            :class => 'gravatar-small', 
+							            :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
+							    <%= current_user.username%>
+							</a>
+							<ul class="dropdown">
+								<li><%= link_to raw('<i class="foundicon-settings"></i> Inställningar'), edit_user_registration_path %> </li>
+								<li><%= link_to raw('<i class="foundicon-lock"></i> Logga ut'), destroy_user_session_path, :method => :delete %></li>
+							</ul>
+
+						</li>
+					</ul>
+				<% end %>
+			</section>
+		</nav>
+
 
 		<nav class="row" id="navigation">
 			<div class="twelve columns">
 				<% if user_signed_in? %>
-			    	Inloggad som <%= current_user.email %>
-                	<%= gravatar_image_tag(current_user.email,  :alt => current_user.email, :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
-			    	<%= link_to "Logga ut", destroy_user_session_path, :method => :delete %> | <%= link_to 'Byt lösenord', edit_user_registration_path %>
+					inloggad
+
+
+
 			  	<% else %>
 			  		<%= link_to "Registrera dig", new_user_registration_path %> or <%= link_to "Logga in", new_user_session_path %>
 					<%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
