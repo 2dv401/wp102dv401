@@ -23,8 +23,6 @@ group :assets do
   # Foundation and compass
   gem 'compass-rails'
   gem 'zurb-foundation'
-
-
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -33,6 +31,8 @@ gem 'gmaps4rails'
 gem 'gravatar_image_tag'
 
 gem 'httparty'
+gem 'multi_json'
+gem 'multi_xml'
 
 #gem "jammit", :git => "git://github.com/documentcloud/jammit.git"
 #gem "yui-compressor"
