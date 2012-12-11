@@ -3,7 +3,7 @@ class CreateLocationImages < ActiveRecord::Migration
     create_table :location_images do |t|
 		t.string :file_name, :null => false, :limit => 32
 		t.text :description, :null => false, :limit => 256
-		t.int :location_id, :null => false
+		t.integer :location_id, :null => false
 		t.timestamps
     end
   end
