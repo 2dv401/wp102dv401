@@ -1,14 +1,16 @@
 Wp102dv401::Application.routes.draw do
-  get "maps/index"
+  #get "maps/index"
 
-  get "maps/new"
+ # get "maps/new"
 
-  get "maps/edit"
+ # get "maps/edit"
 
-  get "maps/update"
+  #get "maps/update"
 
-  get "maps/delete"
+  #get "maps/delete"
 
+  
+  
   get "dashboard/index"
 
   get "home/index"
@@ -28,6 +30,8 @@ Wp102dv401::Application.routes.draw do
 
 
   resources :dashboard
+  
+  resources :maps
 
   root :to => "home#index"
 

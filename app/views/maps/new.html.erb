@@ -1,2 +1,19 @@
-<h1>Maps#new</h1>
-<p>Find me in app/views/maps/new.html.erb</p>
+<div id="mapCreation">
+   <%= form_tag("/maps") do %>
+      <%= label_tag(:name, "Namn:") %>
+      <%= text_field_tag(:name) %>
+  
+     <%= label_tag(:description, "Beskrivning:") %>
+     <%= text_field_tag(:description) %>
+  
+     <%= label_tag(:private, "Privat") %>
+     <%= check_box_tag(:private) %>
+     
+     <%= gmaps4rails(@map) %>
+     
+     <%= submit_tag "Skapa" %>
+   <% end %>
+</div>
+
+<%= yield :scripts %>
+<%= stylesheet_link_tag 'gmaps4rails' %>
