@@ -1,20 +1,24 @@
 class MapsController < ApplicationController
   def index
+  
+  #todo: kontrollera att en användare är inloggad
+  #todo: hämta endast användarens kartor
+  @maps = Map.all.to_gmaps4rails
+  
   end
 
   def new
-		#todo: kontrollera ifall användaren är inloggad
-		
-		map = Map.new
-		map.name = params[:map][:name]
-		map.description = params[:map][:description]
-		map.private = params[:map][:private]
-		#todo:userid?
-		
-		#todo:validera?
-		
-		map.save
-		redirect_to :controller => "maps" ,:action => "show", :id => map.id
+      #todo: kontrollera att en användare är inloggad
+		newmap = Map.new
+      #todo: sätt default-koordinater nånstans
+      newmap.longitude = 15
+      newmap.latitude = 60
+      
+      @map = newmap.to_gmaps4rails
+  end
+  
+  def create
+   
   end
 
   def edit
@@ -24,7 +28,6 @@ class MapsController < ApplicationController
   end
 
   def delete
-	#todo:kontrollera ifall användaren äger kartan
-	Map.find_by_id(params[:id]).destroy
+	
   end
 end

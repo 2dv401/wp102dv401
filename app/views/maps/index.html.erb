@@ -1,2 +1,4 @@
-<h1>Maps#index</h1>
-<p>Find me in app/views/maps/index.html.erb</p>
+<%= gmaps4rails(@maps) %>
+
+<%= yield :scripts %>
+<%= stylesheet_link_tag 'gmaps4rails' %>
