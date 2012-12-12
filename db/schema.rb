@@ -11,25 +11,46 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121210195538) do
+ActiveRecord::Schema.define(:version => 20121211151127) do
+
+  create_table "location_images", :force => true do |t|
+    t.string   "file_name",   :limit => 32,  :null => false
+    t.text     "description", :limit => 256, :null => false
+    t.integer  "location_id",                :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  create_table "location_types", :force => true do |t|
+    t.string   "name",       :limit => 45, :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
 
   create_table "locations", :force => true do |t|
-    t.string   "header",      :limit => 32,                     :null => false
-    t.string   "description", :limit => 256,                    :null => false
-    t.float    "longitude",                                     :null => false
-    t.float    "latitude",                                      :null => false
+    t.string   "name",          :limit => 32,                     :null => false
+    t.string   "description",   :limit => 256
+    t.float    "longitude",                                       :null => false
+    t.float    "latitude",                                        :null => false
     t.datetime "date"
-    t.boolean  "private",                    :default => false, :null => false
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.boolean  "private",                      :default => false, :null => false
+    t.integer  "place_type_id",                                   :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
+  end
+
+  create_table "map_locations", :id => false, :force => true do |t|
+    t.integer "map_id"
+    t.integer "location_id"
   end
 
   create_table "maps", :force => true do |t|
-    t.string   "name",        :limit => 50, :null => false
-    t.text     "description",               :null => false
-    t.string   "creator"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.string   "name",        :limit => 50,  :null => false
+    t.text     "description", :limit => 256, :null => false
+    t.boolean  "private",                    :null => false
+    t.integer  "user_id",                    :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -48,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20121210195538) do
     t.string   "provider"
     t.string   "uid"
     t.string   "username"
+    t.string   "name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
