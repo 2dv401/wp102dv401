@@ -3,28 +3,28 @@
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
     <%= devise_error_messages! %>
-    <div>
-        <%= f.label :username, "Användarnamn" %><br />
+    <div class="username">
+        <%= f.label :username, "Användarnamn" %>
         <%= f.text_field :username, :autocomplete => "off" %>
     </div>
 
-    <div>
-        <%= f.label :email, "epost" %><br />
+    <div class="email">
+        <%= f.label :email, "Epost" %>
         <%= f.email_field :email, :autocomplete => "off", :disabled => true %>
     </div>
 
-    <div>
-        <%= f.label :password, "Nytt lösenord" %>  <br />
+    <div class="password">
+        <%= f.label :password, "Nytt lösenord" %>
         <%= f.password_field :password, :autocomplete => "off" %>
     </div>
 
-    <div>
-        <%= f.label :password_confirmation, "bekräfta lösenord" %><br />
+    <div class="password">
+        <%= f.label :password_confirmation, "Bekräfta lösenord" %>
       <%= f.password_field :password_confirmation %>
     </div>
 
-    <div>
-        <%= f.label :current_password, "Nuvarande lösenord" %> <br />
+    <div class="password">
+        <%= f.label :current_password, "Nuvarande lösenord" %>
         <%= f.password_field :current_password %>
     </div>
 
