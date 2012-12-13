@@ -10,6 +10,10 @@ sv:
         other: "%{count} fel hindrade denna %{resource} från att sparas:"
 
   devise:
+    authentications:
+      user: #Ändra
+        success: ""
+        failure: ""
     failure:
       already_authenticated: 'Du har redan loggat in.'
       unauthenticated: 'Du måste logga in eller skapa ett konto innan du kan fortsätta.'
