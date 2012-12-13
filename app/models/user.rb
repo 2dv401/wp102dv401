@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :username
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :username, :name
   # attr_accessible :title, :body
 
   # Lägger till facebook-mailen till användarkontot när det registreras
@@ -20,15 +20,22 @@ class User < ActiveRecord::Base
 
   # Hittar användare eller registrerar en ny
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+
 	  user = User.where(:provider => auth.provider, :uid => auth.uid).first
-	  unless user
-	  	# name:auth.extra.raw_info.name,
-	    user = User.create(provider:auth.provider,
+	  
+    unless user
+	    user = User.create(name:auth.extra.raw_info.name,
+                          username:auth.username,
+                          provider:auth.provider,
 	                         uid:auth.uid,
 	                         email:auth.info.email,
 	                         password:Devise.friendly_token[0,20]
 	                         )
 	  end
+    puts "hejhej"
+    puts user
+    puts auth
+    puts
 	  user
 	end
 end
