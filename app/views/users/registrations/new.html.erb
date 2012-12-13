@@ -1,22 +1,29 @@
-<h2>Sign up</h2>
+<h2>Registrering</h2>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
   <div>
-  	<%= f.label :username %> <br />
-  	<%= f.text_field :username %>
+    <%= f.label :username, "Användarnamn" %><br />
+    <%= f.text_field :username %>
   </div>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+  <div>
+    <%= f.label :email, "epost" %><br />
+    <%= f.email_field :email %>
+  </div>
+  
+  <div>
+    <%= f.label :password, "lösenord" %><br />
+    <%= f.password_field :password %>
+  </div>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+  <div>
+    <%= f.label :password_confirmation, "bekräfta lösenord" %><br />
+    <%= f.password_field :password_confirmation %>
+  </div>
 
-  <div><%= f.submit "Sign up" %></div>
+  <div><%= f.submit "Registrera" %></div>
 <% end %>
 
 <%= render "devise/shared/links" %>
