@@ -1,5 +1,5 @@
 <div id="mapCreation">
-   <%= form_tag("/maps") do %>
+   <%= form_tag("/maps",{:id=>'map_form'}) do %>
       <%= label_tag(:name, "Namn:") %>
       <%= text_field_tag(:name) %>
   
@@ -7,11 +7,14 @@
      <%= text_field_tag(:description) %>
   
      <%= label_tag(:private, "Privat") %>
-     <%= check_box_tag(:private) %>
+     <%= check_box_tag(:private, "yes",true) %>
+     
+     <%= hidden_field_tag "latitude","0" %>
+     <%= hidden_field_tag "longitude","0" %>
      
      <%= gmaps4rails(@map) %>
      
-     <%= submit_tag "Skapa" %>
+     <%= submit_tag "Skapa", :id=>"submit" %>
    <% end %>
 </div>
 

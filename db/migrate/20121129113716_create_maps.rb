@@ -6,6 +6,7 @@ class CreateMaps < ActiveRecord::Migration
       t.float :longitude, :null => false
       t.float :latitude, :null => false
       t.boolean :private, :null => false
+      t.boolean :gmaps, :null => false, :default => true
       t.integer :user_id, :null => false
       t.timestamps
     end
