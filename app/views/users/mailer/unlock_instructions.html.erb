@@ -1,7 +1,7 @@
-<p>Hello <%= @resource.email %>!</p>
+<p>Hej <%= @resource.username %>!</p>
 
-<p>Your account has been locked due to an excessive amount of unsuccessful sign in attempts.</p>
+<p>På grund av flera misslyckade inloggningsförsök har ditt konto på kartr.se nu blockerats.</p>
 
-<p>Click the link below to unlock your account:</p>
+<p>Vänligen klicka på länken nedan för att låsa upp ditt konto igen:</p>
 
-<p><%= link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @resource.unlock_token) %></p>
+<p><%= link_to 'Lås upp mitt konto', unlock_url(@resource, :unlock_token => @resource.unlock_token) %></p>

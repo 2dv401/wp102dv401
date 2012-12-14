@@ -16,18 +16,32 @@ Wp102dv401::Application.routes.draw do
   get "home/index"
   
   
-  devise_scope :user do
-    get '/users/auth/:provider' => 'authentications#passthru'
-  end
+  
 
   # Tell Devise in which controller we will implement Omniauth callbacks
-  devise_for :users, :controllers => { :omniauth_callbacks => "authentications" }, 
-                     :path_names => { 
-                                      :sign_up => "register", 
-                                      :sign_in => "sign-in",
-                                      :sign_out => "sign-out"
-                                    }
+  devise_for :users, :controllers => { :omniauth_callbacks => "authentications" }
 
+  devise_scope :user do
+    # Session routes
+    get "/login" => "devise/sessions#new", :as => :new_user_session
+    post "/login" => "devise/sessions#create", :as => :user_session
+    delete "/logout" => "devise/sessions#destroy", :as => :destroy_user_session
+    # Confirm routes
+    get "/confirmation" => "devise/confirmations#new", :as => :new_user_confirmation
+    post "/confirmation" => "devise/confirmations#create", :as => :user_confirmation
+    # Password routes
+    get "/password" => "devise/passwords#new", :as => :new_user_password
+    post "/password" => "devise/passwords#create", :as => :user_password
+    get "/password/edit" => "devise/passwords#edit", :as => :edit_user_password
+    # Registration routes
+    get "/register" => "devise/registrations#new", :as => :new_user_registration
+    post "/register" => "devise/registrations#create", :as => :user_registration
+    get "user/edit" => "devise/registrations#edit", :as => :edit_user_registration
+    get "/register/cancel" => "devise/registrations#cancel", :as => :cancel_user_registration
+
+    # Routes for provider authentication
+    get '/users/auth/:provider' => 'authentications#passthru'
+  end
 
   resources :dashboard
   
