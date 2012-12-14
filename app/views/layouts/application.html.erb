@@ -57,12 +57,10 @@
 			<div class="twelve columns">
 				<% if user_signed_in? %>
 					inloggad
-
-
-
 			  	<% else %>
-			  		<%= link_to "Registrera dig", new_user_registration_path %> eller <%= link_to "Logga in", new_user_session_path %>
-					<%= link_to "Logga in med Facebook", user_omniauth_authorize_path(:facebook) %>
+			  		<%= link_to "Registrera dig", new_user_registration_path %> eller
+			  		<%= link_to "Logga in", new_user_session_path %>
+						<%= link_to "Logga in med Facebook", user_omniauth_authorize_path(:facebook) %>
 			  	<% end %>
 			</div>
 		</nav>
