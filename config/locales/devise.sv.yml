@@ -6,6 +6,7 @@ sv:
           attributes:
             email:
               taken: "Det finns redan ett konto registrerat på denna epostadress"
+              invalid: "Ogiltig epostadress"
             password:
               too_short: "Lösenordet är för kort, det bör vara minst 6 tecken"
   errors:
