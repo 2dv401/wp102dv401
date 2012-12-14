@@ -2,15 +2,20 @@ class MapsController < ApplicationController
   before_filter :authenticate_user!
   def index
   
-  #todo: kontrollera att en användare är inloggad
-  #todo: hämta endast användarens kartor
-  @maps = Map.all.to_gmaps4rails
+   @maps = Map.find(:all, :conditions => [ "user_id = ?", current_user.id])
   
   end
 
+  def show
+  
+   #todo: kontrollera ifall användaren ska få se kartan
+   #todo: kontrollera att kartan finns
+   @map =  Map.find(:all, :conditions => [ "id = ?",  params[:id]]).to_gmaps4rails
+  
+  end
+  
   def new
-      #todo: kontrollera att en användare är inloggad
-		  newmap = Map.new
+      newmap = Map.new
       logger.debug newmap
       #todo: hämta default-koordinater nånstans/används geolocation som default
       newmap.longitude = 15
@@ -20,7 +25,6 @@ class MapsController < ApplicationController
   end
   
   def create
-      #todo: kontrollera att användaren är inloggad
       map = Map.new
       
       map.name = params[:name]

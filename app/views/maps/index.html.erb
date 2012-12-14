@@ -1,4 +1,7 @@
-<%= gmaps4rails(@maps) %>
+<% @maps.each do |map| %>
+     <%= link_to map.name, map_path(map.id) %>
+     <br>
+<% end %>
 
 <%= link_to "Ny karta", new_map_path %>
 

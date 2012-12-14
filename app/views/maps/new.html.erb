@@ -1,4 +1,5 @@
 <div id="mapCreation">
+   <%= submit_tag "Geolocate!", :type => 'button', :id=>'geolocate_button' %>
    <%= form_tag("/maps",{:id=>'map_form'}) do %>
       <%= label_tag(:name, "Namn:") %>
       <%= text_field_tag(:name) %>
