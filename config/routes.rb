@@ -16,9 +16,7 @@ Wp102dv401::Application.routes.draw do
   get "home/index"
   
   
-  devise_scope :user do
-    get '/users/auth/:provider' => 'authentications#passthru'
-  end
+  
 
   # Tell Devise in which controller we will implement Omniauth callbacks
   devise_for :users, :controllers => { :omniauth_callbacks => "authentications" }, 
@@ -28,6 +26,20 @@ Wp102dv401::Application.routes.draw do
                                       :sign_out => "sign-out"
                                     }
 
+  devise_scope :user do
+    # Session routes
+    get "/login" => "devise/sessions#new", :as => :new_user_session
+    post '/login' => 'devise/sessions#create', :as => :user_session
+    delete '/logout' => 'devise/sessions#destroy', :as => :destroy_user_session
+    # Confirm routes
+    get "/confirmation" => "devise/confirmations#new", :as => :new_user_confirmation
+    # Password routes
+    get "/password" => "devise/passwords#new", :as => :new_user_password
+    # Registration routes
+    get "/registration" => "devise/registrations#new", :as => :new_user_registration
+
+    get '/users/auth/:provider' => 'authentications#passthru'
+  end
 
   resources :dashboard
   
