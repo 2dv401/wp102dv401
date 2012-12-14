@@ -1,14 +1,22 @@
 sv:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "Det finns redan ett konto registrerat på denna epostadress"
+            password:
+              too_short: "Lösenordet är för kort, det bör vara minst 6 tecken"
   errors:
     messages:
-      expired: "har löpt ut, vad god begär en ny"
+      expired: "Har löpt ut, vad god begär en ny"
       not_found: "hittades inte"
       already_confirmed: "är redan bekräftad, vänligen logga in igen"
       not_locked: "var inte låst"
       not_saved:
         one: "1 fel hindrade denna %{resource} från att sparas:"
         other: "%{count} fel hindrade denna %{resource} från att sparas:"
-
   devise:
     failure:
       already_authenticated: 'Du har redan loggat in.'
@@ -32,6 +40,7 @@ sv:
       confirmed: 'Ditt konto har bekräftats. Du är nu inloggad.'
     registrations:
       signed_up: 'Ett nytt konto har skapats. En bekräftelse har skickats till din epost.'
+      signed_up_but_unconfirmed: "Ett konto har skapats men inte bekräftats."
       inactive_signed_up: 'Ett nytt konto har skapats. Du kunde inte logga in, för ditt konto är %{reason}.'
       updated: 'Ditt konto har uppdaterats.'
       destroyed: 'Hej då! Ditt konto har avregistrerats. Vi hoppas få se dig snart igen.'
