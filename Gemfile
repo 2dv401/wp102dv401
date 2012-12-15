@@ -10,7 +10,7 @@ gem 'omniauth-facebook'
 gem 'sqlite3'
 
 gem 'devise'
-
+gem 'devise-twitter'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -34,6 +34,8 @@ gem 'gravatar_image_tag'
 gem 'httparty'
 gem 'multi_json'
 gem 'multi_xml'
+
+
 
 #gem "jammit", :git => "git://github.com/documentcloud/jammit.git"
 #gem "yui-compressor"

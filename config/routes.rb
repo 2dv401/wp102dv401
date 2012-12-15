@@ -1,4 +1,10 @@
 Wp102dv401::Application.routes.draw do
+  devise_for :user do
+    match '/user/sign_in/twitter' => Devise::Twitter::Rack::Signin
+    match '/user/connect/twitter' => Devise::Twitter::Rack::Connect
+  end
+
+
   #get "maps/index"
 
  # get "maps/new"
@@ -41,6 +47,11 @@ Wp102dv401::Application.routes.draw do
 
     # Routes for provider authentication
     get '/users/auth/:provider' => 'authentications#passthru'
+  end
+
+  devise_for :user do
+    match '/signin/twitter' => Devise::Twitter::Rack::Signin
+    match '/connect/twitter' => Devise::Twitter::Rack::Connect
   end
 
   resources :dashboard
