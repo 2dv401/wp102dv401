@@ -4,6 +4,7 @@ gem 'rails', '3.2.9'
 gem "geocoder", "~> 1.1.5" # http://www.rubygeocoder.com/
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -53,4 +54,4 @@ gem 'multi_xml'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+gem 'debugger'

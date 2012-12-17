@@ -26,9 +26,20 @@ class User < ActiveRecord::Base
   # Lägger till facebook-mailen till användarkontot när det registreras
   def self.new_with_session(params, session)
     super.tap do |user|
+
+      debugger
+      puts user.email
+
+
+
       if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
         user.email = data["email"] if user.email.blank?
       end
+
+      if data = session["devise.twitter_data"] && session["devise.twitter_data"]["extra"]["raw_info"]
+        user.email = data["email"] if user.email.blank?
+      end
+
     end
   end
 
@@ -47,6 +58,25 @@ class User < ActiveRecord::Base
 	                         )
 	  end
 	end
+
+  def self.find_for_twitter_oauth(auth, signed_in_resource=nil)
+
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+
+    
+
+
+    unless user
+      user = User.create(name:auth.extra.raw_info.name,
+                          username:auth.username,
+                          provider:auth.provider,
+                           uid:auth.uid,
+                           email:auth.info.email,
+                           password:Devise.friendly_token[0,20]
+                           )
+    end
+  end  
+
 
   # function to handle user's login via email or username
   def self.find_first_by_auth_conditions(warden_conditions)

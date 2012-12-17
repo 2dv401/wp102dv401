@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20121215093740) do
+=======
+ActiveRecord::Schema.define(:version => 20121214174515) do
+>>>>>>> old_state
 
   create_table "location_images", :force => true do |t|
     t.string   "file_name",   :limit => 32,  :null => false
