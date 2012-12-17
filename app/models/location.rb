@@ -6,11 +6,11 @@ class Location < ActiveRecord::Base
 
   	validates	:name, 
   				:presence => { :message => "The field for name can't be empty." },
-  				:length => { :message => "Name can't be longer than 32 characters." }
+  				:length => { :maximum => 32, :message => "Name can't be longer than 32 characters." }
 
   	validates	:description, 
   				:presence => { :message => "The field for description can't be empty." },
-  				:length => { :message => "Description can't be longer than 250 characters." }
+  				:length => { :maximum => 250, :message => "Description can't be longer than 250 characters." }
 
   	validates	:longitude, :presence => true
   	validates	:latitude, :presence => true
