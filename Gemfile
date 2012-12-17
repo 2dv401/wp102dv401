@@ -11,7 +11,6 @@ gem 'omniauth-twitter'
 gem 'sqlite3'
 
 gem 'devise'
-gem 'devise-twitter'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -32,7 +31,7 @@ gem 'gmaps4rails'
 gem 'gravatar_image_tag'
 
 ## Gem för HTTP-anrop
-gem 'httparty'
+#gem 'httparty'
 gem 'multi_json'
 gem 'multi_xml'
 

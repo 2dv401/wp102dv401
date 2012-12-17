@@ -1,28 +1,8 @@
 Wp102dv401::Application.routes.draw do
-  devise_for :user do
-    match '/user/sign_in/twitter' => Devise::Twitter::Rack::Signin
-    match '/user/connect/twitter' => Devise::Twitter::Rack::Connect
-  end
 
-
-  #get "maps/index"
-
- # get "maps/new"
-
- # get "maps/edit"
-
-  #get "maps/update"
-
-  #get "maps/delete"
-
-  
-  
   get "dashboard/index"
 
   get "home/index"
-  
-  
-  
 
   # Tell Devise in which controller we will implement Omniauth callbacks
   devise_for :users, :controllers => { :omniauth_callbacks => "authentications" }
@@ -42,16 +22,10 @@ Wp102dv401::Application.routes.draw do
     # Registration routes
     get "/register" => "devise/registrations#new", :as => :new_user_registration
     post "/register" => "devise/registrations#create", :as => :user_registration
-    get "user/edit" => "devise/registrations#edit", :as => :edit_user_registration
+    get "/user/edit" => "devise/registrations#edit", :as => :edit_user_registration
     get "/register/cancel" => "devise/registrations#cancel", :as => :cancel_user_registration
-
     # Routes for provider authentication
-    get '/users/auth/:provider' => 'authentications#passthru'
-  end
-
-  devise_for :user do
-    match '/signin/twitter' => Devise::Twitter::Rack::Signin
-    match '/connect/twitter' => Devise::Twitter::Rack::Connect
+    get "/users/auth/:provider" => "authentications#passthru"
   end
 
   resources :dashboard

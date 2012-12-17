@@ -61,13 +61,8 @@
 			  	<% else %>
 			  		<%= link_to "Registrera dig", new_user_registration_path %> eller
 			  		<%= link_to "Logga in", new_user_session_path %>
-<<<<<<< HEAD
-					<%#= link_to "Logga in med Facebook", user_omniauth_authorize_path(:facebook) %>
-					<%= link_to "Logga in med Twitter", signin_twitter_path %>
-=======
-						<%= link_to "Logga in med Facebook", user_omniauth_authorize_path(:facebook) %>
-						<%= link_to "Logga in med Twitter", user_omniauth_authorize_path(:twitter) %>
->>>>>>> old_state
+					<%= link_to "Logga in med Facebook", user_omniauth_authorize_path(:facebook) %>
+					<%= link_to "Logga in med Twitter", user_omniauth_authorize_path(:twitter) %>
 			  	<% end %>
 			</div>
 		</nav>

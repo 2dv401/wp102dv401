@@ -9,7 +9,7 @@ Devise.setup do |config|
 
 
   config.omniauth :facebook, "537438802934858", "0c3798c71ce437ff0bef52c70d8a24b6", :strategy_class => OmniAuth::Strategies::Facebook
-  config.omniauth :twitter, "LoR4wQulyIQmPFRzvL9rw", "xatqh83sCMStM4RMwlHugB9qTjAxoJal6zf3ZtlNf7I", :strategy_class => OmniAuth::Strategies::Twitter
+  config.omniauth :twitter, "PtqZomQuqMsTIJsbjHzT0Q", "lYOn9lhfpmCzEZIkqbLzRlDukkYJWha61VLhI4", :strategy_class => OmniAuth::Strategies::Twitter
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
