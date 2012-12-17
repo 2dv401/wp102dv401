@@ -10,37 +10,66 @@ class MapsController < ApplicationController
   
    #todo: kontrollera ifall användaren ska få se kartan
    #todo: kontrollera att kartan finns
-   @map =  Map.find(:all, :conditions => [ "id = ?",  params[:id]]).to_gmaps4rails
+   #@map =  Map.find(:all, :conditions => [ "id = ?",  params[:id]])
+
+   # Referens till ett Map-objekt
+   @map = Map.find(params[:id])
+
+   # Referens till ett gmaps-objekt
+   @display_map = @map.to_gmaps4rails
   
   end
   
   def new
-      newmap = Map.new
-      logger.debug newmap
+      @map = Map.new
+      logger.debug @map
+
       #todo: hämta default-koordinater nånstans/används geolocation som default
-      newmap.longitude = 15
-      newmap.latitude = 60
-      
-      @map = newmap.to_gmaps4rails
+      @map.longitude = 18
+      @map.latitude = 59.33
+
+      @map_options = {
+        "map_options" => {
+          "auto_zoom" => false,
+          "zoom" => 8,
+          "center_latitude" => @map.latitude,
+          "center_longitude" => @map.longitude
+        },
+        "markers" => {
+          "data" => @map.to_gmaps4rails
+        }
+      }
   end
   
   def create
-      map = Map.new
+      @map = Map.new
       
-      map.name = params[:name]
-      map.description = params[:description]
+      @map.name = params[:name]
+      @map.description = params[:description]
       
-      map.latitude = params[:latitude]
-      map.longitude = params[:longitude]
+      @map.latitude = params[:latitude]
+      @map.longitude = params[:longitude]
       
       #todo: Av någon anledning går det inte att skapa karta om private är "false"
-      map.private = params[:private]
-      map.gmaps = true
+      @map.private = params[:private]
+      @map.gmaps = true
       
-      map.user_id = current_user.id
+      @map.user_id = current_user.id
 
-      if map.save!
-        redirect_to map_path(map)
+      @map_options = {
+        "map_options" => {
+          "auto_zoom" => false,
+          "zoom" => 8,
+          "center_latitude" => @map.latitude,
+          "center_longitude" => @map.longitude
+        },
+        "markers" => {
+          "data" => @map.to_gmaps4rails
+        }
+      }
+
+      if @map.save
+        redirect_to map_path(@map)
       else
         render :action => "new"
       end

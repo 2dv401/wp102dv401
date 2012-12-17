@@ -1,5 +1,17 @@
 <div id="mapCreation">
-   <%= form_tag("/maps",{:id=>'map_form'}) do %>
+   <%= form_tag("/maps", { :id => 'map_form' }) do %>
+
+     <% if @map.errors.any? %> 
+      <div id="errors">
+        <h4>Fel uppstod. Åtgärda följande och försök igen: </h4>
+        <ul>
+          <% @map.errors.full_messages.each do |msg| %>
+            <li><%= msg %> </li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
+
       <%= label_tag(:name, "Namn:") %>
       <%= text_field_tag(:name) %>
   
@@ -7,13 +19,14 @@
      <%= text_field_tag(:description) %>
   
      <%= label_tag(:private, "Privat") %>
-     <%= check_box_tag(:private, "yes",true) %>
+     <%= check_box_tag(:private, "yes", true) %><br />
+
+     <%= submit_tag "Hitta min position", :type => "button", :id => "geolocate_button" %>
+     <%= hidden_field_tag "latitude", "59" %>
+     <%= hidden_field_tag "longitude", "18" %>
      
-     <%= hidden_field_tag "latitude","0" %>
-     <%= hidden_field_tag "longitude","0" %>
+     <%= gmaps(@map_options) %>
      
-     <%= gmaps4rails(@map) %>
-     
-     <%= submit_tag "Skapa", :id=>"submit" %>
+     <%= submit_tag "Skapa karta", :id => "submit" %>
    <% end %>
 </div>
