@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121215093740) do
+ActiveRecord::Schema.define(:version => 20121214174515) do
 
   create_table "location_images", :force => true do |t|
     t.string   "file_name",   :limit => 32,  :null => false
@@ -28,14 +28,15 @@ ActiveRecord::Schema.define(:version => 20121215093740) do
   end
 
   create_table "locations", :force => true do |t|
-    t.string   "header",      :limit => 32,                     :null => false
-    t.string   "description", :limit => 256,                    :null => false
-    t.float    "longitude",                                     :null => false
-    t.float    "latitude",                                      :null => false
+    t.string   "name",          :limit => 32,                     :null => false
+    t.string   "description",   :limit => 256
+    t.float    "longitude",                                       :null => false
+    t.float    "latitude",                                        :null => false
     t.datetime "date"
-    t.boolean  "private",                    :default => false, :null => false
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.boolean  "private",                      :default => false, :null => false
+    t.integer  "place_type_id",                                   :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
   end
 
   create_table "map_locations", :id => false, :force => true do |t|
@@ -44,11 +45,15 @@ ActiveRecord::Schema.define(:version => 20121215093740) do
   end
 
   create_table "maps", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.string   "creator"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.string   "name",        :limit => 50,                    :null => false
+    t.text     "description", :limit => 256,                   :null => false
+    t.float    "longitude",                                    :null => false
+    t.float    "latitude",                                     :null => false
+    t.boolean  "private",                                      :null => false
+    t.boolean  "gmaps",                      :default => true, :null => false
+    t.integer  "user_id",                                      :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -71,15 +76,10 @@ ActiveRecord::Schema.define(:version => 20121215093740) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "twitter_handle"
-    t.string   "twitter_oauth_token"
-    t.string   "twitter_oauth_secret"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-  add_index "users", ["twitter_handle"], :name => "index_users_on_twitter_handle", :unique => true
-  add_index "users", ["twitter_oauth_token", "twitter_oauth_secret"], :name => "index_users_on_twitter_oauth_token_and_twitter_oauth_secret"
 
 end
