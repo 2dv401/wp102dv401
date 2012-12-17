@@ -37,14 +37,14 @@ class MapsController < ApplicationController
       map.private = params[:private]
       map.gmaps = true
       
-      #todo: sätt rätt id
       map.user_id = current_user.id
-      
-      #todo: validera map
-      map.save!
-      
-      #todo: gå till skapad karta?
-      redirect_to :controller => "maps"
+
+      if map.save!
+        redirect_to map_path(map)
+      else
+        render :action => "new"
+      end
+
   end
 
   def edit
