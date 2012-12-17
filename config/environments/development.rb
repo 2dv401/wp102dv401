@@ -17,7 +17,15 @@ Wp102dv401::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # Custom
-  #config.action_mailer.deliver_method = 
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+  :address              => "smtp.kartr.se",
+  :port                 => 587,
+  :user_name            => 'info@kartr.se',
+  :password             => 'qAFapha6',
+  :authentication       => 'login',
+  :enable_starttls_auto => true  }
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
