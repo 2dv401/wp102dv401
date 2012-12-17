@@ -10,7 +10,9 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
+
 ActiveRecord::Schema.define(:version => 20121215093740) do
+
   create_table "location_images", :force => true do |t|
     t.string   "file_name",   :limit => 32,  :null => false
     t.text     "description", :limit => 256, :null => false
@@ -26,15 +28,14 @@ ActiveRecord::Schema.define(:version => 20121215093740) do
   end
 
   create_table "locations", :force => true do |t|
-    t.string   "name",          :limit => 32,                     :null => false
-    t.string   "description",   :limit => 256
-    t.float    "longitude",                                       :null => false
-    t.float    "latitude",                                        :null => false
+    t.string   "header",      :limit => 32,                     :null => false
+    t.string   "description", :limit => 256,                    :null => false
+    t.float    "longitude",                                     :null => false
+    t.float    "latitude",                                      :null => false
     t.datetime "date"
-    t.boolean  "private",                      :default => false, :null => false
-    t.integer  "place_type_id",                                   :null => false
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.boolean  "private",                    :default => false, :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
   end
 
   create_table "map_locations", :id => false, :force => true do |t|
@@ -43,15 +44,11 @@ ActiveRecord::Schema.define(:version => 20121215093740) do
   end
 
   create_table "maps", :force => true do |t|
-    t.string   "name",        :limit => 50,                    :null => false
-    t.text     "description", :limit => 256,                   :null => false
-    t.float    "longitude",                                    :null => false
-    t.float    "latitude",                                     :null => false
-    t.boolean  "private",                                      :null => false
-    t.boolean  "gmaps",                      :default => true, :null => false
-    t.integer  "user_id",                                      :null => false
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
+    t.string   "name"
+    t.text     "description"
+    t.string   "creator"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "users", :force => true do |t|
