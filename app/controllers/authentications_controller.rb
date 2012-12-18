@@ -23,7 +23,15 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
   def twitter
     @user = User.find_for_twitter_oauth(request.env["omniauth.auth"], current_user)
 
+
     if @user.persisted?
+
+      ## Kolla om man loggar in med Twitter och be användaren fyll i en mejl-adress.
+     # if not @user.email?
+     #   ##return render :text => "The object is #{@object}"
+     #    return render :text => "The object is text kaa"
+     # end
+
       sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
       set_flash_message(:notice, :success, :kind => "Twitter") if is_navigational_format?
     else

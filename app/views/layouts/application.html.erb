@@ -34,7 +34,6 @@
 				<% if user_signed_in? %>
 					<ul class="right">
 						<li class="has-dropdown">
-
 							<a href="#">
 								<% #@TODO: Bryta ut detta till en helper %>
 								<% if current_user.provider? %>
@@ -45,14 +44,12 @@
 							            :class => 'profile-image-small', 
 							            :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
 								<% end %>
-							
 							    <%= current_user.name%>
 							</a>
 							<ul class="dropdown">
 								<li><%= link_to raw('<i class="foundicon-settings"></i> Inställningar'), edit_user_registration_path %> </li>
-							
                         		<li><%= link_to raw('<i class="foundicon-location"></i> Mina kartor'), maps_path %></li>
-                        			<li><%= link_to raw('<i class="foundicon-lock"></i> Logga ut'), destroy_user_session_path, :method => :delete %></li>
+                        		<li><%= link_to raw('<i class="foundicon-lock"></i> Logga ut'), destroy_user_session_path, :method => :delete %></li>
 							</ul>
 						</li>
 					</ul>
@@ -60,25 +57,13 @@
 			</section>
 		</nav>
 
-
 		<nav class="row" id="navigation">
 			<div class="twelve columns">
-				<% if user_signed_in? %>
-
-					<%= debug current_user %>
-
-					<% if current_user.provider? %>
-						<h3>Inloggad med <%= current_user.provider%></h3>
-					<% end %>
-						
-		
-
-					inloggad
-			  	<% else %>
-			  		<%= link_to "Registrera dig", new_user_registration_path %> eller
-			  		<%= link_to "Logga in", new_user_session_path %>
-					<%= link_to "Logga in med Facebook", user_omniauth_authorize_path(:facebook) %>
-					<%= link_to "Logga in med Twitter", user_omniauth_authorize_path(:twitter) %>
+				<% if not user_signed_in? %>
+					<%= link_to "Registrera dig", new_user_registration_path %> eller
+			  		<%= link_to "Logga in", new_user_session_path %> eller
+					<%= link_to "Logga in med Facebook", user_omniauth_authorize_path(:facebook) %> eller
+					<%= link_to "Logga in med Twitter", user_omniauth_authorize_path(:twitter) %>			  		
 			  	<% end %>
 			</div>
 		</nav>
@@ -99,7 +84,7 @@
 
 		<footer class="row" id="footer">
 			<div class="twelve columns">
-				<p class="copywright text_center">&copy; kartr.se</p>
+				<p class="copyright">&copy; kartr.se</p>
 			</div>
 		</footer>
 	</div>

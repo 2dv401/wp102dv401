@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
                           provider:auth.provider,
                           uid:auth.uid,
                           profile_image:auth.info.image,
-                          email:'tordbob@foo.se',
+                          email:'',
                           password:Devise.friendly_token[0,20]
                         )
       user.skip_confirmation!
