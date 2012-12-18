@@ -16,7 +16,7 @@
  *= require_tree .
  */
 
-.gravatar-small {
+.profile-image-small {
 	width: 24px;
 	height: 24px;
 	margin-bottom: -6px;
@@ -37,7 +37,3 @@
 .text-center 	{ text-align: center; }
 .text-right 	{ text-align: right; }
 .text-left 		{ text-align: left; }
-
-/* True */
-.right 				{ text-align: right; float: right;}
-.left 				{ text-align: left; float: left; }

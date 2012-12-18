@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :username, :name, :login
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :username, :name, :login, :profile_image
 
   # attr_accessible :title, :body
   # Lägger till facebook-mailen till användarkontot när det registreras
@@ -37,11 +37,16 @@ class User < ActiveRecord::Base
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
 
+  require('json')
+    puts "hej hej Facebook"
+    puts auth.to_json
+
     unless user
       user = User.new(name:auth.extra.raw_info.name,
-                        username:auth.username,
+                        username:auth.extra.raw_info.username,
                         provider:auth.provider,
                         uid:auth.uid,
+                        profile_image:auth.info.image,
                         email:auth.info.email,
                         password:Devise.friendly_token[0,20]
                       )
@@ -54,11 +59,18 @@ class User < ActiveRecord::Base
 
   def self.find_for_twitter_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
+      
+    require('json')
+
+    puts "hej hej Twitter"
+    puts auth.to_json  
+
     unless user
       user = User.new(name:auth.extra.raw_info.name,
-                          username:auth.username,
+                          username:auth.info.nickname,
                           provider:auth.provider,
                           uid:auth.uid,
+                          profile_image:auth.info.image,
                           email:'tordbob@foo.se',
                           password:Devise.friendly_token[0,20]
                         )

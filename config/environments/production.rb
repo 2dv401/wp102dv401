@@ -65,6 +65,15 @@ Wp102dv401::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.sass.cache = false
-  config.sass.read_cache = false
+
+  # Custom
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.kartr.se",
+    :port                 => 587,
+    :user_name            => 'info@kartr.se',
+    :password             => 'qAFapha6',
+    :authentication       => 'login',
+    :enable_starttls_auto => true  }
 end
