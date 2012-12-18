@@ -32,20 +32,22 @@ class User < ActiveRecord::Base
       end
     end
   end
+  
   # Hittar användare eller registrerar en ny
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
 
     unless user
-    user = User.create(name:auth.extra.raw_info.name,
+      user = User.new(name:auth.extra.raw_info.name,
                         username:auth.username,
                         provider:auth.provider,
                         uid:auth.uid,
                         email:auth.info.email,
                         password:Devise.friendly_token[0,20]
                       )
+      user.skip_confirmation!
+      user.save
     end
-
     return user
   end
 
@@ -53,13 +55,15 @@ class User < ActiveRecord::Base
   def self.find_for_twitter_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user
-      user = User.create(name:auth.extra.raw_info.name,
+      user = User.new(name:auth.extra.raw_info.name,
                           username:auth.username,
                           provider:auth.provider,
                           uid:auth.uid,
                           email:'tordbob@foo.se',
                           password:Devise.friendly_token[0,20]
                         )
+      user.skip_confirmation!
+      user.save
     end
 
     return user
@@ -73,5 +77,9 @@ class User < ActiveRecord::Base
     else
       where(conditions).first
     end
+  end
+
+  def skip_confirmation!
+   self.confirmed_at = Time.now
   end
 end
