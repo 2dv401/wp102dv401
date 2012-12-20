@@ -2,7 +2,9 @@
 <p>Find me in app/views/dashboard/index.html.erb</p>
 
 <h3>Alla användare</h3>
+<hr />
 <% (@User).each do |u| %>
 	<p>E-Post: <%= u.email %></p>
 	<p>Användarnamn: <%= u.username%></p>
+	<hr />
 <% end %>

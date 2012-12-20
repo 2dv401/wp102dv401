@@ -6,11 +6,10 @@ class User < ActiveRecord::Base
   # since it's email and password is blank.
   # :validatable checks only email and password so it's safe to remove
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
+  # :token_authenticatable, :confirmable
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable,:validatable,
   :recoverable, :rememberable, :trackable,
-  :validatable, :confirmable,
   :omniauthable, :authentication_keys => [:login]
 
   # Virtual attribute for authenticating by either username or email
@@ -58,7 +57,8 @@ class User < ActiveRecord::Base
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
       
     require('json')
-
+nummer = rand(1+1000)+1000
+foonummer = nummer.to_s << "@gmail.com"
     puts "hej hej Twitter"
     puts auth.to_json  
 
@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
                           provider:auth.provider,
                           uid:auth.uid,
                           profile_image:auth.info.image,
-                          email:'',
+                          email:foonummer,
                           password:Devise.friendly_token[0,20]
                         )
       user.skip_confirmation!

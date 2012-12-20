@@ -70,9 +70,13 @@
 
 		<div class="row" id="flash">
 			<div class="twelve columns">
+				
 				<% flash.each do |name, msg| %>
+					<div class="alert-box">
 					<%= content_tag :div, msg, :id => "flash_#{name}" %>
-				<% end %>
+					</div>
+					<% end %>
+				
 			</div>
 		</div>
 
