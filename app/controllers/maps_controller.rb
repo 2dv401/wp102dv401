@@ -15,15 +15,21 @@ class MapsController < ApplicationController
    # Referens till ett Map-objekt
    @map = Map.find(params[:id])
 
+   @locations = @map.locations
+   
    # Referens till ett gmaps-objekt
-   @display_map = @map.to_gmaps4rails
+   if @locations.any?
+      @display_map = @locations.to_gmaps4rails
+   else
+      @display_map = @map.to_gmaps4rails
+   end
   
   end
   
   def new
       @map = Map.new
       logger.debug @map
-
+      
       #todo: hämta default-koordinater nånstans/används geolocation som default
       @map.longitude = 18
       @map.latitude = 59.33

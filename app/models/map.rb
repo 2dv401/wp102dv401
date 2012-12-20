@@ -1,6 +1,6 @@
 class Map < ActiveRecord::Base
 	belongs_to :user
-	has_and_belongs_to_many :map_locations
+	has_and_belongs_to_many :locations
 	acts_as_gmappable
    
    	attr_accessor :first_name, :last_name

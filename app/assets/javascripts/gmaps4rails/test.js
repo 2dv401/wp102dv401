@@ -24,16 +24,17 @@ function testFunc(){
    })
 }
 
-
 function useGeolocation(){
    navigator.geolocation.getCurrentPosition(move_map);
+   
+   
 }
-
 function move_map(position){  
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             
             Gmaps.map.map.setCenter(new google.maps.LatLng(latitude,longitude));
+            Gmaps.map.map.setZoom(30);
         }  
 
 window.onload = function () {
