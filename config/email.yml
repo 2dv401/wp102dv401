@@ -1,0 +1,14 @@
+development:
+  :address: smtp.kartr.se
+  :port: 587
+  :authentication: plain
+  :user_name: info@kartr.se
+  :password: qAFapha6
+  :enable_starttls_auto: true
+production:
+  :address: smtp.kartr.se
+  :port: 587
+  :authentication: plain
+  :user_name: info@kartr.se
+  :password: qAFapha6
+  :enable_starttls_auto: true
