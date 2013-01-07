@@ -88,7 +88,8 @@ class MapsController < ApplicationController
   def update
   end
 
-  def delete
-	
+  def destroy
+	@map = Map.find(params[:id])
+	@map.destroy
   end
 end
