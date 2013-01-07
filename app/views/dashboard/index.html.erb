@@ -1,10 +1,41 @@
-<h1>Dashboard#index</h1>
-<p>Find me in app/views/dashboard/index.html.erb</p>
+<!-- Starsida - inloggad läge -->
+<div class="row">
+	<div class="twelve columns">
+		<h2>Kartor - Översikt</h2>
+		<p>Find me in app/views/dashboard/index.html.erb</p>
+	</div>
+</div>
+<div class="row">
+	<div class="three columns">
+		<h3>Alla användare</h3>
+		<hr />
+		<% (@User).each do |u| %>
+		<p>E-Post: <%= u.email %></p>
+		<p>Användarnamn: <%= u.username%></p>
+		<hr />
+		<% end %>
+	</div>
+	<div class="three columns">
+		<h4>Mina kartor</h4>
+		<% @maps.each do |map| %>
+			<%= link_to map.name, map_path(map.id) %>
+			<br>
+		<% end %>
+	</div>
+	<div class="three columns">
+		<h4>Kartor jag följer</h4>
+	</div>
+</div>
 
-<h3>Alla användare</h3>
-<hr />
-<% (@User).each do |u| %>
-	<p>E-Post: <%= u.email %></p>
-	<p>Användarnamn: <%= u.username%></p>
-	<hr />
-<% end %>
+<div class="row">
+	<div class="three columns">
+		<h4>Populära kartor</h4>
+	</div>
+	<div class="three columns">
+		<h4>Nya kartor idag</h4>
+	</div>
+	<div class="three columns">
+		<h4>Något annat</h4>
+	</div>
+</div>
+

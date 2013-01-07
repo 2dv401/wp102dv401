@@ -56,11 +56,10 @@ class User < ActiveRecord::Base
   def self.find_for_twitter_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
       
-    require('json')
-nummer = rand(1+1000)+1000
-foonummer = nummer.to_s << "@gmail.com"
-    puts "hej hej Twitter"
-    puts auth.to_json  
+    # Fullösning. Fixa
+    nummer = rand(1+1000)+1000
+    foonummer = nummer.to_s << "@gmail.com"
+ 
 
     unless user
       user = User.new(name:auth.extra.raw_info.name,

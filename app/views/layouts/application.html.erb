@@ -57,16 +57,7 @@
 			</section>
 		</nav>
 
-		<nav class="row" id="navigation">
-			<div class="twelve columns">
-				<% if not user_signed_in? %>
-					<%= link_to "Registrera dig", new_user_registration_path %> eller
-			  		<%= link_to "Logga in", new_user_session_path %> eller
-					<%= link_to "Logga in med Facebook", user_omniauth_authorize_path(:facebook) %> eller
-					<%= link_to "Logga in med Twitter", user_omniauth_authorize_path(:twitter) %>			  		
-			  	<% end %>
-			</div>
-		</nav>
+		
 
 		<div class="row" id="flash">
 			<div class="twelve columns">

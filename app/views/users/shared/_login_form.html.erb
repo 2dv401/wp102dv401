@@ -1,0 +1,21 @@
+<h4>Logga in</h4>
+<%= link_to image_tag("login_with_facebook.png"), user_omniauth_authorize_path(:facebook) %>
+          <%= link_to image_tag("login_with_twitter.png"), user_omniauth_authorize_path(:twitter) %>
+
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+  <div class="login">
+    <%= f.label :login, "Epost eller användarnamn" %>
+    <%= f.text_field :login %>
+  </div>
+
+  <div class="password">
+    <%= f.label :password, "Lösenord" %>
+    <%= f.password_field :password %>
+  </div>
+
+  <% if devise_mapping.rememberable? -%>
+    <div><%= f.check_box :remember_me %> <%= f.label :remember_me, "Kom ihåg mig" %></div>
+  <% end -%>
+
+  <div><%= f.submit "Logga in" %></div>
+<% end %>

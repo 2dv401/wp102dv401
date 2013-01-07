@@ -1,6 +1,9 @@
 <h2>Skicka bekräftelseinstruktioner</h2>
+<%= debug resource %>
+<%= debug resource_name %>
 
-<%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
+
+<%= form_for(resource, :as => resource_name, :url => user_confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
   <p>Ett epostmeddelande med en bekräftelselänk och instruktioner på hur du skall gå till väga kommer att skickas till din epostadress.</p>
   <div class="email">
