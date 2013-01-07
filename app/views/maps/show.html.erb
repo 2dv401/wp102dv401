@@ -1,4 +1,3 @@
-<h4><%= @map.name %></h4>
+<h4><%= @map.name %> (<%= link_to "ta bort", map_path(@map.id), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>)</h4>
 <p><%= @map.description %><p>
-
 <%= gmaps4rails(@display_map) %>
