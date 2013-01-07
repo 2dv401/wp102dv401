@@ -48,10 +48,7 @@ ActiveRecord::Schema.define(:version => 20121219143250) do
   create_table "maps", :force => true do |t|
     t.string   "name",        :limit => 50,                     :null => false
     t.text     "description", :limit => 256,                    :null => false
-    t.float    "longitude",                                     :null => false
-    t.float    "latitude",                                      :null => false
     t.boolean  "private",                    :default => false, :null => false
-    t.boolean  "gmaps",                      :default => true,  :null => false
     t.integer  "user_id",                                       :null => false
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
