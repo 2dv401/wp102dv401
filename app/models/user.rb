@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   has_many :status_updates
+  has_many :maps
+
 
 
   # To use devise-twitter don't forget to include the :twitter_oauth module:

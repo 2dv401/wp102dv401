@@ -1,7 +1,11 @@
 class Location < ActiveRecord::Base
 	has_and_belongs_to_many :maps
+
+  has_one :location_image
 	belongs_to :location_type
-   acts_as_gmappable
+
+
+  acts_as_gmappable
 
   	attr_accessible :date, :description, :name, :latitude, :longitude, :private
 
