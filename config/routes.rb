@@ -1,5 +1,33 @@
 Wp102dv401::Application.routes.draw do
 
+  get "status_updates/index"
+
+  get "status_updates/show"
+
+  get "status_updates/new"
+
+  get "status_updates/create"
+
+  get "status_updates/edit"
+
+  get "status_updates/update"
+
+  get "status_updates/destroy"
+
+  get "status_update/index"
+
+  get "status_update/show"
+
+  get "status_update/new"
+
+  get "status_update/create"
+
+  get "status_update/edit"
+
+  get "status_update/update"
+
+  get "status_update/destroy"
+
   get "dashboard/index"
 
   get "home/index"
