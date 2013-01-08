@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  has_many :status_updates
+
+
   # To use devise-twitter don't forget to include the :twitter_oauth module:
   # e.g. devise :database_authenticatable, ... , :twitter_oauth
   # IMPORTANT: If you want to support sign in via twitter you MUST remove the
@@ -20,6 +23,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :username, :name, :login, :profile_image
 
   # attr_accessible :title, :body
+
   # Lägger till facebook-mailen till användarkontot när det registreras
   def self.new_with_session(params, session)
     super.tap do |user|
