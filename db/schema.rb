@@ -11,8 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
-ActiveRecord::Schema.define(:version => 20130108131848) do
+ActiveRecord::Schema.define(:version => 20130108143427) do
 
   create_table "location_images", :force => true do |t|
     t.string   "file_name",   :limit => 32,  :null => false
@@ -64,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20130108131848) do
     t.string   "content",    :limit => 5120, :default => "", :null => false
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
+    t.integer  "map_id"
   end
 
   create_table "users", :force => true do |t|
