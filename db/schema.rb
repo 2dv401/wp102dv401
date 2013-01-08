@@ -11,7 +11,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130108094250) do
+
+ActiveRecord::Schema.define(:version => 20130108131848) do
 
   create_table "location_images", :force => true do |t|
     t.string   "file_name",   :limit => 32,  :null => false
@@ -41,14 +42,19 @@ ActiveRecord::Schema.define(:version => 20130108094250) do
   end
 
   create_table "locations_maps", :id => false, :force => true do |t|
-    t.integer "map_id"
     t.integer "location_id"
+    t.integer "map_id"
   end
+
+  add_index "locations_maps", ["location_id", "map_id"], :name => "index_locations_maps_on_location_id_and_map_id"
 
   create_table "maps", :force => true do |t|
     t.string   "name",        :limit => 50,                     :null => false
     t.text     "description", :limit => 256,                    :null => false
+    t.float    "longitude",                                     :null => false
+    t.float    "latitude",                                      :null => false
     t.boolean  "private",                    :default => false, :null => false
+    t.boolean  "gmaps",                      :default => true,  :null => false
     t.integer  "user_id",                                       :null => false
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
