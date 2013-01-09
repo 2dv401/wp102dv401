@@ -3,7 +3,9 @@
 one:
   user: 
   status_update: 
+  content: MyString
 
 two:
   user: 
   status_update: 
+  content: MyString
