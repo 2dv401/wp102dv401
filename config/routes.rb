@@ -1,5 +1,19 @@
 Wp102dv401::Application.routes.draw do
 
+  get "status_comments/index"
+
+  get "status_comments/show"
+
+  get "status_comments/new"
+
+  get "status_comments/create"
+
+  get "status_comments/edit"
+
+  get "status_comments/update"
+
+  get "status_comments/destroy"
+
   get "status_updates/index"
 
   get "status_updates/show"

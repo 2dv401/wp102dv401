@@ -1,8 +1,7 @@
 class User < ActiveRecord::Base
   has_many :status_updates, :dependent => :destroy
+  has_many :status_comments, :dependent => :destroy
   has_many :maps, :dependent => :destroy
-
-  has_many :likes, :source => "likes", :dependent => :destroy
 
 
       # To use devise-twitter don't forget to include the :twitter_oauth module:
