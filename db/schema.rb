@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130108143427) do
+ActiveRecord::Schema.define(:version => 20130109144237) do
+
+  create_table "likes", :id => false, :force => true do |t|
+    t.integer  "user_id",          :null => false
+    t.integer  "status_update_id", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "likes", ["user_id", "status_update_id"], :name => "index_likes_on_user_id_and_status_update_id"
 
   create_table "location_images", :force => true do |t|
     t.string   "file_name",   :limit => 32,  :null => false

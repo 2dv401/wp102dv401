@@ -1,8 +1,8 @@
 class CreateLocationsMaps < ActiveRecord::Migration
   def up
     create_table :locations_maps, :id => false do |t|
-      t.integer :location_id
-      t.integer :map_id
+      t.references :location
+      t.references :map
     end
 
     add_index :locations_maps, [:location_id, :map_id]

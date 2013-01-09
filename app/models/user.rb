@@ -1,10 +1,12 @@
 class User < ActiveRecord::Base
-  has_many :status_updates
-  has_many :maps
+  has_many :status_updates, :dependent => :destroy
+  has_many :maps, :dependent => :destroy
+  has_many :likes, :class_name => "Like",
+                    :source => :status_update,
+                    :dependent => :destroy
 
 
-
-  # To use devise-twitter don't forget to include the :twitter_oauth module:
+      # To use devise-twitter don't forget to include the :twitter_oauth module:
   # e.g. devise :database_authenticatable, ... , :twitter_oauth
   # IMPORTANT: If you want to support sign in via twitter you MUST remove the
   # :validatable module, otherwise the user will never be saved
@@ -22,7 +24,9 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :username, :name, :login, :profile_image
+  attr_accessible :email, :password, :password_confirmation,
+                  :remember_me, :provider, :uid, :username,
+                  :name, :login, :profile_image, :likes
 
   # attr_accessible :title, :body
 
