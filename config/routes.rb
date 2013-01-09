@@ -57,8 +57,11 @@ Wp102dv401::Application.routes.draw do
   end
 
   resources :dashboard
-  
-  resources :maps
+ 
+  resources :maps do
+    resource :status_updates
+    resources :status_updates
+  end
 
   root :to => "home#index"
 

@@ -1,5 +1,5 @@
 class StatusUpdate < ActiveRecord::Base
-	belongs_to :map
+belongs_to :map
   belongs_to :user
 
   has_many :comments
