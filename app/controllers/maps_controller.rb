@@ -36,6 +36,15 @@ class MapsController < ApplicationController
    
    # Referens till ett gmaps-objekt
    if @locations.any?
+	#Gör om startpunkten till en location
+    @location = Location.new
+	@location.name = @map.name
+	@location.description = @map.description
+	@location.latitude = @map.latitude
+	@location.longitude = @map.longitude
+	@location.location_type = LocationType.new(:name => "Startpunkt")
+	@location.save
+	@locations << @location
     @display_map = @locations.to_gmaps4rails
   else
     @display_map = @map.to_gmaps4rails
@@ -66,7 +75,6 @@ def new
 
       def create
         @map = Map.new
-
         @map.name = params[:name]
         @map.description = params[:description]
 

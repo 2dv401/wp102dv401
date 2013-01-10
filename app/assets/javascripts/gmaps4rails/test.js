@@ -12,41 +12,46 @@ function activateLocationAdd(){
 
 	if(Gmaps.map.map){
 
-	var mapContainer = $("#viewMapContainter");
+	var mapContainer = $(".map_container");
 	mapContainer.unbind('mouseover');
 	
 	var map = Gmaps.map.map;
-
+	
    google.maps.event.addListener(map, 'rightclick', function(event) {
 		var latLng = event.latLng;
 		var lat = latLng.lat();
 		var lng = latLng.lng();
-	 
-		x = event.pixel.x;
-		y = event.pixel.y;
-	
-		showMarkingCreationBox(lat,lng,mapContainer);
+		if($("#markingInfo").length == 0){
+			var marker = new google.maps.Marker({ map: map });
+			marker.setPosition(latLng);
+			x = event.pixel.x;
+			y = event.pixel.y;
+			showMarkingCreationBox(lat,lng,mapContainer);
+			//fryser kartan
+			map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
+		}
 	})
 	}
 }
 
 function showMarkingCreationBox(latitude,longitude,container){
-	if($("#markingInfo").length == 0){
+		//Hämta map-id ur URL
+		var a = $(location).attr('href').split("//");
+		var b = a[1].split("/");
+		var id = "";
+		if ($.isNumeric(b[2])) { 
+			id = b[2].toString();
+		}
 		Gmaps.map.map.setCenter(new google.maps.LatLng(latitude,longitude));
-	
-		var markingBox = $('<div id="markingInfo">Visa box med textfält, lås allt annat, o.s.v.</div>')
-		markingBox.css({left:(container.width() /2),top:(container.height() /2) +60,position:'absolute'});
-		
+		var markingBox = $('<div id="markingInfo"><form name="marking_form" method="post" action="/locations" id="marking_form"><input name="authenticity_token" type="hidden" value="'+AUTH_TOKEN+'"/><span style="background-color:white; color: black">Platsnamn:</span><input type="text" name="titel" id="titel" /><span style="background-color:white; color: black">Beskrivning:</span><textarea name="description" id="desc"></textarea><input type="submit" id="submitMarking" /><input id="longitude" name="longitude" type="hidden" value="'+longitude+'" /><input id="latitude" name="latitude" type="hidden" value="'+latitude+'" /><input id="id" name="id" type="hidden" value="'+id+'" /></form></div>');
+		markingBox.css({left:(container.width() /2),top:(container.height() /2) +110,position:'absolute', color: '#FFFFFF'});		
 		container.append(markingBox);
-	}
+
 }
 
 function saveMarking(longitude,latitude,name,description){
-	new google.maps.Marker({
-            position: event.latLng,
-            map: map,
-            title: "name"
-        });
+	var marker = new google.maps.Marker({ map: map });
+	marker.setPosition(LatLng(latitude, longitude));
 }
 
 function searchFieldAutoComplete(){
@@ -104,8 +109,9 @@ window.onready = function () {
     var test = document.getElementById("navigation");
     var navigation = document.getElementById("geolocate_button");
 	 var searchField = document.getElementById("locationTextField");
-	 var map = $("#viewMapContainter");
-	 
+	 var map = $("#map");
+	 var mapCreation = $("#mapCreation");
+
     if(submit){
       submit.onclick = click;
     }
@@ -118,7 +124,7 @@ window.onready = function () {
 		searchField.onkeyup = searchFieldAutoComplete;
     }
 	 
-	 if(map){
+	 if(map.is('*') && mapCreation.length < 1){
 		map.mouseover(activateLocationAdd);
     }
 }

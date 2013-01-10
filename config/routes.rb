@@ -29,7 +29,7 @@ Wp102dv401::Application.routes.draw do
   end
 
   resources :dashboard
- 
+  resources :locations
   resources :maps do
     post 'follow'
     post 'unfollow'
