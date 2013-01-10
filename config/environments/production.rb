@@ -15,7 +15,10 @@ Wp102dv401::Application.configure do
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
+  config.assets.compile = true
+
+  # Prcompile bilder
+  config.assets.precompile += %w[*.png *.jpg *.jpeg *.gif]
 
   # Generate digests for assets URLs
   config.assets.digest = true
@@ -75,5 +78,5 @@ Wp102dv401::Application.configure do
     :user_name            => 'info@kartr.se',
     :password             => 'qAFapha6',
     :authentication       => 'login',
-    :enable_starttls_auto => true  }
+    :enable_starttls_auto => false  }
 end
