@@ -7,5 +7,7 @@
 	<% end %>
 </h4>
 <p><%= @map.description %><p>
-<%= gmaps4rails(@display_map) %>
+<div id="viewMapContainter">
+	<%= gmaps4rails(@display_map) %>
+</div>
 <%= render "status_updates/shared/form" %>

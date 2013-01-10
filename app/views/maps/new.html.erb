@@ -25,8 +25,11 @@
      <%= hidden_field_tag "latitude", "59" %>
      <%= hidden_field_tag "longitude", "18" %>
      
+	  <%= text_field_tag "locationTextField" %>
+	  
      <%= gmaps(@map_options) %>
      
      <%= submit_tag "Skapa karta", :id => "submit" %>
    <% end %>
+	
 </div>
