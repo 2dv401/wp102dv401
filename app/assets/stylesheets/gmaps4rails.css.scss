@@ -7,10 +7,10 @@
   -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
   box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
   width: 800px;
-}
 
-.map_container img {
-  max-width: none;
+  img {
+    max-width: none;
+  }
 }
 
 .gmaps4rails_map {
