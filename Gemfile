@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem "socialization"
+
 gem 'rails', '3.2.9'
 gem "geocoder", "~> 1.1.5" # http://www.rubygeocoder.com/
 gem 'omniauth'

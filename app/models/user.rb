@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   has_many :status_updates
   has_many :maps
 
-
+  acts_as_follower
+  acts_as_liker
 
   # To use devise-twitter don't forget to include the :twitter_oauth module:
   # e.g. devise :database_authenticatable, ... , :twitter_oauth

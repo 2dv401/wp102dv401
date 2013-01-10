@@ -6,6 +6,11 @@ class MapsController < ApplicationController
   
   end
 
+
+  def follow
+    @follow = Follow.new(params[:id])
+    @follow.save
+  end
   def show
   
    #todo: kontrollera ifall användaren ska få se kartan
