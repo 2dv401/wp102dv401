@@ -1,4 +1,13 @@
-<h4><%= @map.name %> (<%= link_to "ta bort", map_path(@map.id), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>)</h4>
+<h4><%= @map.name %> 
+	(<%= link_to "ta bort", map_path(@map.id), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>)
+	<% if current_user.follows?(@map) %>
+		(<%= link_to "Sluta följa", map_unfollow_path(@map.id), :method=>:post %>)
+	<% else %> 
+		(<%= link_to "Följ", map_follow_path(@map.id), :method=>:post %>)
+	<% end %>
+</h4>
 <p><%= @map.description %><p>
-<%= gmaps4rails(@display_map) %>
+<div id="viewMapContainter">
+	<%= gmaps4rails(@display_map) %>
+</div>
 <%= render "status_updates/shared/form" %>

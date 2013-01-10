@@ -3,8 +3,11 @@ class User < ActiveRecord::Base
   has_many :status_comments, :dependent => :destroy
   has_many :maps, :dependent => :destroy
 
+  acts_as_follower
+  acts_as_liker
 
-      # To use devise-twitter don't forget to include the :twitter_oauth module:
+  # To use devise-twitter don't forget to include the :twitter_oauth module:
+
   # e.g. devise :database_authenticatable, ... , :twitter_oauth
   # IMPORTANT: If you want to support sign in via twitter you MUST remove the
   # :validatable module, otherwise the user will never be saved

@@ -6,11 +6,24 @@ class MapsController < ApplicationController
 
  end
 
+ def follow
+    @map = Map.find(params[:map_id])
+    current_user.follow!(@map)
+    redirect_to @map
+ end
+
+ def unfollow
+    @map = Map.find(params[:map_id])
+    current_user.unfollow!(@map)
+    redirect_to @map
+ end
  def show
 
   #Ny statusuppdatering med kommentareer som ligger och hï¿½nger
   @status_update = StatusUpdate.new
   @status_comment = StatusComment.new
+    #Ny statusuppdatering som ligger och hänger
+    @status_update = StatusUpdate.new
 
     #todo: kontrollera ifall anvï¿½ndaren ska fï¿½ se kartan
     #todo: kontrollera att kartan finns

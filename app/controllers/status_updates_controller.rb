@@ -1,6 +1,19 @@
 class StatusUpdatesController < ApplicationController
   before_filter :authenticate_user!
 
+  def like
+    @status_update = StatusUpdate.find(params[:status_update_id])
+    puts @status_update
+    current_user.like!(@status_update)
+    redirect_to map_path(params[:map_id])
+  end
+
+  def unlike
+    @status_update = StatusUpdate.find(params[:status_update_id])
+    current_user.unlike!(@status_update)
+    redirect_to map_path(params[:map_id])
+  end
+
   def index
 
   end
