@@ -31,8 +31,11 @@ Wp102dv401::Application.routes.draw do
   resources :dashboard
  
   resources :maps do
+    post 'follow'
+    post 'unfollow'
     resources :status_updates do
-      resources :status_comments
+      post 'like'
+      post 'unlike'
     end
   end
 
