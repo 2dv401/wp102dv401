@@ -1,47 +1,5 @@
 Wp102dv401::Application.routes.draw do
 
-  get "status_comments/index"
-
-  get "status_comments/show"
-
-  get "status_comments/new"
-
-  get "status_comments/create"
-
-  get "status_comments/edit"
-
-  get "status_comments/update"
-
-  get "status_comments/destroy"
-
-  get "status_updates/index"
-
-  get "status_updates/show"
-
-  get "status_updates/new"
-
-  get "status_updates/create"
-
-  get "status_updates/edit"
-
-  get "status_updates/update"
-
-  get "status_updates/destroy"
-
-  get "status_update/index"
-
-  get "status_update/show"
-
-  get "status_update/new"
-
-  get "status_update/create"
-
-  get "status_update/edit"
-
-  get "status_update/update"
-
-  get "status_update/destroy"
-
   get "dashboard/index"
 
   get "home/index"
@@ -73,8 +31,9 @@ Wp102dv401::Application.routes.draw do
   resources :dashboard
  
   resources :maps do
-    resource :status_updates
-    resources :status_updates
+    resources :status_updates do
+      resources :status_comments
+    end
   end
 
   root :to => "home#index"

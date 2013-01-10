@@ -1,20 +1,40 @@
 <div class="status-updates">
-	<% if current_user == @map.user %>
-		<%= form_for([@map, @status_update]) do |f| %>
-			<div class="content">
-			    <%= f.label :content, "Lägg till statusuppdatering" %>
-			    <%= f.text_field :content %>
-			</div>	
-		<% end %>
-	<% end %>
-	<ul>
-		<% @map.status_updates.each do |s| %>
-		<li>
-			<%= s.content %> <br />
-			<%= s.user.username %> <br />
-			<%= s.created_at %>
-			<%= link_to 'Ta bort', map_status_update_path(@map.id, s.id), :confirm => 'Saker', :method => :delete %>
-		</li>
-		<% end %>
-	</ul>
-</div>	
+  <% if current_user == @map.user %>
+      <%= form_for([@map, @status_update]) do |f| %>
+          <div class="content">
+            <%= f.text_field :content, :placeholder => "Lägg till statusuppdatering" %>
+          </div>
+      <% end %>
+  <% end %>
+  <ul>
+    <% @map.status_updates.each do |s| %>
+        <li>
+          <%= s.user.username %>: <%= s.content %><br />
+          <%= s.created_at %>
+          <% if current_user == s.user %>
+              <%= link_to 'Ta bort', map_status_update_path(@map.id, s.id), :confirm => 'Saker', :method => :delete %>
+          <% end %>
+          <% if s.status_comments.any? %>
+              <ul class="status-comments">
+                <% s.status_comments.each do |c| %>
+                    <li><%= c.user.username %>: <%= c.content %><br />
+                      <%= c.created_at %>
+                      <% if current_user == c.user %>
+                          <%= link_to 'Ta bort', map_status_update_status_comment_path(@map.id, s.id, c.id), :confirm => 'Vill du ta bort kommentaren?', :method => :delete %>
+                      <% end %>
+                    </li>
+                <% end %>
+              </ul>
+          <% end %>
+        </li>
+        <li class="status_comment_form">
+          <%= form_for([@map, s, @status_comment]) do |f| %>
+              <div class="content">
+                <%= f.text_field :content, :placeholder => "Skriv kommentar..." %>
+              </div>
+          <% end %>
+        </li>
+    <% end %>
+  </ul>
+</div>
+

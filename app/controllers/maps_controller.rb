@@ -8,10 +8,11 @@ class MapsController < ApplicationController
 
  def show
 
-  #Ny statusuppdatering som ligger och hänger
+  #Ny statusuppdatering med kommentareer som ligger och hï¿½nger
   @status_update = StatusUpdate.new
+  @status_comment = StatusComment.new
 
-    #todo: kontrollera ifall användaren ska få se kartan
+    #todo: kontrollera ifall anvï¿½ndaren ska fï¿½ se kartan
     #todo: kontrollera att kartan finns
     #@map =  Map.find(:all, :conditions => [ "id = ?",  params[:id]])
 
@@ -33,7 +34,7 @@ def new
   @map = Map.new
   logger.debug @map
 
-      #todo: hämta default-koordinater nånstans/används geolocation som default
+      #todo: hï¿½mta default-koordinater nï¿½nstans/anvï¿½nds geolocation som default
       @map.longitude = 18
       @map.latitude = 59.33
 
@@ -59,7 +60,7 @@ def new
         @map.latitude = params[:latitude]
         @map.longitude = params[:longitude]
 
-      #todo: Av någon anledning går det inte att skapa karta om private är "false"
+      #todo: Av nï¿½gon anledning gï¿½r det inte att skapa karta om private ï¿½r "false"
       @map.private = params[:private]
       @map.gmaps = true
       
