@@ -1,36 +1,40 @@
 class MapsController < ApplicationController
   before_filter :authenticate_user!
   def index
-  
+
    @maps = Map.find(:all, :conditions => [ "user_id = ?", current_user.id])
-  
-  end
 
-  def show
-  
-   #todo: kontrollera ifall användaren ska få se kartan
-   #todo: kontrollera att kartan finns
-   #@map =  Map.find(:all, :conditions => [ "id = ?",  params[:id]])
+ end
 
-   # Referens till ett Map-objekt
+ def show
+
+  #Ny statusuppdatering med kommentareer som ligger och hï¿½nger
+  @status_update = StatusUpdate.new
+  @status_comment = StatusComment.new
+
+    #todo: kontrollera ifall anvï¿½ndaren ska fï¿½ se kartan
+    #todo: kontrollera att kartan finns
+    #@map =  Map.find(:all, :conditions => [ "id = ?",  params[:id]])
+
+    # Referens till ett Map-objekt
    @map = Map.find(params[:id])
 
    @locations = @map.locations
    
    # Referens till ett gmaps-objekt
    if @locations.any?
-      @display_map = @locations.to_gmaps4rails
-   else
-      @display_map = @map.to_gmaps4rails
-   end
-  
+    @display_map = @locations.to_gmaps4rails
+  else
+    @display_map = @map.to_gmaps4rails
   end
   
-  def new
-      @map = Map.new
-      logger.debug @map
-      
-      #todo: hämta default-koordinater nånstans/används geolocation som default
+end
+
+def new
+  @map = Map.new
+  logger.debug @map
+
+      #todo: hï¿½mta default-koordinater nï¿½nstans/anvï¿½nds geolocation som default
       @map.longitude = 18
       @map.latitude = 59.33
 
@@ -40,23 +44,23 @@ class MapsController < ApplicationController
           "zoom" => 8,
           "center_latitude" => @map.latitude,
           "center_longitude" => @map.longitude
-        },
-        "markers" => {
-          "data" => @map.to_gmaps4rails
+          },
+          "markers" => {
+            "data" => @map.to_gmaps4rails
+          }
         }
-      }
-  end
-  
-  def create
-      @map = Map.new
-      
-      @map.name = params[:name]
-      @map.description = params[:description]
-      
-      @map.latitude = params[:latitude]
-      @map.longitude = params[:longitude]
-      
-      #todo: Av någon anledning går det inte att skapa karta om private är "false"
+      end
+
+      def create
+        @map = Map.new
+
+        @map.name = params[:name]
+        @map.description = params[:description]
+
+        @map.latitude = params[:latitude]
+        @map.longitude = params[:longitude]
+
+      #todo: Av nï¿½gon anledning gï¿½r det inte att skapa karta om private ï¿½r "false"
       @map.private = params[:private]
       @map.gmaps = true
       
@@ -68,28 +72,28 @@ class MapsController < ApplicationController
           "zoom" => 8,
           "center_latitude" => @map.latitude,
           "center_longitude" => @map.longitude
-        },
-        "markers" => {
-          "data" => @map.to_gmaps4rails
+          },
+          "markers" => {
+            "data" => @map.to_gmaps4rails
+          }
         }
-      }
 
-      if @map.save
-        redirect_to map_path(@map)
-      else
-        render :action => "new"
+        if @map.save
+          redirect_to map_path(@map)
+        else
+          render :action => "new"
+        end
+
       end
 
-  end
+      def edit
+      end
 
-  def edit
-  end
+      def update
+      end
 
-  def update
-  end
-
-  def destroy
-	@map = Map.find(params[:id])
-	@map.destroy
-  end
-end
+      def destroy
+       @map = Map.find(params[:id])
+       @map.destroy
+     end
+   end

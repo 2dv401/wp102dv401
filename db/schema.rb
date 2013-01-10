@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130108143427) do
+ActiveRecord::Schema.define(:version => 20130109173841) do
 
   create_table "location_images", :force => true do |t|
     t.string   "file_name",   :limit => 32,  :null => false
@@ -58,6 +58,16 @@ ActiveRecord::Schema.define(:version => 20130108143427) do
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
   end
+
+  create_table "status_comments", :force => true do |t|
+    t.integer  "user_id",                                          :null => false
+    t.integer  "status_update_id",                                 :null => false
+    t.string   "content",          :limit => 5120, :default => "", :null => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
+  end
+
+  add_index "status_comments", ["user_id", "status_update_id"], :name => "index_status_comments_on_user_id_and_status_update_id"
 
   create_table "status_updates", :force => true do |t|
     t.string   "content",    :limit => 5120, :default => "", :null => false

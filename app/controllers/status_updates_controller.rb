@@ -2,6 +2,7 @@ class StatusUpdatesController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+
   end
 
   def show
@@ -11,6 +12,17 @@ class StatusUpdatesController < ApplicationController
   end
 
   def create
+    #Skapar ny statusuppdatering från post-parametrarna samt lägger till aktuella användaren
+    @status_update = StatusUpdate.new(params[:status_update])
+    @status_update.user = current_user
+    @status_update.map_id = params[:map_id] 
+
+    if @status_update.save
+      flash[:notice] = "Statusuppdatering sparad"
+    else
+      flash[:notice] = "Fel nar statusuppdatering skulle sparas"
+    end
+    redirect_to map_path(params[:map_id])
   end
 
   def edit
@@ -20,5 +32,8 @@ class StatusUpdatesController < ApplicationController
   end
 
   def destroy
+    @status_update = StatusUpdate.find(params[:id])
+    @status_update.destroy
+    redirect_to map_path(params[:map_id])
   end
 end
