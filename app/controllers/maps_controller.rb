@@ -5,11 +5,21 @@ class MapsController < ApplicationController
    @maps = Map.find(:all, :conditions => [ "user_id = ?", current_user.id])
  end
 
+ def follow
+    @map = Map.find(params[:map_id])
+    current_user.follow!(@map)
+    redirect_to @map
+ end
 
+ def unfollow
+    @map = Map.find(params[:map_id])
+    current_user.unfollow!(@map)
+    redirect_to @map
+ end
  def show
 
-  #Ny statusuppdatering som ligger och hänger
-  @status_update = StatusUpdate.new
+    #Ny statusuppdatering som ligger och hänger
+    @status_update = StatusUpdate.new
 
     #todo: kontrollera ifall användaren ska få se kartan
     #todo: kontrollera att kartan finns

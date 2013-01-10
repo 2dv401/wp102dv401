@@ -59,8 +59,12 @@ Wp102dv401::Application.routes.draw do
   resources :dashboard
  
   resources :maps do
-    resource :status_updates
-    resources :status_updates
+    post 'follow'
+    post 'unfollow'
+    resources :status_updates do
+      post 'like'
+      post 'unlike'
+    end
   end
 
   root :to => "home#index"
