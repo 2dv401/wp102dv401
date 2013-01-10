@@ -13,6 +13,11 @@
           <%= s.created_at %>
           <% if current_user == s.user %>
               <%= link_to 'Ta bort', map_status_update_path(@map.id, s.id), :confirm => 'Saker', :method => :delete %>
+              <% if current_user.likes?(s) %>
+                        (<%= link_to "Sluta Gilla", map_status_update_unlike_path(@map.id, s.id), :method=>:post %>)
+                      <% else %> 
+                        (<%= link_to "Gilla", map_status_update_like_path(@map.id, s.id), :method=>:post %>)
+                      <% end %>
           <% end %>
           <% if s.status_comments.any? %>
               <ul class="status-comments">
@@ -22,11 +27,7 @@
                       <% if current_user == c.user %>
                           <%= link_to 'Ta bort', map_status_update_status_comment_path(@map.id, s.id, c.id), :confirm => 'Vill du ta bort kommentaren?', :method => :delete %>
                       <% end %>
-                      <% if current_user.likes?(s) %>
-                        (<%= link_to "Sluta Gilla", map_status_update_unlike_path(@map.id, s.id), :method=>:post %>)
-                      <% else %> 
-                        (<%= link_to "Gilla", map_status_update_like_path(@map.id, s.id), :method=>:post %>)
-                      <% end %>
+                      
                     </li>
                 <% end %>
               </ul>

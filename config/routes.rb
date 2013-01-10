@@ -36,6 +36,7 @@ Wp102dv401::Application.routes.draw do
     resources :status_updates do
       post 'like'
       post 'unlike'
+      resources :status_comments
     end
   end
 
