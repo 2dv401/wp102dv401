@@ -11,6 +11,7 @@ gem 'omniauth-twitter'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+gem 'mysql2'
 
 gem 'devise'
 # Gems used only for assets and not required
@@ -32,10 +33,6 @@ gem 'jquery-rails'
 gem 'gmaps4rails'
 gem 'gravatar_image_tag'
 
-## Gem för HTTP-anrop
-#gem 'httparty'
-gem 'multi_json'
-gem 'multi_xml'
 
 
 
@@ -55,4 +52,4 @@ gem 'multi_xml'
 # gem 'capistrano'
 
 # To use debugger
-gem 'debugger'
+# gem 'debugger'
