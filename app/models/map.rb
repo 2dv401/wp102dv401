@@ -1,9 +1,10 @@
 class Map < ActiveRecord::Base
 	belongs_to :user
 	has_and_belongs_to_many :locations
-  has_many :status_updates
+  has_many :status_updates, :dependent => :destroy  
   acts_as_followable
   acts_as_gmappable
+
 
   attr_accessor :first_name, :last_name
 
