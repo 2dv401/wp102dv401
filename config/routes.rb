@@ -1,7 +1,7 @@
 Wp102dv401::Application.routes.draw do
 
   get "/om-kartr" => "pages#about", :as => :pages_about
-  get "/anvandarvillkar" => "pages#terms", :as => :pages_terms
+  get "/anvandarvillkor" => "pages#terms", :as => :pages_terms
   get "/sekretess" => "pages#privacy", :as => :pages_privacy
   get "/hjalp" => "pages#help", :as => :pages_help
 
