@@ -1,0 +1,39 @@
+<div id="mapCreation">
+   <%= form_tag("/maps", { :id => 'map_form' }) do %>
+
+     <% if @map.errors.any? %> 
+      <div id="errors">
+        <h4>Fel uppstod. Åtgärda följande och försök igen: </h4>
+        <ul>
+          <% @map.errors.full_messages.each do |msg| %>
+            <li><%= msg %> </li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
+
+      <%= label_tag(:name, "Namn:") %>
+      <%= text_field_tag(:name) %>
+  
+     <%= label_tag(:description, "Beskrivning:") %>
+     <%= text_field_tag(:description) %>
+  
+     <%= label_tag(:private, "Vem ska få se kartan?") %>
+     <%= radio_button_tag(:private, 1) %> Synlig enbart för mig och de jag bjuder in <br />
+     <%= radio_button_tag(:private, 0) %> Publik
+
+     <br /> <!-- Todo: Fixa till formulären med css istället! -->
+     <br />
+     <%= submit_tag "Hitta min position", :type => "button", :id => "geolocate_button" %>
+     <%= hidden_field_tag "latitude", "59" %>
+     <%= hidden_field_tag "longitude", "18" %>
+     
+	   <%= text_field_tag "locationTextField", nil, :placeholder => "Sök startposition" %>
+	  
+     <%= gmaps(@map_options) %>
+     
+     <%= submit_tag "Skapa karta", :id => "submit" %>
+
+   <% end %>
+	
+</div>
