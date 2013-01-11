@@ -5,10 +5,7 @@ class Map < ActiveRecord::Base
   acts_as_followable
   acts_as_gmappable
 
-
-  attr_accessor :first_name, :last_name
-
-  validates_presence_of :user_id, :message => "User could not be found!"
+  attr_accessible :name, :description, :private, :longitude, :latitude
 
   validates	:name, 
   :presence => { :message => "Field for title can't be empty." },

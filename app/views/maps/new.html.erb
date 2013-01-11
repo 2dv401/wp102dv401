@@ -1,35 +1,3 @@
-<div id="mapCreation">
-   <%= form_tag("/maps", { :id => 'map_form' }) do %>
+<h2>Skapa ny karta</h2>
 
-     <% if @map.errors.any? %> 
-      <div id="errors">
-        <h4>Fel uppstod. Åtgärda följande och försök igen: </h4>
-        <ul>
-          <% @map.errors.full_messages.each do |msg| %>
-            <li><%= msg %> </li>
-          <% end %>
-        </ul>
-      </div>
-      <% end %>
-
-      <%= label_tag(:name, "Namn:") %>
-      <%= text_field_tag(:name) %>
-  
-     <%= label_tag(:description, "Beskrivning:") %>
-     <%= text_field_tag(:description) %>
-  
-     <%= label_tag(:private, "Privat") %>
-     <%= check_box_tag(:private, "yes", true) %><br />
-
-     <%= submit_tag "Hitta min position", :type => "button", :id => "geolocate_button" %>
-     <%= hidden_field_tag "latitude", "59" %>
-     <%= hidden_field_tag "longitude", "18" %>
-     
-	  <%= text_field_tag "locationTextField" %>
-	  
-     <%= gmaps(@map_options) %>
-     
-     <%= submit_tag "Skapa karta", :id => "submit" %>
-   <% end %>
-	
-</div>
+<%= render :partial => 'maps/shared/form' %>
