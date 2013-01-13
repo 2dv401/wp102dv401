@@ -14,7 +14,7 @@
                 <h4><%= s.user.username %></h4>
                 <h5><%= s.content %></h5>
                 <div class="status_update_footer">
-                  <span class="created_at"><%= s.created_at %></span>
+                  <span class="created_at"><%= time_ago(s.created_at) %></span>
                   <% if current_user == s.user %>
                       <%= link_to 'Ta bort', map_status_update_path(@map.id, s.id), :confirm => 'Vill du ta bort status uppdateringen?', :method => :delete %>
                   <% end %>
@@ -25,7 +25,7 @@
                           <li>
                             <p><span><%= c.user.username %>: </span><%= c.content %></p>
                             <div class="status_comment_footer">
-                              <span class="created_at"><%= c.created_at %></span>
+                              <span class="created_at"><%= time_ago(c.created_at) %></span>
                               <% if current_user == c.user %>
                                   <%= link_to 'Ta bort', map_status_update_status_comment_path(@map.id, s.id, c.id), :confirm => 'Vill du ta bort kommentaren?', :method => :delete %>
                               <% end %>

@@ -35,4 +35,11 @@ module ApplicationHelper
       content_for?(:meta_description) ? content_for(:meta_description) : APP_CONFIG['meta_description']
     end
   end
+
+  # DateTime formaterare
+  def time_ago(time_format = nil)
+    now = Time.now
+    time = time_format.to_time
+    time.to_formatted_s(:short)
+  end
 end
