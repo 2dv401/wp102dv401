@@ -1,0 +1,10 @@
+
+# Default settings for head information
+
+# Default title
+default_title: "Kartr"
+
+# Default meta information
+meta_author: "Martin Svensson, Hans Bentlöv, Claes Tillborg, Therese Andersson, Linus Persson, Jacob Ottosson"
+meta_keywords: "Webbprogrammering, Kartor, karta, karttjänst, Linnéuniversitetet"
+meta_description: "En karttjänst för dig som vill dela med dig av dina smultronställen."

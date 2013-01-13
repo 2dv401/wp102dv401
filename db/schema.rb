@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20130110102709) do
     t.float    "latitude",                                        :null => false
     t.datetime "date"
     t.boolean  "private",                      :default => false, :null => false
-    t.integer  "place_type_id"
+    t.integer  "place_type_id",                                   :null => false
     t.datetime "created_at",                                      :null => false
     t.datetime "updated_at",                                      :null => false
     t.boolean  "gmaps",                        :default => true,  :null => false

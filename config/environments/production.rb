@@ -79,4 +79,7 @@ Wp102dv401::Application.configure do
     :password             => 'qAFapha6',
     :authentication       => 'login',
     :enable_starttls_auto => false  }
+
+  # Each of the settings defined in config/config.yml will be accessible by calling APP_CONFIG['item'] anywhere in your code.
+  APP_CONFIG = YAML.load_file("#{Rails.root}/config/config.yml")
 end
