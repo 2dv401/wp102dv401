@@ -40,6 +40,23 @@ module ApplicationHelper
   def time_ago(time_format = nil)
     now = Time.now
     time = time_format.to_time
-    time.to_formatted_s(:short)
+    months = ["Januari", "Februari", "Mars","April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"]
+    month = months[time.month - 1]
+     now.yesterday
+    # Är det idag?
+    if time.today?
+      time.strftime("idag kl. %H:%M")
+
+    # Är det igar?
+    elsif time.day == now.yesterday.day
+      time.strftime("igar kl. %H:%M")
+
+    # Är det iår?
+    elsif time.year == now.year
+      time.strftime("den %d "+ month +" kl. %H:%M")
+
+    else
+      time.strftime("den %d "+ month +" %Y kl. %H:%M")
+    end
   end
 end
