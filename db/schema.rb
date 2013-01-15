@@ -70,11 +70,11 @@ ActiveRecord::Schema.define(:version => 20130115144701) do
   add_index "locations_maps", ["location_id", "map_id"], :name => "index_locations_maps_on_location_id_and_map_id"
 
   create_table "map_comments", :force => true do |t|
-    t.integer  "map_id"
-    t.integer  "user_id"
-    t.string   "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "map_id",                                     :null => false
+    t.integer  "user_id",                                    :null => false
+    t.string   "content",    :limit => 5120, :default => "", :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
   end
 
   add_index "map_comments", ["map_id"], :name => "index_map_comments_on_map_id"

@@ -1,9 +1,9 @@
 class CreateMapComments < ActiveRecord::Migration
   def change
     create_table :map_comments do |t|
-      t.references :map
-      t.references :user
-      t.string :content
+      t.references :map, :null => false
+      t.references :user, :null => false
+      t.string :content, :null => false, :limit => 5120, :default => ""
 
       t.timestamps
     end
