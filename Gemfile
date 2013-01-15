@@ -33,6 +33,8 @@ gem 'jquery-rails'
 gem 'gmaps4rails'
 gem 'gravatar_image_tag'
 
+gem 'friendly_id'
+
 
 
 

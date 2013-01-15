@@ -22,22 +22,26 @@ class MapsController < ApplicationController
   #Ny statusuppdatering med kommentareer som ligger och hï¿½nger
   @status_update = StatusUpdate.new
   @status_comment = StatusComment.new
-    #Ny statusuppdatering som ligger och hänger
-    @status_update = StatusUpdate.new
+  #Ny statusuppdatering som ligger och hänger
+  @status_update = StatusUpdate.new
 
     #todo: kontrollera ifall anvï¿½ndaren ska fï¿½ se kartan
     #todo: kontrollera att kartan finns
     #@map =  Map.find(:all, :conditions => [ "id = ?",  params[:id]])
 
-    # Referens till ett Map-objekt
-   @map = Map.find(params[:id])
+  # Referens till ett Map-objekt
+  @map = Map.find(params[:id])
 
-   @locations = @map.locations
+  if request.path != map_path(@map)
+    redirect_to @map, status: :moved_permanently
+  end
+
+  @locations = @map.locations
    
-   # Referens till ett gmaps-objekt
-   if @locations.any?
+  # Referens till ett gmaps-objekt
+  if @locations.any?
 	#Gör om startpunkten till en location
-    @location = Location.new
+  @location = Location.new
 	@location.name = @map.name
 	@location.description = @map.description
 	@location.latitude = @map.latitude
@@ -45,7 +49,7 @@ class MapsController < ApplicationController
 	@location.location_type = LocationType.new(:name => "Startpunkt")
 	@location.save
 	@locations << @location
-    @display_map = @locations.to_gmaps4rails
+  @display_map = @locations.to_gmaps4rails
   else
     @display_map = @map.to_gmaps4rails
   end
@@ -71,7 +75,7 @@ def new
             "data" => @map.to_gmaps4rails
           }
         }
-      end
+  end
 
       def create
         @map = Map.new
@@ -99,6 +103,9 @@ def new
           }
         }
 
+
+        puts @map
+
         if @map.save
           redirect_to map_path(@map)
         else
@@ -108,6 +115,19 @@ def new
       end
 
       def edit
+        @map = Map.find(params[:id])
+
+        @map_options = {
+        "map_options" => {
+          "auto_zoom" => false,
+          "zoom" => 8,
+          "center_latitude" => @map.latitude,
+          "center_longitude" => @map.longitude
+          },
+          "markers" => {
+            "data" => @map.to_gmaps4rails
+          }
+        }
       end
 
       def update
