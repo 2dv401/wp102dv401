@@ -16,7 +16,7 @@ class LocationsController < ApplicationController
 		@location.latitude = params[:latitude]
 		@location.date = Time.now
 		#locationtype måste implementeras rätt
-		@location.location_type = LocationType.new(:name => "Stuga")	
+		@location.place_type_id = 1
 		
 		if @location.save
 		   @map.locations << @location
