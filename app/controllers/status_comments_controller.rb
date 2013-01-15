@@ -1,15 +1,6 @@
 class StatusCommentsController < ApplicationController
   before_filter :authenticate_user!
 
-  def index
-  end
-
-  def show
-  end
-
-  def new
-  end
-
   def create
     #Skapar ny statusuppdatering från post-parametrarna samt lägger till aktuella användaren
     @comment = StatusComment.new(params[:status_comment])
@@ -22,12 +13,6 @@ class StatusCommentsController < ApplicationController
       flash[:notice] = "Fel nar kommentaren skulle sparas"
     end
     redirect_to map_path(params[:map_id])
-  end
-
-  def edit
-  end
-
-  def update
   end
 
   def destroy
