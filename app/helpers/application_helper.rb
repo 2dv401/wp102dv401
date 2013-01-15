@@ -39,10 +39,10 @@ module ApplicationHelper
   # DateTime formaterare
   def time_ago(time_format = nil)
     now = Time.now
-    time = time_format.to_time
+    time = time_format
     months = ["Januari", "Februari", "Mars","April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"]
     month = months[time.month - 1]
-     now.yesterday
+
     # Är det idag?
     if time.today?
       time.strftime("idag kl. %H:%M")
