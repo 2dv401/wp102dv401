@@ -12,4 +12,8 @@
 
 <%= render "status_updates/shared/form" %>
 
-<%= render "map_comments/form" %>
+<%= render "map_comments/shared/form" %>
+
+<% if @map.map_comments.any? %>
+    <%= render "map_comments/shared/map_comments", :comments => @map.map_comments %>
+<% end %>
