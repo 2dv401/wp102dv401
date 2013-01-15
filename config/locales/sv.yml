@@ -6,6 +6,11 @@ sv:
         location_image:
         location_type:
         map:
+          attributes:
+            name:
+              blank: "Kartan måste ha ett namn."
+              too_long: "Namnet är för långt, Korta ner namnet och försök igen."
+            description: "Kartan måste ha en beskrivning."
         map_comment:
           attributes:
             content:
@@ -14,6 +19,11 @@ sv:
         status_update:
           attributes:
             content:
-              blank: "Det gar inte att ladda upp en tom status."
+              blank: "Det går inte att ladda upp en tom status."
               too_long: "Statusen är för lång, korta ner texten och försök igen."
+        status_comment:
+          attributes:
+            content:
+              blank: "Det går inte att ladda upp en tom kommentar."
+              too_long: "Kommentaren är för lång, korta ner texten och försök igen."
 #felmeddelanden för user-modellen finns i "devise.sv.yml"
