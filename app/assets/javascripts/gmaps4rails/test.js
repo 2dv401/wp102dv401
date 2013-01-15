@@ -1,4 +1,6 @@
-﻿function click() {
+﻿var temporaryMarker = null;
+
+function click() {
    var latitude = Gmaps.map.map.center.$a;
    var longitude = Gmaps.map.map.center.ab;
    
@@ -23,6 +25,7 @@ function activateLocationAdd(){
 		var lng = latLng.lng();
 		if($("#markingInfo").length == 0){
 			var marker = new google.maps.Marker({ map: map });
+			temporaryMarker = marker;
 			marker.setPosition(latLng);
 			x = event.pixel.x;
 			y = event.pixel.y;
@@ -47,6 +50,20 @@ function showMarkingCreationBox(latitude,longitude,container){
 		markingBox.css({left:(container.width() /2),top:(container.height() /2) +110,position:'absolute', color: '#FFFFFF'});		
 		container.append(markingBox);
 
+}
+
+function closeMarkingCreationBox(){
+	$("#markingInfo").remove();
+	
+	if(Gmaps.map){
+		var map = Gmaps.map.map;
+		
+		map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false});
+		
+		if(temporaryMarker){
+			temporaryMarker.setMap(null);
+		}
+	}
 }
 
 function saveMarking(longitude,latitude,name,description){
@@ -127,4 +144,10 @@ window.onready = function () {
 	 if(map.is('*') && mapCreation.length < 1){
 		map.mouseover(activateLocationAdd);
     }
+	 
+	$(document).keyup(function(e) {
+		if (e.keyCode == 27){
+			closeMarkingCreationBox();
+			}
+	});
 }
