@@ -36,18 +36,12 @@ class MapsController < ApplicationController
   end
 
   @locations = @map.locations
-   
-<<<<<<< HEAD
+
   # Referens till ett gmaps-objekt
   if @locations.any?
+
 	#G�r om startpunkten till en location
   @location = Location.new
-=======
-   # Referens till ett gmaps-objekt
-   if @locations.any?
-	#G�r om startpunkten till en location
-    @location = Location.new
->>>>>>> MapComments
 	@location.name = @map.name
 	@location.description = @map.description
 	@location.latitude = @map.latitude
