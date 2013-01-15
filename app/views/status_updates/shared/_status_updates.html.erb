@@ -1,0 +1,25 @@
+<div class="status-update-list">
+  <ul class="status-updates">
+    <% updates.each do |u| %>
+        <li class="status-update">
+          <p><span><%= u.user.username %>: </span><%= u.content %></p>
+          <div class="status-update-footer">
+            <span class="created-at"><%= time_ago(u.created_at) %></span>
+            <% if current_user == u.user %>
+                <%= link_to 'Ta bort', map_status_update_path(@map, u), :confirm => 'Vill du ta bort statusuppdateringen?', :method => :delete %>
+            <% end %>
+          </div>
+          <% if u.status_comments.any? %>
+              <%= render "status_comments/shared/status_comments", :update => u, :comments => u.status_comments %>
+          <% end %>
+        </li>
+        <li class="status_comment_form">
+          <%= form_for([@map, u, @status_comment]) do |f| %>
+              <div class="content">
+                <%= f.text_field :content, :placeholder => "Skriv kommentar..." %>
+              </div>
+          <% end %>
+        </li>
+    <% end %>
+  </ul>
+</div>

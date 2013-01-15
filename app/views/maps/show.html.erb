@@ -7,12 +7,25 @@
 
 <p><%= @map.description %><p>
 <div id="viewMapContainter">
-	<%= gmaps4rails(@display_map) %>
+  <%= gmaps4rails(@display_map) %>
 </div>
 
-<%= render "status_updates/shared/form" %>
-<h3>Skriv en kommentar om kartan här</h3>
-<%= render "map_comments/shared/form" %>
+<% if current_user == @map.user %>
+    <div class="status-update-form">
+      <h3>Skriv statusuppdatering här</h3>
+      <%= render "status_updates/shared/form" %>
+    </div>
+<% end %>
+
+<% if @map.status_updates.any? %>
+    <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
+<% end %>
+
+<div class="map-comment-form">
+  <h3>Skriv en kommentar om kartan här</h3>
+  <%= render "map_comments/shared/form" %>
+</div>
+
 
 <% if @map.map_comments.any? %>
     <%= render "map_comments/shared/map_comments", :comments => @map.map_comments %>

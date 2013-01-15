@@ -14,16 +14,6 @@ class StatusUpdatesController < ApplicationController
     redirect_to map_path(params[:map_id])
   end
 
-  def index
-
-  end
-
-  def show
-  end
-
-  def new
-  end
-
   def create
     #Skapar ny statusuppdatering från post-parametrarna samt lägger till aktuella användaren
     @status_update = StatusUpdate.new(params[:status_update])
@@ -36,12 +26,6 @@ class StatusUpdatesController < ApplicationController
       flash[:notice] = "Fel nar statusuppdatering skulle sparas"
     end
     redirect_to map_path(params[:map_id])
-  end
-
-  def edit
-  end
-
-  def update
   end
 
   def destroy
