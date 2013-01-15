@@ -43,6 +43,7 @@ Wp102dv401::Application.routes.draw do
       post 'unlike'
       resources :status_comments
     end
+    resources :map_comments
   end
 
   root :to => "home#index"

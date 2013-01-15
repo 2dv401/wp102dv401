@@ -18,12 +18,11 @@ class MapsController < ApplicationController
     render :template => 'maps/follow/toggle'
  end
  def show
-
-  #Ny statusuppdatering med kommentareer som ligger och hï¿½nger
+  #Nya objekt som kommer finnas pÃ¥ maps-sidan
   @status_update = StatusUpdate.new
   @status_comment = StatusComment.new
-  #Ny statusuppdatering som ligger och hänger
-  @status_update = StatusUpdate.new
+
+  @map_comment = MapComment.new
 
     #todo: kontrollera ifall anvï¿½ndaren ska fï¿½ se kartan
     #todo: kontrollera att kartan finns
@@ -38,10 +37,17 @@ class MapsController < ApplicationController
 
   @locations = @map.locations
    
+<<<<<<< HEAD
   # Referens till ett gmaps-objekt
   if @locations.any?
-	#Gör om startpunkten till en location
+	#Gï¿½r om startpunkten till en location
   @location = Location.new
+=======
+   # Referens till ett gmaps-objekt
+   if @locations.any?
+	#Gï¿½r om startpunkten till en location
+    @location = Location.new
+>>>>>>> MapComments
 	@location.name = @map.name
 	@location.description = @map.description
 	@location.latitude = @map.latitude

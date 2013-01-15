@@ -1,0 +1,2 @@
+module MapCommentsHelper
+end
