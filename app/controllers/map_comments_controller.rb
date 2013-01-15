@@ -37,20 +37,19 @@ class MapCommentsController < ApplicationController
     @map_comment = MapComment.find(params[:id])
   end
 
-  # POST /map_comments
-  # POST /map_comments.json
+  # POST map/:id/map_comments
   def create
-    @map_comment = MapComment.new(params[:map_comment])
+    #Skapar ny kartkommentar från post-parametrarna samt lägger till aktuella användaren
+    @comment = MapComment.new(params[:map_comment])
+    @comment.user = current_user
+    @comment.map = Map.find(params[:map_id])
 
-    respond_to do |format|
-      if @map_comment.save
-        format.html { redirect_to @map_comment, notice: 'Map comment was successfully created.' }
-        format.json { render json: @map_comment, status: :created, location: @map_comment }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @map_comment.errors, status: :unprocessable_entity }
-      end
+    if @comment.save
+      flash[:notice] = "Kommentaren sparad"
+    else
+      flash[:notice] = "Fel nar kommentaren skulle sparas"
     end
+    redirect_to map_path(params[:map_id])
   end
 
   # PUT /map_comments/1

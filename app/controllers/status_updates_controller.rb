@@ -28,7 +28,7 @@ class StatusUpdatesController < ApplicationController
     #Skapar ny statusuppdatering från post-parametrarna samt lägger till aktuella användaren
     @status_update = StatusUpdate.new(params[:status_update])
     @status_update.user = current_user
-    @status_update.map_id = params[:map_id] 
+    @status_update.map = Map.find(params[:map_id])
 
     if @status_update.save
       flash[:notice] = "Statusuppdatering sparad"
