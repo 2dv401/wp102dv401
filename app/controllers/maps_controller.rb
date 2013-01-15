@@ -136,5 +136,7 @@ def new
       def destroy
        @map = Map.find(params[:id])
        @map.destroy
+
+       redirect_to root_path
      end
    end
