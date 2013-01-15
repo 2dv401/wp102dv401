@@ -20,19 +20,7 @@
                   <% end %>
                 </div>
                 <% if s.status_comments.any? %>
-                    <ul class="status-comments">
-                      <% s.status_comments.each do |c| %>
-                          <li>
-                            <p><span><%= c.user.username %>: </span><%= c.content %></p>
-                            <div class="status_comment_footer">
-                              <span class="created_at"><%= time_ago(c.created_at) %></span>
-                              <% if current_user == c.user %>
-                                  <%= link_to 'Ta bort', map_status_update_status_comment_path(@map.id, s.id, c.id), :confirm => 'Vill du ta bort kommentaren?', :method => :delete %>
-                              <% end %>
-                            </div>
-                          </li>
-                      <% end %>
-                    </ul>
+                    <%= render "status_comments/shared/status_comments", :map => @map, :status_update => s, :comments => s.status_comments %>
                 <% end %>
               </li>
               <li class="status_comment_form">
