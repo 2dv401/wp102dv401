@@ -9,13 +9,13 @@ class MapsController < ApplicationController
  def follow
     @map = Map.find(params[:map_id])
     current_user.follow!(@map)
-    redirect_to @map
+    render :template => 'maps/follow/toggle'
  end
 
  def unfollow
     @map = Map.find(params[:map_id])
     current_user.unfollow!(@map)
-    redirect_to @map
+    render :template => 'maps/follow/toggle'
  end
  def show
 
