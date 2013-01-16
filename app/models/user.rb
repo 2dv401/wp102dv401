@@ -29,7 +29,11 @@ class User < ActiveRecord::Base
                   :remember_me, :provider, :uid, :username,
                   :name, :login, :profile_image, :likes
 
-  # attr_accessible :title, :body
+
+  ## Ser till att e-post inte behövs vid Twitter registrering.
+  def email_required?
+    super && provider.blank?
+  end
 
   # Lägger till facebook-mailen till användarkontot när det registreras
   def self.new_with_session(params, session)
@@ -78,7 +82,6 @@ class User < ActiveRecord::Base
                           provider:auth.provider,
                           uid:auth.uid,
                           profile_image:auth.info.image,
-                          email:foonummer,
                           password:Devise.friendly_token[0,20]
                         )
       user.skip_confirmation!
@@ -101,4 +104,8 @@ class User < ActiveRecord::Base
   def skip_confirmation!
    self.confirmed_at = Time.now
   end
+
+
+
+
 end
