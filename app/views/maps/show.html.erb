@@ -19,29 +19,28 @@
 <div id="viewMapContainter">
   <%= gmaps4rails(@display_map) %>
 </div>
-
-<% if @map.status_updates.any? %>
-    <div class="row">
+<div class="row">
+  <% if @map.status_updates.any? %>
       <div class="six columns">
         <h3>Statusuppdateringar</h3>
         <%= render "status_updates/shared/status_updates", :map => @map, :updates => @map.status_updates %>
       </div>
-    </div>
-<% end %>
+  <% end %>
+  <div class="six columns">
+    <section class="map-comment-wrapper">
+      <h3>Kommentarer</h3>
+      <ul class="map-comments">
+        <% if @map.map_comments.any? %>
 
-<div class="row">
-  <div class="four columns">
-    <div class="map-comment-form">
-      <h3>Skriv en kommentar om kartan här</h3>
-      <%= render "map_comments/shared/form" %>
-    </div>
+            <%= render "map_comments/shared/map_comments", :map => @map, :comments => @map.map_comments %>
+        <% end %>
+        <li>
+          <div class="map-comment-form">
+            <%= render "map_comments/shared/form" %>
+          </div>
+        </li>
+      </ul>
+    </section>
   </div>
 </div>
 
-<% if @map.map_comments.any? %>
-    <div class="row">
-      <div class="six columns">
-        <%= render "map_comments/shared/map_comments", :map => @map, :comments => @map.map_comments %>
-      </div>
-    </div>
-<% end %>

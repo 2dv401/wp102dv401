@@ -1,3 +1,42 @@
 // Place all the styles related to the MapComments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// inlänkade hjälpmedel
+@import "shared/_colors.css.scss";
+@import "shared/_mixins.css.scss";
+
+.map-comment-wrapper {
+  padding: 0 0.5em;
+  ul { list-style: none; margin: 0; }
+  p, form, input[type="text"] { margin: .1em; }
+
+  .created-at {
+    color: $gray;
+    font-weight: bold;
+    font-size: small;
+  }
+  .author {
+
+  }
+  .map-comments {
+    padding: 0.5em;
+    border: 1px solid $light-light-gray;
+    @include rounded(.3em);
+    @include box-shadow(.1em, .1em, .1em, .1em, $light-light-gray);
+
+    .map-comment {
+      margin: 1em 0;
+
+      .map-comment-body {
+        word-wrap:break-word;
+
+        .author {
+          color: $gray;
+          display: block;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
