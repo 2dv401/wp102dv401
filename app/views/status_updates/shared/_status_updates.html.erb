@@ -5,7 +5,7 @@
           <article>
             <div class="status-update-body">
               <div class="status-update-header">
-                <h3><%= link_to @map.name, map_path(@map) %></h3>
+                <h3><%= link_to map.name, map_path(map) %></h3>
               </div>
               <div class="status-update-content">
                 <p><%= u.content %></p>
@@ -13,12 +13,12 @@
               <div class="status-update-footer">
                 <span class="created-at"><%= time_ago(u.created_at) %></span>
                 <% if current_user.likes?(u) %>
-                    <%= link_to 'Sluta gilla', map_status_update_toggle_like_path(@map, u), :method => :post %>
+                    <%= link_to 'Sluta gilla', map_status_update_toggle_like_path(map, u), :method => :post %>
                 <% else %>
-                    <%= link_to 'Gilla', map_status_update_toggle_like_path(@map, u), :method => :post %>
+                    <%= link_to 'Gilla', map_status_update_toggle_like_path(map, u), :method => :post %>
                 <% end %>
                 <% if current_user == u.user %>
-                    <%= link_to 'Ta bort', map_status_update_path(@map, u), :confirm => 'Vill du ta bort statusuppdateringen?', :method => :delete %>
+                    <%= link_to 'Ta bort', map_status_update_path(map, u), :confirm => 'Vill du ta bort statusuppdateringen?', :method => :delete %>
                 <% end %>
                 <div class="status-update-statistics">
                   <span class="status-update-likes"> ... personer gillar detta.</span>
@@ -29,9 +29,9 @@
               <ul class="status-comments">
                 <% if u.status_comments.any? %>
                     <li class="status-update-comment-show">Visa alla kommentarer</li>
-                    <%= render "status_comments/shared/status_comments", :update => u, :comments => u.status_comments %>
+                    <%= render "status_comments/shared/status_comments", :map => map, :update => u, :comments => u.status_comments %>
                 <% end %>
-                <li><%= render "status_comments/shared/form", :update => u %></li>
+                <li><%= render "status_comments/shared/form", :map => map, :update => u %></li>
               </ul>
             </div>
           </article>
