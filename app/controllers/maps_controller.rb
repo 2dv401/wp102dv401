@@ -40,97 +40,69 @@ class MapsController < ApplicationController
   # Referens till ett gmaps-objekt
   if @locations.any?
 
-	#G�r om startpunkten till en location
-  @location = Location.new
-	@location.name = @map.name
-	@location.description = @map.description
-	@location.latitude = @map.latitude
-	@location.longitude = @map.longitude
-	@location.location_type = LocationType.new(:name => "Startpunkt")
-	@location.save
-	@locations << @location
-  @display_map = @locations.to_gmaps4rails
+  	#G�r om startpunkten till en location
+    @location = Location.new
+  	@location.name = @map.name
+  	@location.description = @map.description
+  	@location.latitude = @map.latitude
+  	@location.longitude = @map.longitude
+  	@location.location_type = LocationType.new(:name => "Startpunkt")
+  	@location.save
+  	@locations << @location
+    @display_map = @locations.to_gmaps4rails
   else
     @display_map = @map.to_gmaps4rails
   end
   
 end
 
-def new
-  @map = Map.new
-  logger.debug @map
+  def new
+    @map = Map.new
+    logger.debug @map
 
-      #todo: h�mta default-koordinater n�nstans/anv�nds geolocation som default
-      @map.longitude = 18
-      @map.latitude = 59.33
-
-      @map_options = {
-        "map_options" => {
-          "auto_zoom" => false,
-          "zoom" => 8,
-          "center_latitude" => @map.latitude,
-          "center_longitude" => @map.longitude
-          },
-          "markers" => {
-            "data" => @map.to_gmaps4rails
-          }
-        }
+    #todo: h�mta default-koordinater n�nstans/anv�nds geolocation som default
+    @map.longitude = 18
+    @map.latitude = 59.33
+    @map_options = get_map_options
   end
 
-      def create
-        @map = Map.new
-        @map.name = params[:name]
-        @map.description = params[:description]
-
-        @map.latitude = params[:latitude]
-        @map.longitude = params[:longitude]
-
-      #todo: Av n�gon anledning g�r det inte att skapa karta om private �r "false"
-      @map.private = params[:private]
-      @map.gmaps = true
+  def create
       
+      @map = Map.new(params[:map])
+      @map_options = get_map_options
+      @map.gmaps = true
       @map.user_id = current_user.id
-
-      @map_options = {
-        "map_options" => {
-          "auto_zoom" => false,
-          "zoom" => 8,
-          "center_latitude" => @map.latitude,
-          "center_longitude" => @map.longitude
-          },
-          "markers" => {
-            "data" => @map.to_gmaps4rails
-          }
-        }
-
-
-        puts @map
+      
+      puts @map
 
         if @map.save
+          flash[:notice] = "Kartan sparades!"
           redirect_to map_path(@map)
         else
+          flash[:error] = "Fel intraffade nar kartan skulle sparas."
           render :action => "new"
         end
 
       end
 
+      # GET /maps/:slug/edit
       def edit
         @map = Map.find(params[:id])
-
-        @map_options = {
-        "map_options" => {
-          "auto_zoom" => false,
-          "zoom" => 8,
-          "center_latitude" => @map.latitude,
-          "center_longitude" => @map.longitude
-          },
-          "markers" => {
-            "data" => @map.to_gmaps4rails
-          }
-        }
+        @map_options = get_map_options
       end
 
+      # PUT /maps/:slug/edit
       def update
+        @map = Map.find(params[:id])
+        @map_options = get_map_options
+
+        if @map.update_attributes(params[:map])
+          flash[:notice] = "Kartan sparades!"
+          redirect_to map_path(@map)
+        else
+          flash[:error] = "Fel intraffade nar kartan skulle sparas."
+          render :action => "edit"
+        end
       end
 
       def destroy
@@ -139,4 +111,21 @@ def new
 
        redirect_to root_path
      end
-   end
+     
+     # Sets options for map
+     def get_map_options
+       
+        return  {
+          "map_options" => {
+            "auto_zoom" => false,
+            "zoom" => 8,
+            "center_latitude" => @map.latitude,
+            "center_longitude" => @map.longitude
+            },
+            "markers" => {
+              "data" => @map.to_gmaps4rails
+            }
+        }
+        	
+     end
+  end
