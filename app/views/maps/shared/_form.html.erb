@@ -1,38 +1,42 @@
 <div id="mapCreation">
-   <%= form_tag("/maps", { :id => 'map_form' }) do %>
 
-     <% if @map.errors.any? %> 
-      <div id="errors">
-        <h4>Fel uppstod. Åtgärda följande och försök igen: </h4>
-        <ul>
-          <% @map.errors.full_messages.each do |msg| %>
-            <li><%= msg %> </li>
-          <% end %>
-        </ul>
-      </div>
-      <% end %>
-      <%= label_tag(:name, "Namn:") %>
-      <%= text_field_tag(:name) %>
-  
-     <%= label_tag(:description, "Beskrivning:") %>
-     <%= text_field_tag(:description) %>
-  
-     <%= label_tag(:private, "Vem ska få se kartan?") %>
-     <%= radio_button_tag(:private, 1) %> Synlig enbart för mig och de jag bjuder in <br />
-     <%= radio_button_tag(:private, 0) %> Publik
-
-     <br /> <!-- Todo: Fixa till formulären med css istället! -->
-     <br />
-     <%= submit_tag "Hitta min position", :type => "button", :id => "geolocate_button" %>
-     <%= hidden_field_tag "latitude", "59" %>
-     <%= hidden_field_tag "longitude", "18" %>
-     
-	   <%= text_field_tag "locationTextField", nil, :placeholder => "Sök startposition" %>
-	  
-     <%= gmaps(@map_options) %>
-     
-     <%= submit_tag "Skapa karta", :id => "submit" %>
-
-   <% end %>
+	<%= form_for (@map), :html => { :id => "map_form" } do |f| %>
 	
+		<% if @map.errors.any? %> 
+			<div id="errors">
+			  <h4>Fel uppstod. Åtgärda följande och försök igen: </h4>
+			  <ul>
+				<% @map.errors.full_messages.each do |msg| %>
+				  <li><%= msg %> </li>
+				<% end %>
+			  </ul>
+			</div>
+		<% end %>
+		
+		<%= f.label :name, "Namn på kartan" %>
+		<%= f.text_field :name %>
+		
+		<%= f.label :description, "Beskrivning" %>
+		<%= f.text_field :description %>
+		
+		<%= f.label :private, "Vem ska få se kartan?" %>
+		<%= f.radio_button :private, true, { :checked => true } %> Synlig enbart för mig och de jag bjuder in <br />
+		<%= f.radio_button :private, false, { :checked => false } %> Publik
+		
+		<br />
+		<br />
+		
+		<%= submit_tag "Hitta min position", :type => "button", :id => "geolocate_button" %>
+		<%= f.hidden_field :latitude, :value => @map.latitude, :id => "latitude" %>
+		<%= f.hidden_field :longitude, :value => @map.longitude, :id => "longitude" %>
+		
+		<%= text_field_tag "locationTextField", nil, :placeholder => "Sök startposition" %>
+		
+		<%= gmaps(@map_options) %>
+		
+		<%= f.submit "Spara karta" %>
+	
+	<% end %>
+
 </div>
+

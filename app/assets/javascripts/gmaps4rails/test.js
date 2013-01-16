@@ -1,4 +1,4 @@
-﻿var temporaryMarker = null;
+var temporaryMarker = null;
 
 function click() {
    var latitude = Gmaps.map.map.center.$a;
@@ -103,31 +103,36 @@ function searchFieldSelect(event, ui){
 	var latitude = ui.item.value.$a;
 	
 	Gmaps.map.map.setCenter(new google.maps.LatLng(latitude,longitude));
-   Gmaps.map.map.setZoom(30);
+   	Gmaps.map.map.setZoom(30);
+   	
+   	$('#latitude').val(latitude);
+   	$('#longitude').val(longitude);
 	
 	return false;
 }
 
 function useGeolocation(){
-   navigator.geolocation.getCurrentPosition(move_map);
-   
-   
+   navigator.geolocation.getCurrentPosition(move_map); 
 }
+
 function move_map(position){  
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-            
-            Gmaps.map.map.setCenter(new google.maps.LatLng(latitude,longitude));
-            Gmaps.map.map.setZoom(30);
-        }  
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    
+    Gmaps.map.map.setCenter(new google.maps.LatLng(latitude,longitude));
+    Gmaps.map.map.setZoom(30);
+    
+    $('#latitude').val(latitude);
+    $('#longitude').val(longitude);
+}  
 
 window.onready = function () {
     var submit = document.getElementById("submit");
     var test = document.getElementById("navigation");
     var navigation = document.getElementById("geolocate_button");
-	 var searchField = document.getElementById("locationTextField");
-	 var map = $("#map");
-	 var mapCreation = $("#mapCreation");
+	var searchField = document.getElementById("locationTextField");
+	var map = $("#map");
+	var mapCreation = $("#mapCreation");
 
     if(submit){
       submit.onclick = click;
