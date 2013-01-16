@@ -1,6 +1,19 @@
 class StatusCommentsController < ApplicationController
   before_filter :authenticate_user!
 
+  def like
+    @status_comment = StatusComment.find(params[:status_comment])
+    puts @status_comment
+    current_user.like!(@status_comment)
+    redirect_to map_path(params[:map_id])
+  end
+
+  def unlike
+    @status_comment = StatusComment.find(params[:@status_comment])
+    current_user.unlike!(@status_comment)
+    redirect_to map_path(params[:map_id])
+  end
+
   def create
     #Skapar ny statusuppdatering från post-parametrarna samt lägger till aktuella användaren
     @comment = StatusComment.new(params[:status_comment])
