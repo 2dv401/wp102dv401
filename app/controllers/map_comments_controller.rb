@@ -32,7 +32,15 @@ class MapCommentsController < ApplicationController
   # DELETE /maps/:id/map_comments/1.json
   def destroy
     @map_comment = MapComment.find(params[:id])
-    @map_comment.destroy
+    if current.user == @map_comment.user || current.user == @map_comment.map.user
+      if @map_comment.destroy
+        flash[:notice] = "Kommentaren borttagen"
+      else
+        flash[:notice] = "Fel nar kommentaren skulle tagas bort"
+      end
+    else
+      flash[:notice] = "Fel, bara den som skrev kommentaren och ägaren till kartan kan ta bort den."
+    end
     redirect_to map_path(params[:map_id])
   end
 end
