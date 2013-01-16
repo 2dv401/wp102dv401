@@ -20,7 +20,7 @@
 	<div class="three columns">
 		<h4>Mina kartor</h4>
 		<% @maps.each do |map| %>
-			<%= link_to map.name, map_path(map.slug) %>
+			<%= link_to map.name, map_path(map) %>
 			<br>
 		<% end %>
 	</div>

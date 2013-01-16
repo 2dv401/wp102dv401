@@ -1,13 +1,13 @@
-<ul class="status-comments">
-  <% comments.each do |c| %>
-      <li class="status-comment">
-        <p><span><%= c.user.username %>: </span><%= c.content %></p>
-        <div class="status-comment-footer">
-          <span class="created-at"><%= time_ago(c.created_at) %></span>
-          <% if current_user == c.user %>
-              <%= link_to 'Ta bort', map_status_update_status_comment_path(@map, update, c), :confirm => 'Vill du ta bort kommentaren?', :method => :delete %>
-          <% end %>
-        </div>
-      </li>
-  <% end %>
-</ul>
+<% comments.each do |c| %>
+    <li class="status-comment">
+      <p>
+        <span class="author"><%= c.user.username %></span><%= c.content %>
+      </p>
+      <div class="status-comment-footer">
+        <span class="created-at"><%= time_ago(c.created_at) %></span>
+        <% if current_user == c.user %>
+            <%= link_to 'Ta bort', map_status_update_status_comment_path(@map, update, c), :confirm => 'Vill du ta bort kommentaren?', :method => :delete %>
+        <% end %>
+      </div>
+    </li>
+<% end %>

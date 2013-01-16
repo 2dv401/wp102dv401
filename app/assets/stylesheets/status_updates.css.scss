@@ -3,7 +3,83 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 // Ska ligga i status_update-filen
-.status-updates {
-  ul { list-style: none; }
-  input[type="text"] { width: 100%; }
+
+// Grå variabler
+$light-light-gray: #e6e6e6;
+$light-gray: #707070;
+$gray: #505050;
+$dark_gray: #303030;
+
+@mixin rounded($radius: .3em) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+
+// keeps background from busting out of border
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+
+@mixin box-shadow($horiz:.5em, $vert:.5em, $blur:.5em, $spread:.5em, $color:#000, $inset:"") {
+  -webkit-box-shadow:$horiz $vert $blur $spread $color #{$inset};
+  -moz-box-shadow:$horiz $vert $blur $spread $color #{$inset};
+  box-shadow:$horiz $vert $blur $spread $color #{$inset};
+}
+
+.status-update-wrapper {
+
+  ul { list-style: none; margin: 0; }
+  h3, p, form, input[type="text"] { margin: .1em; }
+  h3 { font-size: 1.1em; }
+
+  .created-at {
+    color: $gray;
+    font-weight: bold;
+    font-size: small;
+  }
+
+
+  .status-update {
+    margin: 1em 0;
+  }
+
+  .status-update-body {
+    border: 1px solid $light-light-gray;
+    @include rounded(.3em);
+    @include box-shadow(0, .1em, .1em, 0,  $light-light-gray);
+    padding: 1em;
+
+    .status-update-header,
+    .status-update-footer {
+      padding: .5em 0;
+    }
+    .status-update-statistics {
+      border-top: 1px solid $light-light-gray;
+      margin-top: .5em;
+      padding-top: .5em;
+    }
+  }
+
+  .status-comment-wrapper {
+    padding: 0 0.5em;
+
+    .status-comments {
+      padding: 0.5em;
+      background-color: #FFF0F5;
+      border: 1px solid $light-light-gray;
+      @include rounded(.3em);
+      @include box-shadow(0, .1em, .3em, 0, $light-light-gray, inset);
+
+      li {
+        padding: 0.5em;
+        &:last-child { border: none; }
+      }
+      .author {
+        color: $gray;
+        display: block;
+        font-weight: bold;
+      }
+    }
+  }
 }

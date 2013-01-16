@@ -1,1 +1,5 @@
-
+<%= form_for([@map, update, @status_comment]) do |f| %>
+  <div class="status-comment-content">
+    <%= f.text_field :content, :placeholder => "Skriv kommentar..." %>
+  </div>
+<% end %>
