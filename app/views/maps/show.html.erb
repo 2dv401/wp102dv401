@@ -1,6 +1,6 @@
 <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
 <h4><%= @map.name %></h4>
-
+(<%= link_to "ta bort", map_path(@map.id), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>)
 <div id="follow-button">
   <%= render 'maps/shared/follow_button', :map => @map %>
 </div>
