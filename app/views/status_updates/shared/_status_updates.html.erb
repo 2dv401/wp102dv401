@@ -12,11 +12,16 @@
               </div>
               <div class="status-update-footer">
                 <span class="created-at"><%= time_ago(u.created_at) %></span>
+                <% if current_user.likes?(u) %>
+                    <%= link_to 'Sluta gilla', map_status_update_toggle_like_path(@map, u), :method => :post %>
+                <% else %>
+                    <%= link_to 'Gilla', map_status_update_toggle_like_path(@map, u), :method => :post %>
+                <% end %>
                 <% if current_user == u.user %>
                     <%= link_to 'Ta bort', map_status_update_path(@map, u), :confirm => 'Vill du ta bort statusuppdateringen?', :method => :delete %>
                 <% end %>
                 <div class="status-update-statistics">
-                    <span class="status-update-likes"> ... personer gillar detta.</span>
+                  <span class="status-update-likes"> ... personer gillar detta.</span>
                 </div>
               </div>
             </div>

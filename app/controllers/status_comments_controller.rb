@@ -1,16 +1,15 @@
 class StatusCommentsController < ApplicationController
   before_filter :authenticate_user!
 
-  def like
-    @status_comment = StatusComment.find(params[:status_comment])
-    puts @status_comment
-    current_user.like!(@status_comment)
-    redirect_to map_path(params[:map_id])
-  end
+  def toggle_like
+    @status_comment = StatusComment.find(params[:status_comment_id])
 
-  def unlike
-    @status_comment = StatusComment.find(params[:@status_comment])
-    current_user.unlike!(@status_comment)
+    if current_user.likes?(@status_comment)
+      current_user.unlike!(@status_comment)
+    else
+      current_user.like!(@status_comment)
+    end
+
     redirect_to map_path(params[:map_id])
   end
 
