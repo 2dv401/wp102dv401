@@ -88,27 +88,46 @@ end
       # GET /maps/:slug/edit
       def edit
         @map = Map.find(params[:id])
-        @map_options = get_map_options
+        if current.user == @map.user
+
+          @map_options = get_map_options
+
+        else
+          flash[:notice] = "Fel, bara ägaren till kartan kan ändra den."
+          redirect_to map_path(@map)
+        end
       end
 
       # PUT /maps/:slug/edit
       def update
         @map = Map.find(params[:id])
-        @map_options = get_map_options
+        if current.user == @map.user
 
-        if @map.update_attributes(params[:map])
-          flash[:notice] = "Kartan sparades!"
-          redirect_to map_path(@map)
+          @map_options = get_map_options
+
+          if @map.update_attributes(params[:map])
+            flash[:notice] = "Kartan sparades!"
+            redirect_to map_path(@map)
+          else
+            flash[:error] = "Fel intraffade nar kartan skulle sparas."
+            render :action => "edit"
+          end
         else
-          flash[:error] = "Fel intraffade nar kartan skulle sparas."
-          render :action => "edit"
+          flash[:notice] = "Fel, bara ägaren till kartan kan uppdatera den."
         end
       end
 
       def destroy
        @map = Map.find(params[:id])
-       @map.destroy
-
+       if current.user == @map.user
+         if @map.destroy
+           flash[:notice] = "Kartan borttagen"
+         else
+           flash[:notice] = "Fel nar kartan skulle tagas bort"
+         end
+       else
+         flash[:notice] = "Fel, bara ägaren till kartan kan ta bort den."
+       end
        redirect_to root_path
      end
      
