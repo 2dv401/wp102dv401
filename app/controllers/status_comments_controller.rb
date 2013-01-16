@@ -29,14 +29,14 @@ class StatusCommentsController < ApplicationController
 
   def destroy
     @comment = StatusComment.find(params[:id])
-    if current.user == @comment.user || current.user == @comment.status_update.map.user
+    if current_user == @comment.user || current_user == @comment.status_update.map.user
       if @comment.destroy
         flash[:notice] = "Kommentaren borttagen"
       else
         flash[:notice] = "Fel nar kommentaren skulle tagas bort"
       end
     else
-      flash[:notice] = "Fel, bara personen som skrev kommentaren och ägaren till kartan kan ta bort den."
+      flash[:notice] = "Fel, bara personen som skrev kommentaren och agaren till kartan kan ta bort den."
     end
     redirect_to map_path(params[:map_id])
   end
