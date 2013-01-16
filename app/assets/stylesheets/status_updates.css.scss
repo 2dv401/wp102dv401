@@ -17,11 +17,12 @@
     font-weight: bold;
     font-size: small;
   }
-
-
-  .status-update {
-    margin: 1em 0;
+  .status-update-content,
+  .status-comment-body {
+    word-wrap:break-word;
   }
+
+  .status-update { margin: 1em 0; }
 
   .status-update-body {
     border: 1px solid $light-light-gray;
@@ -52,8 +53,8 @@
 
       li {
         padding: 0.5em;
-        &:last-child { border: none; }
       }
+
       .author {
         color: $gray;
         display: block;

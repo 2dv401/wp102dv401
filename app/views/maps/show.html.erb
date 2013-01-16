@@ -1,33 +1,47 @@
 <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
 <h1><%= @map.name %></h1>
-
+<p><%= @map.description %><p>
 <% unless @map.user == current_user %>
     <div id="follow-button">
       <%= render 'maps/shared/follow_button', :map => @map %>
     </div>
 <% end %>
 <% if current_user == @map.user %>
-    <div class="status-update-form">
-      <%= render "status_updates/shared/form" %>
+    <div class="row">
+      <div class="four columns">
+        <div class="status-update-form">
+          <%= render "status_updates/shared/form" %>
+        </div>
+      </div>
     </div>
 <% end %>
 
-<p><%= @map.description %><p>
 <div id="viewMapContainter">
   <%= gmaps4rails(@display_map) %>
 </div>
 
 <% if @map.status_updates.any? %>
-    <h3>Statusuppdateringar</h3>
-    <%= render "status_updates/shared/status_updates", :map => @map, :updates => @map.status_updates %>
+    <div class="row">
+      <div class="six columns">
+        <h3>Statusuppdateringar</h3>
+        <%= render "status_updates/shared/status_updates", :map => @map, :updates => @map.status_updates %>
+      </div>
+    </div>
 <% end %>
 
-<div class="map-comment-form">
-  <h3>Skriv en kommentar om kartan här</h3>
-  <%= render "map_comments/shared/form" %>
+<div class="row">
+  <div class="four columns">
+    <div class="map-comment-form">
+      <h3>Skriv en kommentar om kartan här</h3>
+      <%= render "map_comments/shared/form" %>
+    </div>
+  </div>
 </div>
 
-
 <% if @map.map_comments.any? %>
-    <%= render "map_comments/shared/map_comments", :map => @map, :comments => @map.map_comments %>
+    <div class="row">
+      <div class="six columns">
+        <%= render "map_comments/shared/map_comments", :map => @map, :comments => @map.map_comments %>
+      </div>
+    </div>
 <% end %>
