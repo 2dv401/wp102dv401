@@ -5,7 +5,7 @@
     <%= devise_error_messages! %>
     <div class="username">
         <%= f.label :username, "Användarnamn" %>
-        <%= f.text_field :username, :autocomplete => "off" %>
+        <%= f.text_field :username, :autocomplete => "off", :disabled => true %>
     </div>
 
     <div class="email">
