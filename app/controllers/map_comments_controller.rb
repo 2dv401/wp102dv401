@@ -39,7 +39,7 @@ class MapCommentsController < ApplicationController
         flash[:notice] = "Fel nar kommentaren skulle tagas bort"
       end
     else
-      flash[:notice] = "Fel, bara den som skrev kommentaren och ägaren till kartan kan ta bort den."
+      flash[:notice] = "Fel, bara personen som skrev kommentaren och ägaren till kartan kan ta bort den."
     end
     redirect_to map_path(params[:map_id])
   end
