@@ -1,32 +1,45 @@
 <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
-<h4><%= @map.name %></h4>
-(<%= link_to "ta bort", map_path(@map.slug), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>)
-<div id="follow-button">
-  <%= render 'maps/shared/follow_button', :map => @map %>
-</div>
-
+<h1><%= @map.name %></h1>
 <p><%= @map.description %><p>
-<div id="viewMapContainter">
-  <%= gmaps4rails(@display_map) %>
-</div>
-
+<% unless @map.user == current_user %>
+    <div id="follow-button">
+      <%= render 'maps/shared/follow_button', :map => @map %>
+    </div>
+<% end %>
 <% if current_user == @map.user %>
-    <div class="status-update-form">
-      <h3>Skriv statusuppdatering här</h3>
-      <%= render "status_updates/shared/form" %>
+    (<%= link_to "Ta bort", map_path(@map.slug), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>)
+    <div class="row">
+      <div class="four columns">
+        <div class="status-update-form">
+          <%= render "status_updates/shared/form" %>
+        </div>
+      </div>
     </div>
 <% end %>
 
-<% if @map.status_updates.any? %>
-    <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
-<% end %>
-
-<div class="map-comment-form">
-  <h3>Skriv en kommentar om kartan här</h3>
-  <%= render "map_comments/shared/form" %>
+<div id="viewMapContainter">
+  <%= gmaps4rails(@display_map) %>
 </div>
-
-
-<% if @map.map_comments.any? %>
-    <%= render "map_comments/shared/map_comments", :comments => @map.map_comments %>
-<% end %>
+<div class="row">
+  <% if @map.status_updates.any? %>
+      <div class="six columns">
+        <h3>Statusuppdateringar</h3>
+        <%= render "status_updates/shared/status_updates", :map => @map, :updates => @map.status_updates %>
+      </div>
+  <% end %>
+  <div class="six columns">
+    <section class="map-comment-wrapper">
+      <h3>Kommentarer</h3>
+      <ul class="map-comments">
+        <% if @map.map_comments.any? %>
+            <%= render "map_comments/shared/map_comments", :map => @map, :comments => @map.map_comments %>
+        <% end %>
+        <li>
+          <div class="map-comment-form">
+            <%= render "map_comments/shared/form" %>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>

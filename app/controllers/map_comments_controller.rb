@@ -1,5 +1,18 @@
 class MapCommentsController < ApplicationController
 
+  # POST map/:id/map_comments/toggle_like
+  def toggle_like
+    @map_comment = MapComment.find(params[:map_comment_id])
+
+    if current_user.likes?(@map_comment)
+      current_user.unlike!(@map_comment)
+    else
+      current_user.like!(@map_comment)
+    end
+
+    redirect_to map_path(params[:map_id])
+  end
+
   # POST map/:id/map_comments
   def create
     #Skapar ny kartkommentar från post-parametrarna samt lägger till aktuella användaren

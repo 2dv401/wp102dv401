@@ -39,11 +39,14 @@ Wp102dv401::Application.routes.draw do
     post 'follow'
     post 'unfollow'
     resources :status_updates do
-      post 'like'
-      post 'unlike'
-      resources :status_comments
+      post 'toggle_like'
+      resources :status_comments do
+        post 'toggle_like'
+      end
     end
-    resources :map_comments
+    resources :map_comments do
+      post 'toggle_like'
+    end
   end
 
   root :to => "home#index"

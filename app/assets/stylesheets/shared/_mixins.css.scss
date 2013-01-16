@@ -1,0 +1,19 @@
+
+// Border-radius
+@mixin rounded($radius: .3em) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+
+// keeps background from busting out of border
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+
+// Box-shadow
+@mixin box-shadow($horiz:.5em, $vert:.5em, $blur:.5em, $spread:.5em, $color:#000, $inset:"") {
+  -webkit-box-shadow:$horiz $vert $blur $spread $color #{$inset};
+  -moz-box-shadow:$horiz $vert $blur $spread $color #{$inset};
+  box-shadow:$horiz $vert $blur $spread $color #{$inset};
+}

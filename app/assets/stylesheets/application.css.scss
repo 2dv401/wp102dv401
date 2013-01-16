@@ -9,7 +9,6 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
  */
 
 // Application imports
@@ -18,7 +17,7 @@
 
 @import "gmaps4rails.css.scss";
 @import "status_updates.css.scss";
-
+@import "map_comments.css.scss";
 
 
 .profile-image-small {
