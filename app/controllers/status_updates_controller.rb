@@ -29,7 +29,15 @@ class StatusUpdatesController < ApplicationController
 
   def destroy
     @status_update = StatusUpdate.find(params[:id])
-    @status_update.destroy
+    if current.user == @status_update.user
+      if @status_update.destroy
+        flash[:notice] = "Statusen borttagen"
+      else
+        flash[:notice] = "Fel nar statusen skulle tagas bort"
+      end
+    else
+      flash[:notice] = "Fel, bara ägaren till kartan kan ta bort statusen."
+    end
     redirect_to map_path(params[:map_id])
   end
 end
