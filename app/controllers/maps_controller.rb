@@ -1,9 +1,7 @@
 class MapsController < ApplicationController
   before_filter :authenticate_user!
   def index
-
-    @maps = Map.find(:all, :conditions => [ "user_id = ?", current_user.id])
-
+    @maps = Map.find_by_user_id(current_user.id)
   end
 
   def follow
@@ -22,6 +20,7 @@ class MapsController < ApplicationController
     @status_update = StatusUpdate.new
     @status_comment = StatusComment.new
     @map_comment = MapComment.new
+    @mark = Mark.new
 
     # Referens till ett Map-objekt
     @map = Map.find(params[:id])
@@ -34,7 +33,6 @@ class MapsController < ApplicationController
     # Referens till ett gmaps-objekt
     if @marks.any?
      # @display_map = @marks.to_gmaps4rails
-    else
       @display_map = @map.to_gmaps4rails
     end
 
@@ -51,12 +49,10 @@ class MapsController < ApplicationController
   end
 
   def create
-
     @map = Map.new(params[:map])
+    @map.user = current_user
     @map_options = get_map_options
     @map.gmaps = true
-    @map.user = current_user
-    puts @map
 
     # Om kartan sparas
     if @map.save
