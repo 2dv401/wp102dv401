@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @mark.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @mark.description %>
+</p>
+
+<p>
+  <b>Map:</b>
+  <%= @mark.map %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @mark.location %>
+</p>
+
+
+<%= link_to 'Edit', edit_mark_path(@mark) %> |
+<%= link_to 'Back', marks_path %>

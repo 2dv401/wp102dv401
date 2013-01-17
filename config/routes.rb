@@ -1,5 +1,8 @@
 Wp102dv401::Application.routes.draw do
 
+  resources :marks
+
+
   get "locations/create"
 
   get "locations/destroy"
