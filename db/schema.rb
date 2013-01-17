@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130115144701) do
+ActiveRecord::Schema.define(:version => 20130117134201) do
 
   create_table "follows", :force => true do |t|
     t.string   "follower_type"
@@ -46,39 +46,12 @@ ActiveRecord::Schema.define(:version => 20130115144701) do
   add_index "likes", ["likeable_id", "likeable_type"], :name => "fk_likeables"
   add_index "likes", ["liker_id", "liker_type"], :name => "fk_likes"
 
-  create_table "location_images", :force => true do |t|
-    t.string   "file_name",   :limit => 32,  :null => false
-    t.text     "description", :limit => 256, :null => false
-    t.integer  "location_id",                :null => false
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-  end
-
-  create_table "location_types", :force => true do |t|
-    t.string   "name",       :limit => 45, :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
-  end
-
   create_table "locations", :force => true do |t|
-    t.string   "name",          :limit => 32,                     :null => false
-    t.string   "description",   :limit => 256
-    t.float    "longitude",                                       :null => false
-    t.float    "latitude",                                        :null => false
-    t.datetime "date"
-    t.boolean  "private",                      :default => false, :null => false
-    t.integer  "place_type_id",                                   :null => false
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
-    t.boolean  "gmaps",                        :default => true,  :null => false
+    t.float    "longitude",  :null => false
+    t.float    "latitude",   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
-
-  create_table "locations_maps", :id => false, :force => true do |t|
-    t.integer "location_id"
-    t.integer "map_id"
-  end
-
-  add_index "locations_maps", ["location_id", "map_id"], :name => "index_locations_maps_on_location_id_and_map_id"
 
   create_table "map_comments", :force => true do |t|
     t.integer  "map_id",                                     :null => false
@@ -105,6 +78,17 @@ ActiveRecord::Schema.define(:version => 20130115144701) do
   end
 
   add_index "maps", ["slug"], :name => "index_maps_on_slug"
+
+  create_table "marks", :force => true do |t|
+    t.integer  "map_id",                                      :null => false
+    t.integer  "location_id",                                 :null => false
+    t.string   "name",        :limit => 240,  :default => "", :null => false
+    t.string   "description", :limit => 5120, :default => "", :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+  end
+
+  add_index "marks", ["map_id", "location_id"], :name => "index_marks_on_map_id_and_location_id"
 
   create_table "status_comments", :force => true do |t|
     t.integer  "user_id",                                          :null => false
