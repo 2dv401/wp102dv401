@@ -10,7 +10,9 @@ sv:
             name:
               blank: "Kartan måste ha ett namn."
               too_long: "Namnet är för långt, Korta ner namnet och försök igen."
-            description: "Kartan måste ha en beskrivning."
+            description:
+              blank: "Kartan måste ha en beskrivning."
+              too_long: "Beskrivningen är för lång, korta ner och försök igen."
         map_comment:
           attributes:
             content:

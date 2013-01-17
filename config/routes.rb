@@ -1,5 +1,9 @@
 Wp102dv401::Application.routes.draw do
 
+  get "locations/create"
+
+  get "locations/destroy"
+
   get "/om-kartr" => "pages#about", :as => :pages_about
   get "/anvandarvillkor" => "pages#terms", :as => :pages_terms
   get "/sekretess" => "pages#privacy", :as => :pages_privacy
