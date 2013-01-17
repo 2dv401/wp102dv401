@@ -47,10 +47,11 @@ ActiveRecord::Schema.define(:version => 20130117134201) do
   add_index "likes", ["liker_id", "liker_type"], :name => "fk_likes"
 
   create_table "locations", :force => true do |t|
-    t.float    "longitude",  :null => false
-    t.float    "latitude",   :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.float    "longitude",                    :null => false
+    t.float    "latitude",                     :null => false
+    t.boolean  "gmaps",      :default => true, :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   create_table "map_comments", :force => true do |t|
@@ -80,12 +81,13 @@ ActiveRecord::Schema.define(:version => 20130117134201) do
   add_index "maps", ["slug"], :name => "index_maps_on_slug"
 
   create_table "marks", :force => true do |t|
-    t.integer  "map_id",                                      :null => false
-    t.integer  "location_id",                                 :null => false
-    t.string   "name",        :limit => 240,  :default => "", :null => false
-    t.string   "description", :limit => 5120, :default => "", :null => false
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.integer  "map_id",                                        :null => false
+    t.integer  "location_id",                                   :null => false
+    t.string   "name",        :limit => 240,  :default => "",   :null => false
+    t.string   "description", :limit => 5120, :default => "",   :null => false
+    t.boolean  "gmaps",                       :default => true, :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
   end
 
   add_index "marks", ["map_id", "location_id"], :name => "index_marks_on_map_id_and_location_id"

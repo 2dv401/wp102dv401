@@ -1,7 +1,7 @@
 class MapsController < ApplicationController
   before_filter :authenticate_user!
   def index
-    @maps = Map.find_by_user_id(current_user.id)
+    @maps = Map.find_all_by_user_id(current_user.id)
   end
 
   def follow
@@ -30,11 +30,12 @@ class MapsController < ApplicationController
     end
 
     @marks = @map.marks
+
     # Referens till ett gmaps-objekt
     if @marks.any?
-     # @display_map = @marks.to_gmaps4rails
-      @display_map = @map.to_gmaps4rails
+      @positions = @map
     end
+    @display_map = @positions.to_gmaps4rails
 
   end
 
@@ -52,7 +53,6 @@ class MapsController < ApplicationController
     @map = Map.new(params[:map])
     @map.user = current_user
     @map_options = get_map_options
-    @map.gmaps = true
 
     # Om kartan sparas
     if @map.save
