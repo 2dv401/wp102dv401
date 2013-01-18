@@ -42,7 +42,7 @@ class MapsController < ApplicationController
   def new
     @map = Map.new
     logger.debug @map
-
+     @map.location = Location.new
     #todo: h�mta default-koordinater n�nstans/anv�nds geolocation som default
     @map.longitude = 18
     @map.latitude = 59.33
@@ -129,13 +129,16 @@ class MapsController < ApplicationController
 
   # Sets options for map
   def get_map_options
+    longitude = @map.longitude
+    latitude = @map.latitude
 
     return  {
         "map_options" => {
             "auto_zoom" => false,
+            "MapTypeId" => "HYBRID",
             "zoom" => 6,
-            "center_latitude" => @map.latitude,
-            "center_longitude" => @map.longitude
+            "center_latitude" => @map.location.latitude,
+            "center_longitude" => @map.location.longitude
         },
         "markers" => {
             "data" => @map.to_gmaps4rails

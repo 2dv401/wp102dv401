@@ -2,7 +2,6 @@ class Map < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: [:slugged, :history]
 
-
 	belongs_to :user
 
   has_many :marks, :dependent => :destroy
@@ -19,9 +18,6 @@ class Map < ActiveRecord::Base
   validates :private, :inclusion => {:in => [true, false]}
   validates	:longitude, :presence => true
   validates	:latitude, :presence => true
-
-
-
 
   def follow(user)  
     @follower = Follower.new()
