@@ -2,6 +2,7 @@ class Location < ActiveRecord::Base
   acts_as_gmappable
 
   has_many :marks, :dependent => :destroy
+  has_many :maps, :dependent => :destroy
 
   attr_accessible :latitude, :longitude
 

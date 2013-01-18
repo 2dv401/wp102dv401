@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117134201) do
+ActiveRecord::Schema.define(:version => 20130118133614) do
 
   create_table "follows", :force => true do |t|
     t.string   "follower_type"
@@ -66,16 +66,17 @@ ActiveRecord::Schema.define(:version => 20130117134201) do
   add_index "map_comments", ["user_id"], :name => "index_map_comments_on_user_id"
 
   create_table "maps", :force => true do |t|
-    t.string   "name",        :limit => 50,                     :null => false
-    t.text     "description", :limit => 256,                    :null => false
-    t.float    "longitude",                                     :null => false
-    t.float    "latitude",                                      :null => false
-    t.boolean  "private",                    :default => false, :null => false
-    t.boolean  "gmaps",                      :default => true,  :null => false
-    t.integer  "user_id",                                       :null => false
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.string   "name",        :limit => 50,                        :null => false
+    t.text     "description", :limit => 256,                       :null => false
+    t.boolean  "private",                    :default => false,    :null => false
+    t.boolean  "gmaps",                      :default => true,     :null => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
     t.string   "slug"
+    t.integer  "location_id"
+    t.integer  "user_id"
+    t.integer  "zoom",                       :default => 8,        :null => false
+    t.string   "map_type",                   :default => "HYBRID", :null => false
   end
 
   add_index "maps", ["slug"], :name => "index_maps_on_slug"
