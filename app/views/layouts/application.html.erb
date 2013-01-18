@@ -44,13 +44,15 @@
 								<% #@TODO: Bryta ut detta till en helper %>
 								<% if current_user.provider? %>
 									<img src="<%= current_user.profile_image %>" alt="" class="profile-image-small" />
+                   <%= current_user.name%>
 								<% else %>
 								<%= 	
 								gravatar_image_tag(current_user.email,  :alt => current_user.email, 
 							            :class => 'profile-image-small', 
 							            :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
+                <%= current_user.username%>
 								<% end %>
-							    <%= current_user.name%>
+							    
 							</a>
 							<ul class="dropdown">
 								<li><%= link_to raw('<i class="foundicon-settings"></i> Inställningar'), edit_user_registration_path %> </li>
