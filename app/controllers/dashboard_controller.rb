@@ -5,6 +5,7 @@ class DashboardController < ApplicationController
   	@User = User.all
 
   	@maps = Map.find(:all, :conditions => [ "user_id = ?", current_user.id])
+
   	
   	if connected_user = session['warden.user.twitter.connected_user.key'].present?
   		connected_user = User.find(connected_user)

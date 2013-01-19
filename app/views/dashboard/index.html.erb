@@ -13,14 +13,14 @@
 		<hr />
 		<% (@User).each do |u| %>
 		<p>E-Post: <%= u.email %></p>
-		<p>Användarnamn: <%= u.username%></p>
+		<p>Användarnamn: <%= link_to u.username, profile_path(u.slug)%></p>
 		<hr />
 		<% end %>
 	</div>
 	<div class="three columns">
 		<h4>Mina kartor</h4>
 		<% @maps.each do |map| %>
-			<%= link_to map.name, map_path(map.slug) %>
+			<%= link_to map.name, profile_map_path(current_user.slug, map.slug) %>
 			<br>
 		<% end %>
 	</div>
