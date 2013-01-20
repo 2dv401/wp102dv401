@@ -14,10 +14,11 @@ class Map < ActiveRecord::Base
 
   MAP_TYPES = [ "HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"]
 
-  attr_accessible :name, :description, :private, :zoom, :map_type
+  attr_accessor :longitude, :latitude
+  attr_accessible :name, :description, :private, :zoom, :map_type, :longitude, :latitude
 
   validates	:name, :presence => true, :length => { :maximum => 45 }
-  validates	:description, :presence => true, :length => { :maximum => 250 }
+  validates	:description, :length => { :maximum => 250 }
   validates :private, :inclusion => {:in => [true, false]}
   validates :map_type, :inclusion => MAP_TYPES
   validates :zoom, :numericality => { :only_integer => true }

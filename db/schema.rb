@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20130118133614) do
   end
 
   add_index "maps", ["slug"], :name => "index_maps_on_slug"
+  add_index "maps", ["user_id", "location_id"], :name => "index_maps_on_user_id_and_location_id"
 
   create_table "marks", :force => true do |t|
     t.integer  "map_id",                                        :null => false

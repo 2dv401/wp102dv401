@@ -8,5 +8,6 @@ class AddLocationZoomAndMapTypeToMaps < ActiveRecord::Migration
       t.integer :zoom, :null => false, :default => 8
       t.string :map_type, :null => false, :default => "HYBRID"
     end
+    add_index :maps, [:user_id, :location_id]
   end
 end
