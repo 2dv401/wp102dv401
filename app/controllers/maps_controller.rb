@@ -70,6 +70,7 @@ class MapsController < ApplicationController
     display_map(@map)
     if current_user == @map.user
       if @map.update_attributes(params[:map])
+        @map.location = Location.find_or_create_by_latitude_and_longitude(@map.latitude, @map.longitude)
         flash[:notice] = "Kartan sparades!"
         redirect_to map_path(@map)
       else
