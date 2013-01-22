@@ -36,6 +36,8 @@ class MarksController < ApplicationController
 
   # GET /marks/1/edit
   def edit
+
+    # Inte 100%
     @mark = Mark.find(params[:id])
   end
 
@@ -52,10 +54,9 @@ class MarksController < ApplicationController
     @mark.map = Map.find_by_slug(params[:map_id])
     
     respond_to do |format|
-
       if @mark.save
-        format.html { redirect_to @mark, notice: 'Mark was successfully created.' }
-        format.json { render json: @mark, status: :created, location: @mark }
+        format.html { redirect_to @mark.map, notice: 'Mark was successfully created.' }
+        format.json { render json: @mark, status: :created, location: @mark.map }
       else
         format.html { render action: "new" }
         format.json { render json: @mark.errors, status: :unprocessable_entity }
@@ -66,6 +67,10 @@ class MarksController < ApplicationController
   # PUT /marks/1
   # PUT /marks/1.json
   def update
+
+    # Inte 100% än
+    # 
+    # 
     @mark = Mark.find(params[:id])
 
     respond_to do |format|

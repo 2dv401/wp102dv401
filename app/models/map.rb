@@ -2,8 +2,8 @@ class Map < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: [:slugged, :history]
 
-
 	belongs_to :user
+  belongs_to :location
 
   has_many :marks, :dependent => :destroy
   has_many :status_updates, :dependent => :destroy
@@ -11,17 +11,17 @@ class Map < ActiveRecord::Base
 
   acts_as_followable
   acts_as_gmappable
+  
+  MAP_TYPES = [ "HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"]
 
-  attr_accessible :name, :description, :private, :longitude, :latitude
+  attr_accessor :longitude, :latitude
+  attr_accessible :name, :description, :private, :zoom, :map_type, :longitude, :latitude
 
   validates	:name, :presence => true, :length => { :maximum => 45 }
-  validates	:description, :presence => true, :length => { :maximum => 250 }
+  validates	:description, :length => { :maximum => 250 }
   validates :private, :inclusion => {:in => [true, false]}
-  validates	:longitude, :presence => true
-  validates	:latitude, :presence => true
-
-
-
+  validates :map_type, :inclusion => MAP_TYPES
+  validates :zoom, :numericality => { :only_integer => true }
 
   def follow(user)  
     @follower = Follower.new()
