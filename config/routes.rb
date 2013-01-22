@@ -43,7 +43,7 @@ Wp102dv401::Application.routes.draw do
   resources :dashboard
   resources :locations
 
-  resources :user do
+  resources :profile do
     resources :maps
   end
   

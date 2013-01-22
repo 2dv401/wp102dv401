@@ -12,7 +12,7 @@
 		<h3>Alla användare</h3>
 		<% (@User).each do |u| %>
 			<p>E-Post: <%= u.email %></p>
-			<p>Användarnamn: <%= link_to u.username %></p>
+			<p>Användarnamn: <%= u.username%></p>
 		<hr />
 		<% end %>
 		<hr />
