@@ -79,12 +79,14 @@ ActiveRecord::Schema.define(:version => 20130118133614) do
     t.string   "map_type",                   :default => "HYBRID", :null => false
   end
 
+  add_index "maps", ["location_id"], :name => "index_maps_on_location_id"
   add_index "maps", ["slug"], :name => "index_maps_on_slug"
-  add_index "maps", ["user_id", "location_id"], :name => "index_maps_on_user_id_and_location_id"
+  add_index "maps", ["user_id"], :name => "index_maps_on_user_id"
 
   create_table "marks", :force => true do |t|
     t.integer  "map_id",                                        :null => false
     t.integer  "location_id",                                   :null => false
+    t.integer  "user_id",                                       :null => false
     t.string   "name",        :limit => 240,  :default => "",   :null => false
     t.string   "description", :limit => 5120, :default => "",   :null => false
     t.boolean  "gmaps",                       :default => true, :null => false
@@ -92,7 +94,9 @@ ActiveRecord::Schema.define(:version => 20130118133614) do
     t.datetime "updated_at",                                    :null => false
   end
 
-  add_index "marks", ["map_id", "location_id"], :name => "index_marks_on_map_id_and_location_id"
+  add_index "marks", ["location_id"], :name => "index_marks_on_location_id"
+  add_index "marks", ["map_id"], :name => "index_marks_on_map_id"
+  add_index "marks", ["user_id"], :name => "index_marks_on_user_id"
 
   create_table "status_comments", :force => true do |t|
     t.integer  "user_id",                                          :null => false
