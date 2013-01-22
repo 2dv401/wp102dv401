@@ -28,6 +28,10 @@
 	</div>
 	<div class="three columns">
 		<h4>Kartor jag följer</h4>
+		<% @followed_maps.each do |followed| %>
+			<%= link_to followed.name, map_path(followed.slug) %>
+			<br>
+		<% end %>
 	</div>
 </div>
 
