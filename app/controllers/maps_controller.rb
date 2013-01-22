@@ -23,7 +23,7 @@ class MapsController < ApplicationController
     @mark = Mark.new
 
     # Referens till ett Map-objekt
-    @map = Map.find(1)
+    @map = Map.find(params[:id])
 
     display_map(@map)
   end
@@ -107,7 +107,7 @@ class MapsController < ApplicationController
             "center_longitude" => map.location.longitude.present? ? map.location.longitude : 15
         },
         "markers" => {
-          "data" => map.markers.to_gmaps4rails
+          "data" => map.marks.to_gmaps4rails
         }
     }
   end

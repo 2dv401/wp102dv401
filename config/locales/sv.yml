@@ -1,10 +1,16 @@
 sv:
   activerecord:
+    attributes:
+      mark:
+        location: "Plats"
     errors:
       models:
         location:
         location_image:
         location_type:
+        mark:
+          attributes:
+            location:
         map:
           attributes:
             name:

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :status_updates, :dependent => :destroy
   has_many :status_comments, :dependent => :destroy
   has_many :maps, :dependent => :destroy
+  has_many :marks, :dependent => :destroy
 
   acts_as_follower
   acts_as_liker

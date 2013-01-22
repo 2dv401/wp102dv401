@@ -25,7 +25,7 @@ class MarksController < ApplicationController
   # GET /marks/new.json
   def new
     @mark = Mark.new
-    @map = Map.find(params[:map_id]) 
+    @map = Map.find_by_slug(params[:map_id])
     @mark.build_location
     @display_map = @map.to_gmaps4rails
     respond_to do |format|
@@ -39,28 +39,35 @@ class MarksController < ApplicationController
 
     # Inte 100%
     @mark = Mark.find(params[:id])
+    @display_map = @mark.map.to_gmaps4rails
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @mark }
+    end
   end
 
   # POST /marks
   # POST /marks.json
   def create
-    @mark = Mark.new(params[:mark])
+    @mark = Mark.new(params[:mark]) do |m|
+      m.map = Map.find_by_slug(params[:map_id])
+      m.user = current_user
+      m.location = Location.find_by_latitude_and_longitude(m.latitude, m.longitude) ||  m.location
+    end
 
-    @mark.location = Location.find_by_latitude_and_longitude(@mark.location.latitude, @mark.location.longitude) ||  @mark.location
-
-    # Eftersom parametrarna innehåller kartans slug istället för ID
-    # måste vi hitta ID't genom att att slå upp kartan mot sluggen
-    # och sedan koppla kartan till markeringen
-    @mark.map = Map.find_by_slug(params[:map_id])
-    
-    respond_to do |format|
-      if @mark.save
-        format.html { redirect_to @mark.map, notice: 'Mark was successfully created.' }
-        format.json { render json: @mark, status: :created, location: @mark.map }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @mark.errors, status: :unprocessable_entity }
+    unless @mark.exists_in_map?
+      respond_to do |format|
+        if @mark.save
+          format.html { redirect_to @mark.map, notice: 'Markeringen har sparats' }
+          format.json { render json: @mark, status: :created, location: @mark.map }
+        else
+          format.html { redirect_to new_map_mark_path(@mark.map, @mark)}
+          format.json { render json: @mark.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      flash[:notice] = "det finns redan en markering med denna position!"
+      redirect_to new_map_mark_path(@mark.map, @mark)
     end
   end
 
