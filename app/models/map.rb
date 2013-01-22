@@ -1,6 +1,5 @@
 class Map < ActiveRecord::Base
   extend FriendlyId
-  #friendly_id :name, use: [:slugged, :history]
   friendly_id :name, :use => :scoped, :scope => :user
 
 

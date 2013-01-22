@@ -42,7 +42,8 @@ Wp102dv401::Application.routes.draw do
 
   resources :dashboard
   resources :locations
-  resources :profile do
+
+  resources :user do
     resources :maps
   end
   
