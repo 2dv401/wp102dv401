@@ -24,7 +24,27 @@ class MapsController < ApplicationController
 
     # Referens till ett Map-objekt
     @map = Map.find(params[:id])
-    puts @map
+    @display_map = @map.marks.to_gmaps4rails do |mark, marker|
+      marker.infowindow render_to_string(:partial => "marks/foobar",  :locals => { :mark => mark}) # Rendera 
+      # en partial i infofönstret
+      
+      # ändra markeringens bild
+      marker.picture({
+                      :picture => "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Bubble-Chartreuse-icon.png",
+                      :width   => 32,
+                      :height  => 32
+                     })
+
+      # Titeln
+      marker.title   mark.name
+      
+      # Sidebar - inte implementerat
+      #marker.sidebar "i'm the sidebar"
+
+      # Om man vill lägga till fler fält till markeringen i jsonformat
+      marker.json({ :id => mark.id, :foo => "bar" })
+    end
+
     if request.path != map_path(@map)
       redirect_to @map, status: :moved_permanently
     end
@@ -35,7 +55,8 @@ class MapsController < ApplicationController
     if @marks.any?
       @positions = @map
     end
-    @display_map = @positions.to_gmaps4rails
+
+    #@display_map = @map.marks.to_gmaps4rails
 
   end
 

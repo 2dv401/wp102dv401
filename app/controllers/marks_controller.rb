@@ -25,7 +25,9 @@ class MarksController < ApplicationController
   # GET /marks/new.json
   def new
     @mark = Mark.new
-
+    @map = Map.find(params[:map_id]) 
+    @mark.build_location
+    @display_map = @map.to_gmaps4rails
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @mark }
@@ -42,7 +44,15 @@ class MarksController < ApplicationController
   def create
     @mark = Mark.new(params[:mark])
 
+    @mark.location = Location.find_by_latitude_and_longitude(@mark.location.latitude, @mark.location.longitude) ||  @mark.location
+
+    # Eftersom parametrarna innehåller kartans slug istället för ID
+    # måste vi hitta ID't genom att att slå upp kartan mot sluggen
+    # och sedan koppla kartan till markeringen
+    @mark.map = Map.find_by_slug(params[:map_id])
+    
     respond_to do |format|
+
       if @mark.save
         format.html { redirect_to @mark, notice: 'Mark was successfully created.' }
         format.json { render json: @mark, status: :created, location: @mark }
@@ -60,7 +70,7 @@ class MarksController < ApplicationController
 
     respond_to do |format|
       if @mark.update_attributes(params[:mark])
-        format.html { redirect_to @mark, notice: 'Mark was successfully updated.' }
+        format.html { redirect_to @map, notice: 'Mark was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
