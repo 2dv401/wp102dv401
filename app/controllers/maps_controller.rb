@@ -1,7 +1,7 @@
 class MapsController < ApplicationController
   before_filter :authenticate_user!
   def index
-    @maps = Map.find_all_by_user_id(current_user.id)
+    @maps = Map.order("created_at ASC").find_all_by_user_id(current_user.id)
   end
 
   def follow
@@ -16,63 +16,34 @@ class MapsController < ApplicationController
     render :template => 'maps/follow/toggle'
   end
   def show
-    #Nya objekt som kommer finnas på maps-sidan
+    #Nya objekt som kan skapas på maps-sidan
     @status_update = StatusUpdate.new
     @status_comment = StatusComment.new
     @map_comment = MapComment.new
     @mark = Mark.new
 
     # Referens till ett Map-objekt
-    @map = Map.find(params[:id])
-    puts @map
-    if request.path != map_path(@map)
-      redirect_to @map, status: :moved_permanently
-    end
+    @map = Map.find(1)
 
-    @marks = @map.marks
-
-    # Referens till ett gmaps-objekt
-    if @marks.any?
-      @positions = @map
-    end
-    @display_map = @positions.to_gmaps4rails
-
+    display_map(@map)
   end
 
   def new
     @map = Map.new
-    logger.debug @map
-
     #todo: h�mta default-koordinater n�nstans/anv�nds geolocation som default
-    @map.longitude = 18
-    @map.latitude = 59.33
-    @map_options = get_map_options
+    @map.location = Location.find_or_create_by_latitude_and_longitude(60, 15)
+    @map.zoom = 5
+    display_map(@map)
   end
 
   def create
     @map = Map.new(params[:map])
     @map.user = current_user
-    @map_options = get_map_options
+    @map.location = Location.find_or_create_by_latitude_and_longitude(@map.latitude, @map.longitude)
+    display_map(@map)
 
-    # Om kartan sparas
     if @map.save
-      # Skapa ett location-objekt på kartans position om det inte redan finns
-      @location = Location.find_or_create_by_latitude_and_longitude(@map.latitude, @map.longitude)
-
-      @mark = Mark.new do |m|
-        m.map = Map.find(@map)
-        m.location = @location
-        m.name = @map.name
-        m.description = @map.description
-
-        # @location.location_type = LocationType.new(:name => "Startpunkt")
-      end
-
-      if @mark.save
-        flash[:notice] = "Kartan och positionen sparades!"
-      else
-        flash[:notice] = "Kartan sparades! men inte positionen"
-      end
+      flash[:notice] = "Kartan sparades!"
       redirect_to map_path(@map)
     else
       flash[:error] = "Fel intraffade nar kartan skulle sparas."
@@ -84,11 +55,8 @@ class MapsController < ApplicationController
   # GET /maps/:slug/edit
   def edit
     @map = Map.find(params[:id])
-    if current_user == @map.user
-
-      @map_options = get_map_options
-
-    else
+    display_map(@map)
+    unless current_user == @map.user
       flash[:notice] = "Fel, bara agaren till kartan kan andra den."
       redirect_to map_path(@map)
     end
@@ -97,11 +65,10 @@ class MapsController < ApplicationController
   # PUT /maps/:slug/edit
   def update
     @map = Map.find(params[:id])
+    display_map(@map)
     if current_user == @map.user
-
-      @map_options = get_map_options
-
       if @map.update_attributes(params[:map])
+        @map.location = Location.find_or_create_by_latitude_and_longitude(@map.latitude, @map.longitude)
         flash[:notice] = "Kartan sparades!"
         redirect_to map_path(@map)
       else
@@ -110,7 +77,9 @@ class MapsController < ApplicationController
       end
     else
       flash[:notice] = "Fel, bara agaren till kartan kan uppdatera den."
+      redirect_to map_path(@map)
     end
+
   end
 
   def destroy
@@ -128,19 +97,18 @@ class MapsController < ApplicationController
   end
 
   # Sets options for map
-  def get_map_options
-
-    return  {
+  def display_map(map)
+    @display_map =  {
         "map_options" => {
-            "auto_zoom" => false,
-            "zoom" => 6,
-            "center_latitude" => @map.latitude,
-            "center_longitude" => @map.longitude
+            "auto_zoom" => true,
+            "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
+            "zoom" => map.zoom.present? ? map.zoom : 5,
+            "center_latitude" => map.location.latitude.present? ? map.location.latitude : 60,
+            "center_longitude" => map.location.longitude.present? ? map.location.longitude : 15
         },
         "markers" => {
-            "data" => @map.to_gmaps4rails
+          "data" => map.markers.to_gmaps4rails
         }
     }
-
   end
 end

@@ -1,33 +1,42 @@
-<%= form_for(@mark) do |f| %>
-  <% if @mark.errors.any? %>
+<div class="row">
+  <div class="eight columns">
+    <%= form_for([@map, @mark]) do |f| %>
+    <% if @mark.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@mark.errors.count, "error") %> prohibited this mark from being saved:</h2>
 
       <ul>
-      <% @mark.errors.full_messages.each do |msg| %>
+        <% @mark.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
-      <% end %>
+        <% end %>
       </ul>
     </div>
-  <% end %>
+    <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <div class="field">
+      <%= f.label "Namn" %><br />
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label "Beskrivning" %><br />
+      <%= f.text_field :description %>
+    </div>
+
+    <div class="field">
+      <%= f.fields_for :location do |location_fields| %>
+        <%= location_fields.label :longitude %>
+        <%= location_fields.text_field :longitude %>
+
+        <%= location_fields.label :latitude %>
+        <%= location_fields.text_field :latitude %>
+      <% end %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :map %><br />
-    <%= f.text_field :map %>
-  </div>
-  <div class="field">
-    <%= f.label :location %><br />
-    <%= f.text_field :location %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+  <div class="four columns">
+  <%= gmaps4rails(@display_map) %>
+</div>
+</div>
