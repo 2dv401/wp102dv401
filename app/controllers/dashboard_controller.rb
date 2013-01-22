@@ -2,11 +2,15 @@ class DashboardController < ApplicationController
 	before_filter :authenticate_user!
 
   def index
-  	@User = User.all
+   @User = User.all
 
-  	@maps = Map.find(:all, :conditions => [ "user_id = ?", current_user.id])
+	@maps = Map.find(:all, :conditions => [ "user_id = ?", current_user.id])
 
-  	
+	followed_maps_ids = Follow.find_all_by_follower_type_and_followable_type_and_follower_id(
+								'User','Map',current_user.id).map(&:followable_id)
+	
+	@followed_maps = Map.find(followed_maps_ids)
+	
   	if connected_user = session['warden.user.twitter.connected_user.key'].present?
   		connected_user = User.find(connected_user)
 	  # Ask user if she/he wants to merge her/his accounts

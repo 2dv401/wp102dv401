@@ -82,7 +82,7 @@ function searchFieldAutoComplete(){
       if (status == google.maps.GeocoderStatus.OK) {
 			for (var p = 0; p < results.length; p++) {
 				
-				label = results[p].address_components[0].long_name;
+				label = results[p].address_components[0].long_name + ', ' +results[p].address_components[1].long_name;
 				value = results[p].geometry.location;
 			
 				resultPlaces.push({ label: label, value: value });
@@ -95,7 +95,8 @@ function searchFieldAutoComplete(){
     });
 	
 	$("#locationTextField").autocomplete( { source: resultPlaces,
-														select: searchFieldSelect});
+														select: searchFieldSelect,
+														response: onLocationSearchResponse});
 }
 
 function searchFieldSelect(event, ui){
@@ -108,6 +109,22 @@ function searchFieldSelect(event, ui){
    	$('#latitude').val(latitude);
    	$('#longitude').val(longitude);
 	
+	return false;
+}
+
+function onLocationSearchResponse(event, ui){
+	var locations = new Array();
+
+	for (var i = 0; i < ui.content.length;i++)
+	{ 
+		var location = new Array();
+		location.push(ui.content[i].label);
+		location.push(ui.content[i].value.$a);
+		location.push(ui.content[i].value.ab);
+		
+		locations.push(location);
+	}
+
 	return false;
 }
 
