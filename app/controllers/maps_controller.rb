@@ -109,7 +109,26 @@ class MapsController < ApplicationController
             "center_longitude" => map.location.longitude.present? ? map.location.longitude : 15
         },
         "markers" => {
-          "data" => map.marks.to_gmaps4rails
+          "data" => map.marks.to_gmaps4rails  do |mark, marker|
+            marker.infowindow render_to_string(:partial => "marks/foobar",  :locals => { :mark => mark}) # Rendera 
+            # en partial i infofönstret
+            
+            # ändra markeringens bild
+            marker.picture({
+                            :picture => "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Bubble-Chartreuse-icon.png",
+                            :width   => 32,
+                            :height  => 32
+                           })
+
+            # Titeln
+            marker.title   mark.name
+            
+            # Sidebar - inte implementerat
+            #marker.sidebar "i'm the sidebar"
+
+            # Om man vill lägga till fler fält till markeringen i jsonformat
+            marker.json({ :id => mark.id, :foo => "bar" })
+          end
         }
     }
   end
