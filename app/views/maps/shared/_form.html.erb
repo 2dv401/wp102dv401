@@ -26,8 +26,12 @@
 		
 		<br />
 		<br />
-        <%= f.hidden_field :latitude, :value => @map.latitude, :id => "latitude" %>
-        <%= f.hidden_field :longitude, :value => @map.longitude, :id => "longitude" %>
+      <div class="field">
+        <%= f.fields_for :location do |location_fields| %>
+            <%= location_fields.hidden_field :latitude, :value => @map.latitude, :id => "latitude" %>
+            <%= location_fields.hidden_field :longitude, :value => @map.longitude, :id => "longitude" %>
+        <% end %>
+      </div>
 
       <%= submit_tag "Hitta min position", :type => "button", :id => "geolocate_button" %>
 

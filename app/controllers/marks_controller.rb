@@ -53,7 +53,7 @@ class MarksController < ApplicationController
     @mark = Mark.new(params[:mark]) do |m|
       m.map = Map.find_by_slug(params[:map_id])
       m.user = current_user
-      m.location = Location.find_by_latitude_and_longitude(m.latitude, m.longitude) ||  m.location
+      m.location = Location.find_by_latitude_and_longitude(m.latitude, m.longitude) || m.location
     end
 
     unless @mark.exists_in_map?

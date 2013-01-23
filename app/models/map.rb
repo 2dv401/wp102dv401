@@ -11,11 +11,13 @@ class Map < ActiveRecord::Base
 
   acts_as_followable
   acts_as_gmappable
-  
+
+  accepts_nested_attributes_for :location
+
   MAP_TYPES = [ "HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"]
 
   attr_accessor :longitude, :latitude
-  attr_accessible :name, :description, :private, :zoom, :map_type, :longitude, :latitude
+  attr_accessible :name, :description, :private, :zoom, :map_type, :location_attributes
 
   validates	:name, :presence => true, :length => { :maximum => 45 }
   validates	:description, :length => { :maximum => 250 }
@@ -28,4 +30,11 @@ class Map < ActiveRecord::Base
     @follower.save
   end
 
+  def longitude
+    self.location.longitude
+  end
+
+  def latitude
+    self.location.latitude
+  end
 end

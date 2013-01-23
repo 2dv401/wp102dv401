@@ -33,15 +33,19 @@ class MapsController < ApplicationController
   def new
     @map = Map.new
     #todo: h�mta default-koordinater n�nstans/anv�nds geolocation som default
-    @map.location = Location.find_or_create_by_latitude_and_longitude(60, 15)
+    @map.location = Location.new do |l|
+      l.latitude = 60
+      l.longitude = 15
+    end
     @map.zoom = 5
     display_map(@map)
   end
 
   def create
-    @map = Map.new(params[:map])
-    @map.user = current_user
-    @map.location = Location.find_or_create_by_latitude_and_longitude(@map.latitude, @map.longitude)
+    @map = Map.new(params[:map]) do |m|
+      m.user = current_user
+      m.location = Location.find_by_latitude_and_longitude(m.latitude, m.longitude) || m.location
+    end
     display_map(@map)
 
     if @map.save
@@ -105,8 +109,8 @@ class MapsController < ApplicationController
             "auto_zoom" => true,
             "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
             "zoom" => map.zoom.present? ? map.zoom : 5,
-            "center_latitude" => map.location.latitude.present? ? map.location.latitude : 60,
-            "center_longitude" => map.location.longitude.present? ? map.location.longitude : 15
+            "center_latitude" => map.latitude.present? ? map.latitude : 60,
+            "center_longitude" => map.longitude.present? ? map.longitude : 15
         },
         "markers" => {
           "data" => map.marks.to_gmaps4rails
