@@ -49,6 +49,8 @@ Wp102dv401::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  config.assets.logger = false
+
   # Each of the settings defined in config/config.yml will be accessible by calling APP_CONFIG['item'] anywhere in your code.
   APP_CONFIG = YAML.load_file("#{Rails.root}/config/config.yml")
 end

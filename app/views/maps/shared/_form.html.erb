@@ -12,9 +12,10 @@
 			  </ul>
 			</div>
 		<% end %>
-		
+
+
 		<%= f.label :name, "Namn på kartan" %>
-		<%= f.text_field :name %>
+		<%= f.text_field :name, :autofocus => true %>
 		
 		<%= f.label :description, "Beskrivning" %>
 		<%= f.text_field :description %>
@@ -25,14 +26,14 @@
 		
 		<br />
 		<br />
-		
-		<%= submit_tag "Hitta min position", :type => "button", :id => "geolocate_button" %>
-		<%= f.hidden_field :latitude, :value => @map.latitude, :id => "latitude" %>
-		<%= f.hidden_field :longitude, :value => @map.longitude, :id => "longitude" %>
-		
+        <%= f.hidden_field :latitude, :value => @map.latitude, :id => "latitude" %>
+        <%= f.hidden_field :longitude, :value => @map.longitude, :id => "longitude" %>
+
+      <%= submit_tag "Hitta min position", :type => "button", :id => "geolocate_button" %>
+
 		<%= text_field_tag "locationTextField", nil, :placeholder => "Sök startposition" %>
 		
-		<%= gmaps(@map_options) %>
+		<%= gmaps(@display_map) %>
 		
 		<%= f.submit "Spara karta" %>
 	

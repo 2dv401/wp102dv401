@@ -50,6 +50,7 @@ Wp102dv401::Application.routes.draw do
   resources :maps do
     post 'follow'
     post 'unfollow'
+    resources :marks
     resources :status_updates do
       post 'toggle_like'
       resources :status_comments do

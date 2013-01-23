@@ -1,6 +1,10 @@
-<h1>Editing mark</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @mark %> |
-<%= link_to 'Back', marks_path %>
+<div class="row">
+  <div class="eight columns">
+    <h1>Editing mark</h1>
+    <%= render 'form' %>
+  </div>
+  <div class="four columns">
+    <%= gmaps(@display_map) %>
+  </div>
+</div>
+<%= link_to 'Avbryt', map_path(@map) %>
