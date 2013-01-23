@@ -24,10 +24,12 @@ class MarksController < ApplicationController
   # GET /marks/new
   # GET /marks/new.json
   def new
-    @mark = Mark.new
     @map = Map.find_by_slug(params[:map_id])
-    @mark.build_location
-    @display_map = @map.to_gmaps4rails
+    @mark = Mark.new do |m|
+      m.map = @map
+      m.build_location
+    end
+    display_map(@mark.map)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @mark }
@@ -36,10 +38,9 @@ class MarksController < ApplicationController
 
   # GET /marks/1/edit
   def edit
-
     # Inte 100%
     @mark = Mark.find(params[:id])
-    @display_map = @mark.map.to_gmaps4rails
+    display_map(@mark.map)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @mark }
@@ -66,7 +67,7 @@ class MarksController < ApplicationController
         end
       end
     else
-      flash[:notice] = "det finns redan en markering med denna position!"
+      flash[:notice] = "Det finns redan en markering med denna position!"
       redirect_to new_map_mark_path(@mark.map, @mark)
     end
   end
@@ -101,5 +102,21 @@ class MarksController < ApplicationController
       format.html { redirect_to marks_url }
       format.json { head :no_content }
     end
+  end
+
+  # Sets options for map
+  def display_map(map)
+    @display_map =  {
+        "map_options" => {
+            "auto_zoom" => true,
+            "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
+            "zoom" => map.zoom.present? ? map.zoom : 5,
+            "center_latitude" => map.location.latitude.present? ? map.location.latitude : 60,
+            "center_longitude" => map.location.longitude.present? ? map.location.longitude : 15
+        },
+        "markers" => {
+            "data" => map.marks.to_gmaps4rails
+        }
+    }
   end
 end

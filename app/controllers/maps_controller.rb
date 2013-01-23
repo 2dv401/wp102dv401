@@ -20,7 +20,9 @@ class MapsController < ApplicationController
     @status_update = StatusUpdate.new
     @status_comment = StatusComment.new
     @map_comment = MapComment.new
-    @mark = Mark.new
+    @mark = Mark.new do |m|
+      m.build_location
+    end
 
     # Referens till ett Map-objekt
     @map = Map.find(params[:id])

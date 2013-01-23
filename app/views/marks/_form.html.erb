@@ -1,42 +1,35 @@
-<div class="row">
-  <div class="eight columns">
-    <%= form_for([@map, @mark]) do |f| %>
+<%= form_for([@map, @mark]) do |f| %>
     <% if @mark.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@mark.errors.count, "error") %> prohibited this mark from being saved:</h2>
+        <div id="error_explanation">
+          <h2><%= pluralize(@mark.errors.count, "error") %> prohibited this mark from being saved:</h2>
 
-      <ul>
-        <% @mark.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
+          <ul>
+            <% @mark.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
     <% end %>
 
     <div class="field">
       <%= f.label "Namn" %><br />
-      <%= f.text_field :name, :autofocus => true %>
+      <%= f.text_field :name, :placeholder => "Namn ex( min karta )", :autofocus => true %>
     </div>
     <div class="field">
       <%= f.label "Beskrivning" %><br />
-      <%= f.text_field :description %>
+      <%= f.text_field :description, :placeholder => "Beskrivning ex( min Beskrivning )"  %>
     </div>
 
     <div class="field">
       <%= f.fields_for :location do |location_fields| %>
-        <%= location_fields.label :longitude %>
-        <%= location_fields.text_field :longitude %>
+          <%= location_fields.label :longitude %>
+          <%= location_fields.text_field :longitude, :placeholder => "Longitud ex( 15.25 )" %>
 
-        <%= location_fields.label :latitude %>
-        <%= location_fields.text_field :latitude %>
+          <%= location_fields.label :latitude %>
+          <%= location_fields.text_field :latitude, :placeholder => "Latitud ex( 59.25 )" %>
       <% end %>
     </div>
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit "Spara"%>
     </div>
-    <% end %>
-  </div>
-  <div class="four columns">
-  <%= gmaps4rails(@display_map) %>
-</div>
-</div>
+<% end %>
