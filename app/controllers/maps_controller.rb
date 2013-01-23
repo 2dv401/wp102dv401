@@ -4,17 +4,16 @@ class MapsController < ApplicationController
     @maps = Map.order("created_at ASC").find_all_by_user_id(current_user.id)
   end
 
-  def follow
+  def toggle
     @map = Map.find(params[:map_id])
-    current_user.follow!(@map)
+    if current_user.follows?(@map)
+      current_user.unfollow!(@map)
+    else
+      current_user.follow!(@map)
+    end
     render :template => 'maps/follow/toggle'
   end
 
-  def unfollow
-    @map = Map.find(params[:map_id])
-    current_user.unfollow!(@map)
-    render :template => 'maps/follow/toggle'
-  end
   def show
     #Nya objekt som kan skapas på maps-sidan
     @status_update = StatusUpdate.new

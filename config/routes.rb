@@ -48,8 +48,7 @@ Wp102dv401::Application.routes.draw do
   end
   
   resources :maps do
-    post 'follow'
-    post 'unfollow'
+    post 'toggle'
     resources :marks
     resources :status_updates do
       post 'toggle_like'
