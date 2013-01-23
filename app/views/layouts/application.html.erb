@@ -5,7 +5,7 @@
   <meta name="author" content="<%= meta_author %>">
   <meta name="keywords" content="<%= meta_keywords %>" />
   <meta name="description" content="<%= meta_description %>" />
- 
+
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
 
@@ -20,77 +20,76 @@
   <%= favicon_link_tag 'icons/apple-touch-icon-114x114.png', rel: 'apple-touch-icon', type: 'image/png', sizes: '114x114' %>
 </head>
 <body class='<%= controller.controller_name %>'>
-    <div class="container">
-		<nav class="top-bar fixed">
-			<ul>
-				<li class="name">
-					<h1><a href="<%= root_url%>">Kartr.se</a></h1>
-				</li>
-				<li class="toggle-topbar">
-					<a href="#"></a>
-				</li>
-			</ul>
+<div class="container">
+  <nav class="top-bar fixed">
 
-			<section>
-				<ul class="left">
-					<li><a href="#">Link</a></li>
-					<li><a href="#">Link</a></li>
-					<li><a href="#">Link</a></li>
-				</ul>
-				<% if user_signed_in? %>
-					<ul class="right">
-						<li class="has-dropdown">
-							<a href="#">
-								<% #@TODO: Bryta ut detta till en helper %>
-								<% if current_user.provider? %>
-									<img src="<%= current_user.profile_image %>" alt="" class="profile-image-small" />
-                   <%= current_user.name%>
-								<% else %>
-								<%= 	
-								gravatar_image_tag(current_user.email,  :alt => current_user.email, 
-							            :class => 'profile-image-small', 
-							            :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
-                <%= current_user.username%>
-								<% end %>
-							    
-							</a>
-							<ul class="dropdown">
-								<li><%= link_to raw('<i class="foundicon-settings"></i> Inställningar'), edit_user_registration_path %> </li>
-                        		<li><%= link_to raw('<i class="foundicon-location"></i> Mina kartor'), maps_path %></li>
-                        		<li><%= link_to raw('<i class="foundicon-lock"></i> Logga ut'), destroy_user_session_path, :method => :delete %></li>
-							</ul>
-						</li>
-					</ul>
-				<% end %>
-			</section>
-		</nav>
-		<div class="row" id="flash">
-			<div class="twelve columns">
-				
-				<% flash.each do |name, msg| %>
-					<div class="alert-box">
-					<%= content_tag :div, msg, :id => "flash_#{name}" %>
+    <ul>
+      <li class="name">
+        <h1><%= link_to "Kartr.se", root_url %></h1>
+      </li>
+      <li class="toggle-topbar">
+        <a href="#">toggle-topbar</a>
+      </li>
+    </ul>
+
+    <section>
+      <ul class="left">
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+      </ul>
+      <% if user_signed_in? %>
+          <ul class="right">
+            <li class="has-dropdown">
+              <a href="#">
+                <% #@TODO: Bryta ut detta till en helper %>
+                <% if current_user.provider? %>
+                    <img src="<%= current_user.profile_image %>" alt="" class="profile-image-small" />
+                    <%= current_user.name%>
+                <% else %>
+                    <%= gravatar_image_tag(current_user.email,
+                       :alt => current_user.email,
+                       :class => 'profile-image-small',
+                       :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
+                    <%= current_user.username%>
+                <% end %>
+              </a>
+              <ul class="dropdown">
+                <li><%= link_to raw('<i class="foundicon-settings"></i> Inställningar'), edit_user_registration_path %> </li>
+                <li><%= link_to raw('<i class="foundicon-location"></i> Mina kartor'), maps_path %></li>
+                <li><%= link_to raw('<i class="foundicon-lock"></i> Logga ut'), destroy_user_session_path, :method => :delete %></li>
+              </ul>
+            </li>
+          </ul>
+      <% end %>
+    </section>
+
+  </nav>
+
+  <div class="row" id="flash">
+    <div class="twelve columns">
+      <% flash.each do |name, msg| %>
+          <div class="alert-box">
+            <%= content_tag :div, msg, :id => "flash_#{name}" %>
             <a href="" class="close">&times;</a>
+          </div>
+      <% end %>
+    </div>
+  </div>
 
-					</div>
-					<% end %>
-				
-			</div>
-		</div>
+  <section class="row" id="content">
+    <div class="twelve columns">
+      <%= yield %>
+    </div>
+  </section>
 
-		<section class="row" id="content">
-			<div class="twelve columns">
-				<%= yield %>
-			</div>
-		</section>
-
-		<footer class="row" id="footer">
-            <p class="three columns copyright"><strong>kartr.se &copy; 2013</strong></p>
-            <div class="nine columns footer_links">
-              <%= render "shared/footer_links" %>
-			</div>
-		</footer>
-	</div>
+  <footer class="row" id="footer">
+    <p class="three columns copyright"><strong>kartr.se &copy; 2013</strong></p>
+    <div class="nine columns footer_links">
+      <%= render "shared/footer_links" %>
+    </div>
+  </footer>
+</div>
 
 <%= yield :scripts %>
 
