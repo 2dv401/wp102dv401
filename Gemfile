@@ -33,9 +33,6 @@ gem 'jquery-rails'
 gem 'gmaps4rails'
 gem 'gravatar_image_tag'
 
-gem 'friendly_id'
-
-
 
 
 #gem "jammit", :git => "git://github.com/documentcloud/jammit.git"

@@ -1,7 +1,4 @@
 class Map < ActiveRecord::Base
-  extend FriendlyId
-  friendly_id :name, :use => :scoped, :scope => :user
-
 	belongs_to :user
   belongs_to :location
 

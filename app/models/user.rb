@@ -1,7 +1,4 @@
 class User < ActiveRecord::Base
-  extend FriendlyId
-  friendly_id :name, use: [:slugged, :history]
-
   has_many :status_updates, :dependent => :destroy
   has_many :status_comments, :dependent => :destroy
   has_many :maps, :dependent => :destroy
