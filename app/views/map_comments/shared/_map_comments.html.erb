@@ -1,15 +1,14 @@
 <% comments.each do |c| %>
+    <% @comment = c %>
     <li class="map-comment">
       <p class="map-comment-body">
         <span class="author"><%= c.user.username %> - </span><%= c.content %>
       </p>
       <div class="map-comment-footer">
         <span class="created-at"><%= time_ago(c.created_at) %></span>
-        <% if current_user.likes?(c) %>
-            <%= link_to '| Sluta gilla ', map_map_comment_toggle_like_path(map, c), :method => :post %>
-        <% else %>
-            <%= link_to '| Gilla ', map_map_comment_toggle_like_path(map, c), :method => :post %>
-        <% end %>
+        <div id="like-button-<%= c.id %>">
+          <%= render 'map_comments/shared/like_button', :map => @map, :comment => @comment %>
+        </div>
         <% if current_user == c.user || current_user == map.user %>
             <%= link_to '| Ta bort ', map_map_comment_path(map, c), :confirm => 'Vill du ta bort kommentaren?', :method => :delete %>
         <% end %>
