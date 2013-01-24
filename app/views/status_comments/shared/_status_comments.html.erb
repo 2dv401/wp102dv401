@@ -5,11 +5,9 @@
       </p>
       <div class="status-comment-footer">
         <span class="created-at"><%= time_ago(c.created_at) %></span>
-        <% if current_user.likes?(c) %>
-            <%= link_to '| Sluta gilla ', map_status_update_status_comment_toggle_like_path(map, update, c), :method => :post %>
-        <% else %>
-            <%= link_to '| Gilla ', map_status_update_status_comment_toggle_like_path(map, update, c), :method => :post %>
-        <% end %>
+        <div id="status-comment-like-button-<%= c.id %>">
+          <%= render 'status_comments/shared/like_button', :map => map, :update => update, :comment => c %>
+        </div>
         <% if current_user == c.user || current_user == map.user %>
             <%= link_to '| Ta bort ', map_status_update_status_comment_path(map, update, c), :confirm => 'Vill du ta bort kommentaren?', :method => :delete %>
         <% end %>
