@@ -1,7 +1,7 @@
 <% comments.each do |c| %>
     <li class="status-comment">
       <p class="status-comment-body">
-        <span class="author"><%= c.user.username %></span><%= c.content %>
+        <span class="author"><%= c.user.username %></span><%= format_text(c.content) %>
       </p>
       <div class="status-comment-footer">
         <span class="created-at"><%= time_ago(c.created_at) %></span>

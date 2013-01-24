@@ -59,4 +59,11 @@ module ApplicationHelper
       time.strftime("den %d "+ month +" %Y kl. %H:%M")
     end
   end
+
+  def format_text(text)
+    text.gsub!(/\:\-?\)/, '<span class="emoticon smile"></span>')
+    text.gsub!(/\;\-?\)/, '<span class="emoticon blink"></span>')
+    text.gsub!(/\<\-?3/, '<span class="emoticon heart"></span>')
+    text.html_safe
+  end
 end

@@ -31,3 +31,21 @@
 #footer {
   margin-top: 30px;
 }
+
+span.emoticon {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+}
+
+.smile {
+    background-image: url('http://static.ak.fbcdn.net/rsrc.php/v2/yU/x/X8YPpi6kcyo.png');
+} 
+
+.sad {
+    background-image: url('http://static.ak.fbcdn.net/rsrc.php/v2/yU/x/X8YPpi6kcyo.png');
+} 
+
+.heart {
+    background-image: url('http://static.ak.fbcdn.net/rsrc.php/v2/yr/x/Ob2Er7b1NpV.png');
+} 
