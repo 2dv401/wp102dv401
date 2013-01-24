@@ -10,6 +10,10 @@ class DashboardController < ApplicationController
 								'User','Map',current_user.id).map(&:followable_id)
 	
 	@followed_maps = Map.find(followed_maps_ids)
+
+
+  ## Alla kartor - Tillfälligt i DEV-läge
+  @all_maps = Map.all
 	
   	if connected_user = session['warden.user.twitter.connected_user.key'].present?
   		connected_user = User.find(connected_user)
