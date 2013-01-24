@@ -1,0 +1,2 @@
+var buttonId = "#like-button-<%= @update.id %>"
+$(buttonId).html("<%= j render 'status_updates/shared/like_button', :map => @map, :update => @update %>");
