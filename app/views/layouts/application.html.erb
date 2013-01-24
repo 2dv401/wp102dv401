@@ -61,6 +61,18 @@
               </ul>
             </li>
           </ul>
+          <ul>
+            <li class="has-dropdown">
+              <a href="#">
+               Mina kartor
+              </a>
+              <ul class="dropdown">
+                <% current_user.maps.find_each do |map| %>
+                  <li><%= link_to map.name, profile_map_path(current_user.slug, map.slug) %></li>
+                <% end %>
+              </ul>
+            </li>
+          </ul>
       <% end %>
     </section>
 
