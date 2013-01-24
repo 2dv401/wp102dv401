@@ -1,5 +1,4 @@
 Wp102dv401::Application.routes.draw do
-
   resources :marks
 
 
@@ -42,8 +41,9 @@ Wp102dv401::Application.routes.draw do
 
   resources :dashboard
   resources :locations
+  resources :profiles
 
-  resources :profile do
+  resources :profiles do
     resources :maps
   end
   
