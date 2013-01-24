@@ -3,12 +3,12 @@ class MapCommentsController < ApplicationController
   # POST map/:id/map_comments/toggle_like
   def toggle_like
     @map = Map.find(params[:map_id])
-    @comment = MapComment.find(params[:map_comment_id])
+    @map_comment = MapComment.find(params[:map_comment_id])
 
-    if current_user.likes?(@comment)
-      current_user.unlike!(@comment)
+    if current_user.likes?(@map_comment)
+      current_user.unlike!(@map_comment)
     else
-      current_user.like!(@comment)
+      current_user.like!(@map_comment)
     end
     render :template => 'map_comments/like/toggle'
   end
