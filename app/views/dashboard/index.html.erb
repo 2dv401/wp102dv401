@@ -20,7 +20,7 @@
 	<div class="three columns">
 		<h4>Mina kartor</h4>
     <% @maps.each do |map| %>
-    <%= link_to map.name, map_path(map.id) %>
+    <%= link_to map.name, map_path(map.slug) %>
 
     <br>
     <% end %>
@@ -28,7 +28,7 @@
 	<div class="three columns">
 		<h4>Kartor jag följer</h4>
 		<% @followed_maps.each do |followed| %>
-			<%= link_to followed.name, map_path(followed.id) %>
+			<%= link_to followed.name, map_path(followed.slug) %>
 			<br>
 		<% end %>
 	</div>

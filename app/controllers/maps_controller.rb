@@ -57,7 +57,7 @@ class MapsController < ApplicationController
 
   end
 
-  # GET /maps/:id/edit
+  # GET /maps/:slug/edit
   def edit
     @map = Map.find(params[:id])
     display_map(@map)
@@ -67,7 +67,7 @@ class MapsController < ApplicationController
     end
   end
 
-  # PUT /maps/:id/edit
+  # PUT /maps/:slug/edit
   def update
     @map = Map.find(params[:id])
     display_map(@map)

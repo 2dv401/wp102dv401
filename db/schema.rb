@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130123134158) do
+ActiveRecord::Schema.define(:version => 20130118133614) do
 
   create_table "follows", :force => true do |t|
     t.string   "follower_type"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(:version => 20130123134158) do
     t.boolean  "gmaps",                      :default => true,     :null => false
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
+    t.string   "slug"
     t.integer  "location_id"
     t.integer  "user_id"
     t.integer  "zoom",                       :default => 8,        :null => false
@@ -79,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20130123134158) do
   end
 
   add_index "maps", ["location_id"], :name => "index_maps_on_location_id"
+  add_index "maps", ["slug"], :name => "index_maps_on_slug"
   add_index "maps", ["user_id"], :name => "index_maps_on_user_id"
 
   create_table "marks", :force => true do |t|
@@ -135,10 +137,12 @@ ActiveRecord::Schema.define(:version => 20130123134158) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "profile_image"
+    t.string   "slug"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["slug"], :name => "index_users_on_slug"
 
 end
