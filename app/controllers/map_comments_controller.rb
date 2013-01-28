@@ -25,7 +25,7 @@ class MapCommentsController < ApplicationController
     else
       flash[:notice] = "Fel nar kommentaren skulle sparas"
     end
-    redirect_to map_path(params[:map_id])
+    redirect_to profile_map_path(@comment.map.user.slug, @comment.map.slug)
   end
 
   # DELETE /maps/:id/map_comments/1
