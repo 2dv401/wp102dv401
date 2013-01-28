@@ -33,6 +33,8 @@ class User < ActiveRecord::Base
                   :remember_me, :provider, :uid, :username,
                   :name, :login, :profile_image, :likes
 
+  validates_uniqueness_of :username
+
 
   ## Ser till att e-post inte behövs vid Twitter registrering.
   def email_required?

@@ -4,6 +4,8 @@ sv:
       models:
         user:
           attributes:
+            username:
+              taken: "Det finns redan en användare med det användarnamnet, försök igen."
             email:
               taken: "Det finns redan ett konto registrerat på denna epostadress"
               invalid: "Ogiltig epostadress"
