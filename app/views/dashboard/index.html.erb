@@ -39,6 +39,9 @@
 	</div>
 	<div class="three columns">
 		<h4>Nya kartor idag</h4>
+		<% (@new_maps).each do |m| %>
+			<li><%= link_to m.name, profile_map_path(m.user.slug, m.slug)%></li>
+		<% end %>
 	</div>
 	<div class="three columns">
 		<h4>Alla kartor</h4>

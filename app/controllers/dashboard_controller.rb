@@ -11,7 +11,9 @@ class DashboardController < ApplicationController
 	
 	@followed_maps = Map.find(followed_maps_ids)
 
-
+	@new_maps = Map.find(:all, :conditions => [" created_at between ? AND ? AND private = ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day, false],
+			:limit => 10, :order => 'created_at DESC')
+	
   ## Alla kartor - Tillfälligt i DEV-läge
   @all_maps = Map.all
 	
