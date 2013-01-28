@@ -25,15 +25,16 @@ class MapCommentsController < ApplicationController
     else
       flash[:notice] = "Fel nar kommentaren skulle sparas"
     end
-    redirect_to map_path(params[:map_id])
+    redirect_to profile_map_path(@comment.map.user.slug, @comment.map.slug)
   end
 
   # DELETE /maps/:id/map_comments/1
   # DELETE /maps/:id/map_comments/1.json
   def destroy
-    @map_comment = MapComment.find(params[:id])
-    if current_user == @map_comment.user || current_user == @map_comment.map.user
-      if @map_comment.destroy
+    @comment = MapComment.find(params[:id])
+    @map = @comment.map
+    if current_user == @comment.user || current_user == @map.user
+      if @comment.destroy
         flash[:notice] = "Kommentaren borttagen"
       else
         flash[:notice] = "Fel nar kommentaren skulle tagas bort"
@@ -41,6 +42,6 @@ class MapCommentsController < ApplicationController
     else
       flash[:notice] = "Fel, bara personen som skrev kommentaren och agaren till kartan kan ta bort den."
     end
-    redirect_to map_path(params[:map_id])
+    redirect_to profile_map_path(@map.user.slug, @map.slug)
   end
 end

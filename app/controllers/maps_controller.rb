@@ -49,7 +49,7 @@ class MapsController < ApplicationController
 
     if @map.save
       flash[:notice] = "Kartan sparades!"
-      redirect_to map_path(@map)
+      redirect_to profile_map_path(@map.user.slug, @map.slug)
     else
       flash[:error] = "Fel intraffade nar kartan skulle sparas."
       render :action => "new"
@@ -63,7 +63,7 @@ class MapsController < ApplicationController
     display_map(@map)
     unless current_user == @map.user
       flash[:notice] = "Fel, bara agaren till kartan kan andra den."
-      redirect_to map_path(@map)
+      redirect_to edit_profile_map_path(@map.user.slug, @map.slug)
     end
   end
 
@@ -82,7 +82,7 @@ class MapsController < ApplicationController
       end
     else
       flash[:notice] = "Fel, bara agaren till kartan kan uppdatera den."
-      redirect_to map_path(@map)
+      redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
 
   end

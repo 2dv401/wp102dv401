@@ -1,6 +1,6 @@
 <% @maps.each do |map| %>
-     <%= link_to map.name, map_path(map.slug) %>
+     <%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
      <br>
 <% end %>
 
-<h3><%= link_to "Ny karta", new_map_path %></h3>
+<h3><%= link_to "Ny karta", new_profile_map_path(current_user.slug) %></h3>

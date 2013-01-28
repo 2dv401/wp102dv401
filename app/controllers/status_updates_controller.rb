@@ -16,22 +16,23 @@ class StatusUpdatesController < ApplicationController
 
   def create
     #Skapar ny statusuppdatering från post-parametrarna samt lägger till aktuella användaren
-    @status_update = StatusUpdate.new(params[:status_update])
-    @status_update.user = current_user
-    @status_update.map = Map.find(params[:map_id])
+    @update = StatusUpdate.new(params[:status_update])
+    @update.user = current_user
+    @update.map = Map.find(params[:map_id])
 
-    if @status_update.save
+    if @update.save
       flash[:notice] = "Statusuppdatering sparad"
     else
       flash[:notice] = "Fel nar statusuppdatering skulle sparas"
     end
-    redirect_to map_path(params[:map_id])
+    redirect_to profile_map_path(@update.map.user.slug, @update.map.slug)
   end
 
   def destroy
-    @status_update = StatusUpdate.find(params[:id])
-    if current_user == @status_update.user
-      if @status_update.destroy
+    @update = StatusUpdate.find(params[:id])
+    @map = @update.map
+    if current_user == @update.user
+      if @update.destroy
         flash[:notice] = "Statusen borttagen"
       else
         flash[:notice] = "Fel nar statusen skulle tagas bort"
@@ -39,6 +40,6 @@ class StatusUpdatesController < ApplicationController
     else
       flash[:notice] = "Fel, bara agaren till kartan kan ta bort statusen."
     end
-    redirect_to map_path(params[:map_id])
+    redirect_to profile_map_path(@map.user.slug, @map.slug )
   end
 end
