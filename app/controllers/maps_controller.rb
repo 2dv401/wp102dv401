@@ -65,6 +65,7 @@ class MapsController < ApplicationController
       flash[:notice] = "Fel, bara agaren till kartan kan andra den."
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
+
   end
 
   # PUT /maps/:slug/edit
