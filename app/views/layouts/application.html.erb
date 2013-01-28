@@ -34,6 +34,7 @@
 
     <section>
       <ul class="left">
+        <li class="divider">divider</li>
         <li><a href="#">Link</a></li>
         <li><a href="#">Link</a></li>
         <li><a href="#">Link</a></li>
@@ -68,6 +69,9 @@
               </a>
               <ul class="dropdown">
                 <li><%= link_to "Ny karta...", new_profile_map_path(current_user.slug) %></li>
+                <%= top_bar_edit_map_link %>
+                <%= top_bar_delete_map_link %>
+                <li class="divider">divider</li>
                 <% current_user.maps.find_each do |map| %>
                   <li><%= link_to map.name, profile_map_path(current_user.slug, map.slug) %></li>
                 <% end %>

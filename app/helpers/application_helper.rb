@@ -36,6 +36,26 @@ module ApplicationHelper
     end
   end
 
+  # En hjälpmetod för att lägga till edit-länk i top-bar
+  def top_bar_edit_map_link(map = nil)
+    if map.present?
+      link =  link_to "Edit karta...", edit_profile_map_path(map.user.slug, map.slug)
+      content_for :edit_map_link, link
+    else
+      content_for?(:edit_map_link) ? raw('<li>' + content_for(:edit_map_link) + '</li>') : ''
+    end
+  end
+
+  # En hjälpmetod för att lägga till destroy-länk i top-bar
+  def top_bar_delete_map_link(map = nil)
+    if map.present?
+      link = link_to "Ta bort kartan", profile_map_path(@map.user.slug, @map.slug), :method=>:delete, :confirm=>"Vill du ta bort kartan?"
+      content_for :delete_map_link, link
+    else
+      content_for?(:delete_map_link) ? raw('<li>' + content_for(:delete_map_link) + '</li>') : ''
+    end
+  end
+
   # DateTime formaterare
   def time_ago(time_format = nil)
     now = Time.now
