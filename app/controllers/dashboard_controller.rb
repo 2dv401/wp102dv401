@@ -10,6 +10,12 @@ class DashboardController < ApplicationController
 								'User','Map',current_user.id).map(&:followable_id)
 	
 	@followed_maps = Map.find(followed_maps_ids)
+
+	@new_maps = Map.find(:all, :conditions => [" created_at between ? AND ? AND private = ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day, false],
+			:limit => 10, :order => 'created_at DESC')
+	
+  ## Alla kartor - Tillfälligt i DEV-läge
+  @all_maps = Map.all
 	
   	if connected_user = session['warden.user.twitter.connected_user.key'].present?
   		connected_user = User.find(connected_user)
