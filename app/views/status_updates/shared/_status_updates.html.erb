@@ -13,7 +13,7 @@
               <div class="status-update-footer">
                 <span class="created-at"><%= time_ago(u.created_at) %></span>
                 <div id="status-update-like-button-<%= u.id %>">
-                  <%= render 'status_updates/shared/like_button', :map => @map, :update => u %>
+                  <%= render 'status_updates/shared/like_button', :map => map, :update => u %>
                 </div>
                 <% if current_user == u.user %>
                     <%= link_to '| Ta bort ', map_status_update_path(map, u), :confirm => 'Vill du ta bort statusuppdateringen?', :method => :delete %>
