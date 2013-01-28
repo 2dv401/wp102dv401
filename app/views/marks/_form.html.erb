@@ -22,11 +22,11 @@
 
     <div class="field">
       <%= f.fields_for :location do |location_fields| %>
-          <%= location_fields.label :longitude %>
-          <%= location_fields.text_field :longitude, :placeholder => "Longitud ex( 15.25 )" %>
-
           <%= location_fields.label :latitude %>
           <%= location_fields.text_field :latitude, :placeholder => "Latitud ex( 59.25 )" %>
+
+          <%= location_fields.label :longitude %>
+          <%= location_fields.text_field :longitude, :placeholder => "Longitud ex( 15.25 )" %>
       <% end %>
     </div>
     <div class="actions">
