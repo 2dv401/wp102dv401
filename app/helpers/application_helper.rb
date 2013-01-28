@@ -39,7 +39,7 @@ module ApplicationHelper
   # En hjälpmetod för att lägga till edit-länk i top-bar
   def top_bar_edit_map_link(map = nil)
     if map.present?
-      link =  link_to "Edit karta...", edit_profile_map_path(map.user.slug, map.slug)
+      link =  link_to "Redigera karta...", edit_profile_map_path(map.user.slug, map.slug)
       content_for :edit_map_link, link
     else
       content_for?(:edit_map_link) ? raw('<li>' + content_for(:edit_map_link) + '</li>') : ''
