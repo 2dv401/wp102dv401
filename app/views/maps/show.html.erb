@@ -1,4 +1,5 @@
 <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
+
 <div class="row">
   <div class="seven columns">
     <h1><%= @map.name %></h1>
@@ -15,8 +16,10 @@
             <%= render "status_updates/shared/form" %>
           </div>
           <%= link_to "Lägg till markering", new_map_mark_path(@map) %> |
-          <%= link_to "Ändra karta", edit_map_path(@map) %> |
+          <%= link_to "Ändra karta", edit_profile_map_path(@map.user.slug, @map.slug) %> |
           <%= link_to "Ta bort karta", map_path(@map.id), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>
+          <% top_bar_edit_map_link @map %>
+          <% top_bar_delete_map_link @map%>
         </div>
     <% end %>
   </div>

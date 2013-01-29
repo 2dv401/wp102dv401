@@ -34,6 +34,7 @@
 
     <section>
       <ul class="left">
+        <li class="divider">divider</li>
         <li><a href="#">Link</a></li>
         <li><a href="#">Link</a></li>
         <li><a href="#">Link</a></li>
@@ -56,7 +57,7 @@
               </a>
               <ul class="dropdown">
                 <li><%= link_to raw('<i class="foundicon-settings"></i> Inställningar'), edit_user_registration_path %> </li>
-                <li><%= link_to raw('<i class="foundicon-location"></i> Mina kartor'), maps_path %></li>
+                <li><%= link_to raw('<i class="foundicon-location"></i> Mina kartor'), profile_maps_path(current_user.slug) %></li>
                 <li><%= link_to raw('<i class="foundicon-lock"></i> Logga ut'), destroy_user_session_path, :method => :delete %></li>
               </ul>
             </li>
@@ -64,9 +65,14 @@
           <ul>
             <li class="has-dropdown">
               <a href="#">
-               Mina kartor
+               Kartor
               </a>
               <ul class="dropdown">
+                <li><%= link_to "Ny karta...", new_profile_map_path(current_user.slug) %></li>
+                <%= top_bar_edit_map_link %>
+                <%= top_bar_delete_map_link %>
+                <li class="divider"></li>
+                <li><label>Mina kartor</label></li>
                 <% current_user.maps.find_each do |map| %>
                   <li><%= link_to map.name, profile_map_path(current_user.slug, map.slug) %></li>
                 <% end %>
