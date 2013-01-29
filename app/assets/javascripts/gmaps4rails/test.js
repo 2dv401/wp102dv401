@@ -171,6 +171,8 @@ window.onready = function () {
 	var searchField = document.getElementById("locationTextField");
 	var map = $("#map");
 	var mapCreation = $("#mapCreation");
+	
+	
     if(submit){
       submit.onclick = click;
     }
@@ -192,10 +194,15 @@ window.onready = function () {
 	 if(map.is('*') && mapCreation.length < 1){
 		map.mouseover(activateLocationAdd);
     }
+	$('.showCords').click(function(e){
+		e.preventDefault();
+		$('.fieldCords').slideToggle();
+	});
 	 
 	$(document).keyup(function(e) {
 		if (e.keyCode == 27){
 			closeMarkingCreationBox();
 			}
 	});
+	
 }
