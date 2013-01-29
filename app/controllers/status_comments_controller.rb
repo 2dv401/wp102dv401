@@ -2,8 +2,8 @@ class StatusCommentsController < ApplicationController
   before_filter :authenticate_user!
 
   def toggle_like
-    @map = Map.find(params[:map_id])
     @update = StatusUpdate.find(params[:status_update_id])
+    @map = @update.map
     @status_comment = StatusComment.find(params[:status_comment_id])
 
     if current_user.likes?(@status_comment)

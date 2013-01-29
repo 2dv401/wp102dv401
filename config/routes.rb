@@ -34,8 +34,6 @@ Wp102dv401::Application.routes.draw do
   end
 
   resources :dashboard
-  resources :locations
-
   resources :profiles do
     resources :maps
   end
@@ -45,11 +43,14 @@ Wp102dv401::Application.routes.draw do
     resources :marks
     resources :status_updates do
       post 'toggle_like'
-      resources :status_comments do
-        post 'toggle_like'
-      end
     end
     resources :map_comments do
+      post 'toggle_like'
+    end
+  end
+
+  resources :status_updates do
+    resources :status_comments do
       post 'toggle_like'
     end
   end
