@@ -1,0 +1,15 @@
+<ul class="left">
+  <li class="divider"></li>
+  <li class="has-dropdown">
+    <a href="#">Kartor</a>
+    <ul class="dropdown">
+      <li><%= link_to "Ny karta...", new_profile_map_path(current_user.slug) %></li>
+      <li class="divider"></li>
+      <li><label>Mina kartor</label></li>
+      <% current_user.maps.find_each do |map| %>
+          <li><%= link_to map.name, profile_map_path(current_user.slug, map.slug) %></li>
+      <% end %>
+    </ul>
+  </li>
+  <li class="divider hide-for-small"></li>
+</ul>
