@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-	# En hjälpmetod för att lägga till information i titeln
+  # En hjälpmetod för att lägga till information i titeln
   def title(title = nil)
     if title.present?
       content_for :title, title
@@ -36,6 +36,17 @@ module ApplicationHelper
     end
   end
 
+  def followed_maps
+    @maps = []
+    # Hämtar alla Follow-objekt som är kopplad till current_user...
+    Follow.find_all_by_follower_id_and_followable_type(current_user.id, 'Map').each do |follow|
+      # ... hämtar den kartan som menas
+      @maps << Map.find(follow.followable_id)
+    end
+
+    return @maps
+  end
+
   # DateTime formaterare
   def time_ago(time_format = nil)
     now = Time.now
@@ -47,11 +58,11 @@ module ApplicationHelper
     if time.today?
       time.strftime("idag kl. %H:%M")
 
-    # Är det igar?
+      # Är det igar?
     elsif time.day == now.yesterday.day
       time.strftime("igar kl. %H:%M")
 
-    # Är det iår?
+      # Är det iår?
     elsif time.year == now.year
       time.strftime("den %d "+ month +" kl. %H:%M")
 

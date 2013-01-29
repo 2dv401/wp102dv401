@@ -27,9 +27,9 @@
               <ul class="status-comments">
                 <% if u.status_comments.any? %>
                     <li class="status-update-comment-show">Visa alla kommentarer</li>
-                    <%= render "status_comments/shared/status_comments", :map => map, :update => u, :comments => u.status_comments %>
+                    <%= render "status_comments/shared/status_comments", :update => u, :comments => u.status_comments %>
                 <% end %>
-                <li><%= render "status_comments/shared/form", :map => map, :update => u %></li>
+                <li><%= render "status_comments/shared/form", :update => u %></li>
               </ul>
             </div>
           </article>

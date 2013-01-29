@@ -16,10 +16,10 @@ class DashboardController < ApplicationController
 
   @new_maps = Map.where(:created_at => Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
 
-	
+
   ## Alla kartor - Tillfälligt i DEV-läge
   @all_maps = Map.all
-	
+
   	if connected_user = session['warden.user.twitter.connected_user.key'].present?
   		connected_user = User.find(connected_user)
 	  # Ask user if she/he wants to merge her/his accounts
