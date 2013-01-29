@@ -1,10 +1,11 @@
-<div class="row">
+﻿<div class="row">
   <div class="eight columns">
     <h1>New mark</h1>
     <%= render 'form' %>
   </div>
   <div class="four columns">
     <%= gmaps(@display_map) %>
+	 <%= text_field_tag "locationTextField", nil, :placeholder => "Sök startposition" %>
   </div>
 </div>
 <%= link_to 'Avbryt', map_path(@map) %>
