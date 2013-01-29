@@ -1,6 +1,7 @@
 class MapsController < ApplicationController
   before_filter :authenticate_user!
   def index
+    ## Hämtar alla kartor användaren äger
     @maps = Map.order("created_at ASC").find_all_by_user_id(current_user.id)
   end
 
@@ -23,8 +24,15 @@ class MapsController < ApplicationController
       m.build_location
     end
 
+
     # Referens till ett Map-objekt
     @map = Map.find(params[:id])
+
+    # Kontrollerar om användaren har behörighet att titta på kartan.
+    if @map.private? and @map.user.id != current_user.id
+      flash[:notice] = "Kartan du forsoker titta pa ar privat!"
+      redirect_to root_path
+    end
 
     display_map(@map)
   end
@@ -104,6 +112,7 @@ class MapsController < ApplicationController
 
   # Sets options for map
   def display_map(map)
+
     @display_map =  {
         "map_options" => {
             "auto_zoom" => true,

@@ -3,7 +3,6 @@ Wp102dv401::Application.routes.draw do
 
 
   get "locations/create"
-
   get "locations/destroy"
 
   get "/om-kartr" => "pages#about", :as => :pages_about
