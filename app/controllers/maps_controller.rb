@@ -32,6 +32,7 @@ class MapsController < ApplicationController
     if @map.private? and @map.user.id != current_user.id
       flash[:notice] = "Kartan du forsoker titta pa ar privat!"
       redirect_to root_path
+      return
     end
 
     display_map(@map)
