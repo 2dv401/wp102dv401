@@ -5,11 +5,11 @@
       <a href="#"></a>
     </li>
   </ul>
-  <% if user_signed_in? %>
+  <% if user_signed_in?%>
       <section>
         <%= render "shared/dropdowns/maps" %>
         <%= render "shared/dropdowns/main_menu" %>
-        <% if @map.present? %>
+        <% if @map.present? and current_user == @map.user %>
             <%= render "shared/dropdowns/map_settings", :map => @map %>
         <% end %>
       </section>

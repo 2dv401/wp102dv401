@@ -1,10 +1,4 @@
 Wp102dv401::Application.routes.draw do
-  resources :marks
-
-
-  get "locations/create"
-
-  get "locations/destroy"
 
   get "/om-kartr" => "pages#about", :as => :pages_about
   get "/anvandarvillkor" => "pages#terms", :as => :pages_terms
