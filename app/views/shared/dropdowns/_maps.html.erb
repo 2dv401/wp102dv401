@@ -4,10 +4,19 @@
     <a href="#">Kartor</a>
     <ul class="dropdown">
       <li><%= link_to "Ny karta...", new_profile_map_path(current_user.slug) %></li>
-      <li class="divider"></li>
-      <li><label>Mina kartor</label></li>
-      <% current_user.maps.find_each do |map| %>
-          <li><%= link_to map.name, profile_map_path(current_user.slug, map.slug) %></li>
+      <% if current_user.maps.any? %>
+          <li class="divider"></li>
+          <li><label>Mina kartor</label></li>
+          <% current_user.maps.find_each do |map| %>
+              <li><%= link_to map.name, profile_map_path(current_user.slug, map.slug) %></li>
+          <% end %>
+      <% end %>
+      <% if followed_maps.any? %>
+          <li class="divider"></li>
+          <li><label>Följda kartor</label></li>
+          <% followed_maps.each do |map| %>
+              <li><%= link_to map.name, profile_map_path(map.user.slug, map.slug) %></li>
+          <% end %>
       <% end %>
     </ul>
   </li>
