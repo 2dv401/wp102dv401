@@ -6,7 +6,12 @@ class MapsController < ApplicationController
   end
 
   def toggle
-    @map = Map.find(params[:map_id])
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = User.find(params[:profile_id])
+
+    # Hämtar rätt karta från användarens samling
+    @map = @user.maps.find(params[:id])
+
     if current_user.follows?(@map)
       current_user.unfollow!(@map)
     else
@@ -25,10 +30,10 @@ class MapsController < ApplicationController
     end
 
     # Hämtar användaren som äger kartan för att filtrera
-    user = User.find(params[:profile_id])
+    @user = User.find(params[:profile_id])
 
     # Hämtar rätt karta från användarens samling
-    @map = user.maps.find(params[:id])
+    @map = @user.maps.find(params[:id])
 
     # Kontrollerar om användaren har behörighet att titta på kartan.
     if @map.private? and @map.user != current_user
@@ -40,13 +45,16 @@ class MapsController < ApplicationController
   end
 
   def new
-    @map = Map.new
-    #todo: h�mta default-koordinater n�nstans/anv�nds geolocation som default
-    @map.location = Location.new do |l|
-      l.latitude = 60
-      l.longitude = 15
+    # skapar ett map-objekt och ett sätter map-location till default
+    @map = Map.new do |map|
+      map.location = Location.new do |l|
+        l.latitude = 60
+        l.longitude = 15
+      end
+      map.zoom = 5
     end
-    @map.zoom = 5
+    #todo: h�mta default-koordinater n�nstans/anv�nds geolocation som default
+
     display_map(@map)
   end
 
@@ -70,10 +78,10 @@ class MapsController < ApplicationController
   # GET /maps/:slug/edit
   def edit
     # Hämtar användaren som äger kartan för att filtrera
-    user = User.find(params[:profile_id])
+    @user = User.find(params[:profile_id])
 
     # Hämtar rätt karta från användarens samling
-    @map = user.maps.find(params[:id])
+    @map = @user.maps.find(params[:id])
 
     display_map(@map)
     unless current_user == @map.user
@@ -84,7 +92,12 @@ class MapsController < ApplicationController
 
   # PUT /maps/:slug/edit
   def update
-    @map = Map.find(params[:id])
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = User.find(params[:profile_id])
+
+    # Hämtar rätt karta från användarens samling
+    @map = @user.maps.find(params[:id])
+
     display_map(@map)
     if current_user == @map.user
       if @map.update_attributes(params[:map])
@@ -104,10 +117,10 @@ class MapsController < ApplicationController
 
   def destroy
     # Hämtar användaren som äger kartan för att filtrera
-    user = User.find(params[:profile_id])
+    @user = User.find(params[:profile_id])
 
     # Hämtar rätt karta från användarens samling
-    @map = user.maps.find(params[:id])
+    @map = @user.maps.find(params[:id])
 
     if current_user == @map.user
       if @map.destroy

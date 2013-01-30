@@ -1,6 +1,7 @@
 <div id="mapCreation">
 
-	<%= form_for (@map), :html => { :id => "map_form" } do |f| %>
+	<%= form_for(@map, :url => profile_map_path(@map.user.slug, @map.slug), :html => { :method => :put, :id => "map_form" }) do |f| %>
+
 	
 		<% if @map.errors.any? %> 
 			<div id="errors">
