@@ -15,12 +15,6 @@
                 <div id="status-update-like-button-<%= u.id %>">
                   <%= render 'status_updates/shared/like_button', :update => u %>
                 </div>
-                <% if current_user == u.user %>
-                    <%= link_to '| Ta bort ', status_update_path(u), :confirm => 'Vill du ta bort statusuppdateringen?', :method => :delete %>
-                <% end %>
-                <div class="status-update-statistics">
-                  <span class="status-update-likes"> <%= u.likers(User).count %> personer gillar detta.</span>
-                </div>
               </div>
             </div>
             <div class="status-comment-wrapper">

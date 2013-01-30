@@ -47,6 +47,41 @@ module ApplicationHelper
     return @maps
   end
 
+  def like_count_string(likable)
+    @count = likable.likers(User).count
+    @user_likes = current_user.likes?(likable)
+    @count_string = ""
+
+    # kontrollerar först om någon gillar...
+    if @count > 0
+
+      # ... om fler än en person gillar...
+      if @count > 1
+
+        # ...  och användaren är en av dom
+        if @user_likes
+
+          # ... om användaren och en till person gillar
+          if @count == 2
+            @count_string = "Du och en person till"
+          else
+            @count_string = "Du och #{ @count - 1 } presoner till"
+          end
+
+        else
+          @count_string = "#{ @count } personer"
+        end
+      # ... om det inte är fler än en person som gillar och användaren är en av dom
+      elsif @user_likes
+        @count_string = "Du"
+      else
+        @count_string = "#{ @count } person"
+      end
+      @count_string += " gillar detta"
+    end
+  end
+
+
   # DateTime formaterare
   def time_ago(time_format = nil)
     now = Time.now
