@@ -2,13 +2,8 @@ class MapCommentsController < ApplicationController
 
   # POST map/:id/map_comments/toggle_like
   def toggle_like
-    # Hämtar användaren som äger kartan för att filtrera
-    @user = User.find(params[:profile_id])
-
-    # Hämtar rätt karta från användarens samling
-    @map = @user.maps.find(params[:id])
-
-    @map_comment = Map_comments.find(params[:map_comment_id])
+    @map_comment = MapComment.find(params[:map_comment_id])
+    @map = @map_comment.map
 
     if current_user.likes?(@map_comment)
       current_user.unlike!(@map_comment)
@@ -20,16 +15,10 @@ class MapCommentsController < ApplicationController
 
   # POST map/:id/map_comments
   def create
-    # Hämtar användaren som äger kartan för att filtrera
-    @user = User.find(params[:profile_id])
-
-    # Hämtar rätt karta från användarens samling
-    @map = @user.maps.find(params[:id])
-
     #Skapar ny kartkommentar från post-parametrarna samt lägger till aktuella användaren
     @comment = MapComment.new(params[:map_comment]) do |c|
       c.user = current_user
-      c.map = @map
+      c.map = Map.find(params[:map_id])
     end
 
     if @comment.save
