@@ -5,7 +5,7 @@
           <article>
             <div class="status-update-body">
               <div class="status-update-header">
-                <h3><%= link_to map.name, map_path(map) %></h3>
+                <h3><%= link_to u.map.name, map_path(u.map) %></h3>
               </div>
               <div class="status-update-content">
                 <p><%= u.content %></p>
@@ -19,7 +19,7 @@
                     <%= link_to '| Ta bort ', status_update_path(u), :confirm => 'Vill du ta bort statusuppdateringen?', :method => :delete %>
                 <% end %>
                 <div class="status-update-statistics">
-                  <span class="status-update-likes"> ... personer gillar detta.</span>
+                  <span class="status-update-likes"> <%= u.likers(User).count %> personer gillar detta.</span>
                 </div>
               </div>
             </div>

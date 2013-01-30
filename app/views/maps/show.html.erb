@@ -33,7 +33,7 @@
   <% if @map.status_updates.any? %>
       <div class="six columns">
         <h3>Statusuppdateringar</h3>
-        <%= render "status_updates/shared/status_updates", :map => @map, :updates => @map.status_updates %>
+        <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
       </div>
   <% end %>
   <div class="six columns">
@@ -41,7 +41,7 @@
       <h3>Kommentarer</h3>
       <ul class="map-comments">
         <% if @map.map_comments.any? %>
-            <%= render "map_comments/shared/map_comments", :map => @map, :comments => @map.map_comments %>
+            <%= render "map_comments/shared/map_comments", :comments => @map.map_comments %>
         <% end %>
         <li>
           <div class="map-comment-form">
