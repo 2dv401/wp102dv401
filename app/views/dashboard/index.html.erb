@@ -2,69 +2,82 @@
 <% title "Välkommen!" %>
 
 <div class="row">
-	<div class="twelve columns">
-		<h2>Kartor - Översikt</h2>
-	</div>
+  <div class="twelve columns">
+    <h2>Kartor - Översikt</h2>
+  </div>
 </div>
 <div class="row">
-	<div class="three columns">
-		<h3>Alla användare</h3>
-		<% (@User).each do |u| %>
-			<p>E-Post: <%= u.email %></p>
-			<p>Användarnamn: <%= link_to u.username, profile_path(u.slug)%></p>
-		<hr />
-		<% end %>
-		<hr />
-
-	</div>
-	<div class="three columns">
-		<h4>Mina kartor</h4>
-    <% @maps.each do |map| %>
-    <%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
-          <% if map.private %>
-              (Privat)
-          <% end %>
-    <br>
+  <div class="four columns">
+    <h3>Alla användare</h3>
+    <% (@User).each do |u| %>
+        <p>E-Post: <%= u.email %></p>
+        <p>Användarnamn: <%= link_to u.username, profile_path(u.slug)%></p>
+        <hr />
     <% end %>
-	</div>
-	<div class="three columns">
-		<h4>Kartor jag följer</h4>
-      <% followed_maps.each do |map| %>
-          <%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
-          <% if map.private %>
-          (Privat)
-          <% end %>
-          <br />
+  </div>
+
+  <div class="four columns">
+    <h4>Mina kartor</h4>
+    <ul>
+      <% @maps.each do |map| %>
+          <li><%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
+            <% if map.private %>
+                <span>(Privat)</span>
+            <% end %>
+          </li>
       <% end %>
-	</div>
+    </ul>
+  </div>
+
+  <div class="four columns">
+    <h4>Kartor jag följer</h4>
+    <ul>
+      <% followed_maps.each do |map| %>
+          <li>
+            <%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
+            <% if map.private %>
+                <span>(Privat)</span>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
 
 <div class="row">
-	<div class="three columns">
-		<h4>Populära kartor</h4>
-	</div>
-	<div class="three columns">
-		<h4>Nya kartor idag</h4>
-		<% (@new_maps).each do |m| %>
-			<li><%= link_to m.name, profile_map_path(m.user.slug, m.slug)%></li>
-          <% if m.private %>
-              (Privat)
-          <% end %>
-		<% end %>
-	</div>
-	<div class="three columns">
-		<h4>Alla kartor</h4>
-		<ul>
-			<% 
-				## Spruta ut alla kartor, tillfälligt i DEV-läge
-				(@all_maps).each do |m| 
-			%>
-			<li><%= link_to m.name, profile_map_path(m.user.slug, m.slug)%></li>
-              <% if m.private %>
-                  (Privat)
-              <% end %>
-		<% end %>
-		</ul>
-	</div>
+  <div class="four columns">
+    <h4>Populära kartor</h4>
+  </div>
+
+  <div class="four columns">
+    <h4>Nya kartor idag</h4>
+    <ul>
+      <% (@new_maps).each do |m| %>
+          <li>
+            <%= link_to m.name, profile_map_path(m.user.slug, m.slug)%>
+            <% if m.private %>
+                <span>(Privat)</span>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="four columns">
+    <h4>Alla kartor</h4>
+    <ul>
+      <%
+         ## Spruta ut alla kartor, tillfälligt i DEV-läge
+         (@all_maps).each do |m|
+      %>
+          <li>
+            <%= link_to m.name, profile_map_path(m.user.slug, m.slug)%>
+            <% if m.private %>
+                <span>(Privat)</span>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
 
