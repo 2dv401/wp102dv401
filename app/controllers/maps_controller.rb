@@ -24,15 +24,16 @@ class MapsController < ApplicationController
       m.build_location
     end
 
+    # Hämtar användaren som äger kartan för att filtrera
+    user = User.find(params[:profile_id])
 
-    # Referens till ett Map-objekt
-    @map = Map.find(params[:id])
+    # Hämtar rätt karta från användarens samling
+    @map = user.maps.find(params[:id])
 
     # Kontrollerar om användaren har behörighet att titta på kartan.
-    if @map.private? and @map.user.id != current_user.id
+    if @map.private? and @map.user != current_user
       flash[:notice] = "Kartan du forsoker titta pa ar privat!"
       redirect_to root_path
-      return
     end
 
     display_map(@map)
@@ -68,13 +69,17 @@ class MapsController < ApplicationController
 
   # GET /maps/:slug/edit
   def edit
-    @map = Map.find(params[:id])
+    # Hämtar användaren som äger kartan för att filtrera
+    user = User.find(params[:profile_id])
+
+    # Hämtar rätt karta från användarens samling
+    @map = user.maps.find(params[:id])
+
     display_map(@map)
     unless current_user == @map.user
       flash[:notice] = "Fel, bara agaren till kartan kan andra den."
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
-
   end
 
   # PUT /maps/:slug/edit
@@ -98,7 +103,12 @@ class MapsController < ApplicationController
   end
 
   def destroy
-    @map = Map.find(params[:id])
+    # Hämtar användaren som äger kartan för att filtrera
+    user = User.find(params[:profile_id])
+
+    # Hämtar rätt karta från användarens samling
+    @map = user.maps.find(params[:id])
+
     if current_user == @map.user
       if @map.destroy
         flash[:notice] = "Kartan borttagen"
