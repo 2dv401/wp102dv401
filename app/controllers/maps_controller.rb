@@ -7,8 +7,7 @@ class MapsController < ApplicationController
   end
 
   def toggle
-    @map = Map.find(params[:id])
-
+    @map = Map.find(params[:map_id])
     if current_user.follows?(@map)
       current_user.unfollow!(@map)
     else
@@ -68,26 +67,28 @@ class MapsController < ApplicationController
 
   end
 
-  # GET /maps/:slug/edit
+  # GET profiles/:username/maps/:slug/edit
   def edit
-    # Hämtar rätt karta från användarens samling
-    @map = Map.find(params[:id])
-
     # Hämtar användaren som äger kartan för att filtrera
-    @user = @map.user
+    @user = User.find(params[:profile_id])
+
+    # Hämtar rätt karta från användarens samling
+    @map = @user.maps.find(params[:id])
 
     display_map(@map)
     unless current_user == @map.user
       flash[:notice] = "Fel, bara agaren till kartan kan andra den."
-      redirect_to profile_map_path(@map.user.slug, @map.slug)
+      redirect_to profile_map_path(@user.slug, @map.slug)
     end
   end
 
   # PUT /maps/:slug/edit
   def update
-
     # Hämtar rätt karta från användarens samling
     @map = Map.find(params[:id])
+
+    # Sparar undan sluggen om namn-fältet är tomt
+    @slug = @map.slug
 
     display_map(@map)
     if current_user == @map.user
@@ -97,7 +98,7 @@ class MapsController < ApplicationController
         redirect_to profile_map_path(@map.user.slug, @map.slug)
       else
         flash[:error] = "Fel intraffade nar kartan skulle sparas."
-        redirect_to edit_profile_map_path(@map.user.slug, @map.slug)
+        redirect_to edit_profile_map_path(@map.user.slug, @slug)
       end
     else
       flash[:notice] = "Fel, bara agaren till kartan kan uppdatera den."

@@ -8,7 +8,7 @@
   <div class="five columns">
     <% unless @map.user == current_user %>
         <div class ="right" id="follow-button">
-          <%= render 'maps/shared/follow_button', :map => @map %>
+          <%= render 'maps/shared/follow_button'%>
         </div>
     <% else %>
         <div class="right map-handler">
