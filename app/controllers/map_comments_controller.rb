@@ -8,7 +8,7 @@ class MapCommentsController < ApplicationController
     # Hämtar rätt karta från användarens samling
     @map = @user.maps.find(params[:id])
 
-    @map_comment = @map.map_comments.find(params[:map_comment_id])
+    @map_comment = Map_comments.find(params[:map_comment_id])
 
     if current_user.likes?(@map_comment)
       current_user.unlike!(@map_comment)

@@ -1,16 +1,13 @@
 class MapsController < ApplicationController
   before_filter :authenticate_user!
+
   def index
     ## Hämtar alla kartor användaren äger
     @maps = Map.order("created_at ASC").find_all_by_user_id(current_user.id)
   end
 
   def toggle
-    # Hämtar användaren som äger kartan för att filtrera
-    @user = User.find(params[:profile_id])
-
-    # Hämtar rätt karta från användarens samling
-    @map = @user.maps.find(params[:id])
+    @map = Map.find(params[:id])
 
     if current_user.follows?(@map)
       current_user.unfollow!(@map)
@@ -29,11 +26,7 @@ class MapsController < ApplicationController
       m.build_location
     end
 
-    # Hämtar användaren som äger kartan för att filtrera
-    @user = User.find(params[:profile_id])
-
-    # Hämtar rätt karta från användarens samling
-    @map = @user.maps.find(params[:id])
+    @map = Map.find(params[:id])
 
     # Kontrollerar om användaren har behörighet att titta på kartan.
     if @map.private? and @map.user != current_user
@@ -77,11 +70,11 @@ class MapsController < ApplicationController
 
   # GET /maps/:slug/edit
   def edit
-    # Hämtar användaren som äger kartan för att filtrera
-    @user = User.find(params[:profile_id])
-
     # Hämtar rätt karta från användarens samling
-    @map = @user.maps.find(params[:id])
+    @map = Map.find(params[:id])
+
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = @map.user
 
     display_map(@map)
     unless current_user == @map.user
@@ -92,11 +85,9 @@ class MapsController < ApplicationController
 
   # PUT /maps/:slug/edit
   def update
-    # Hämtar användaren som äger kartan för att filtrera
-    @user = User.find(params[:profile_id])
 
     # Hämtar rätt karta från användarens samling
-    @map = @user.maps.find(params[:id])
+    @map = Map.find(params[:id])
 
     display_map(@map)
     if current_user == @map.user
@@ -112,15 +103,10 @@ class MapsController < ApplicationController
       flash[:notice] = "Fel, bara agaren till kartan kan uppdatera den."
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
-
   end
 
   def destroy
-    # Hämtar användaren som äger kartan för att filtrera
-    @user = User.find(params[:profile_id])
-
-    # Hämtar rätt karta från användarens samling
-    @map = @user.maps.find(params[:id])
+    @map = Map.find(params[:id])
 
     if current_user == @map.user
       if @map.destroy

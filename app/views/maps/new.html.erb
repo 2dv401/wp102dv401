@@ -1,3 +1,6 @@
 <h2>Skapa ny karta</h2>
-
-<%= render :partial => 'maps/shared/form' %>
+<div id="mapCreation">
+  <%= form_for(@map, :html => { :id => "map_form" }) do |f| %>
+      <%= render 'maps/shared/form', :f => f %>
+  <% end %>
+</div>

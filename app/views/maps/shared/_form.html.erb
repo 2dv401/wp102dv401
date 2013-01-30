@@ -1,48 +1,37 @@
-<div id="mapCreation">
-
-	<%= form_for(@map, :url => profile_map_path(@map.user.slug, @map.slug), :html => { :method => :put, :id => "map_form" }) do |f| %>
-
-	
-		<% if @map.errors.any? %> 
-			<div id="errors">
-			  <h4>Fel uppstod. Åtgärda följande och försök igen: </h4>
-			  <ul>
-				<% @map.errors.full_messages.each do |msg| %>
-				  <li><%= msg %> </li>
-				<% end %>
-			  </ul>
-			</div>
-		<% end %>
-
-
-		<%= f.label :name, "Namn på kartan" %>
-		<%= f.text_field :name, :autofocus => true %>
-		
-		<%= f.label :description, "Beskrivning" %>
-		<%= f.text_field :description %>
-		
-		<%= f.label :private, "Vem ska få se kartan?" %>
-		<%= f.radio_button :private, true, { :checked => true } %> Synlig enbart för mig och de jag bjuder in <br />
-		<%= f.radio_button :private, false, { :checked => false } %> Publik
-		
-		<br />
-		<br />
-      <div class="field">
-        <%= f.fields_for :location do |location_fields| %>
-            <%= location_fields.hidden_field :latitude, :value => @map.latitude, :id => "latitude" %>
-            <%= location_fields.hidden_field :longitude, :value => @map.longitude, :id => "longitude" %>
+<% if @map.errors.any? %>
+    <div id="errors">
+      <h4>Fel uppstod. Åtgärda följande och försök igen: </h4>
+      <ul>
+        <% @map.errors.full_messages.each do |msg| %>
+            <li><%= msg %> </li>
         <% end %>
-      </div>
+      </ul>
+    </div>
+<% end %>
 
-      <%= submit_tag "Hitta min position", :type => "button", :id => "geolocate_button" %>
+<%= f.label :name, "Namn på kartan" %>
+<%= f.text_field :name, :autofocus => true %>
 
-		<%= text_field_tag "locationTextField", nil, :placeholder => "Sök startposition" %>
-		
-		<%= gmaps(@display_map) %>
-		
-		<%= f.submit "Spara karta", :id => "saveMapButton" %>
-	
-	<% end %>
+<%= f.label :description, "Beskrivning" %>
+<%= f.text_field :description %>
 
+<%= f.label :private, "Vem ska få se kartan?" %>
+<%= f.radio_button :private, true, { :checked => true } %> Synlig enbart för mig och de jag bjuder in <br />
+<%= f.radio_button :private, false, { :checked => false } %> Publik
+
+<br />
+<br />
+<div class="field">
+  <%= f.fields_for :location do |location_fields| %>
+      <%= location_fields.hidden_field :latitude, :value => @map.latitude, :id => "latitude" %>
+      <%= location_fields.hidden_field :longitude, :value => @map.longitude, :id => "longitude" %>
+  <% end %>
 </div>
 
+<%= submit_tag "Hitta min position", :type => "button", :id => "geolocate_button" %>
+
+<%= text_field_tag "locationTextField", nil, :placeholder => "Sök startposition" %>
+
+<%= gmaps(@display_map) %>
+
+<%= f.submit "Spara karta", :id => "saveMapButton" %>
