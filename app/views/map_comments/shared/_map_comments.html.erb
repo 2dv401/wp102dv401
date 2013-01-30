@@ -6,10 +6,10 @@
       <div class="map-comment-footer">
         <span class="created-at"><%= time_ago(c.created_at) %></span>
         <div id="map-comment-like-button-<%= c.id %>">
-          <%= render 'map_comments/shared/like_button', :map => map, :comment => c %>
+          <%= render 'map_comments/shared/like_button', :comment => c %>
         </div>
         <% if current_user == c.user || current_user == map.user %>
-            <%= link_to '| Ta bort ', map_map_comment_path(map, c), :confirm => 'Vill du ta bort kommentaren?', :method => :delete %>
+            <%= link_to '| Ta bort ', map_comment_path(c), :confirm => 'Vill du ta bort kommentaren?', :method => :delete %>
         <% end %>
       </div>
     </li>

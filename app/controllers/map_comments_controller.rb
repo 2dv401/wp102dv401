@@ -3,7 +3,6 @@ class MapCommentsController < ApplicationController
   # POST map/:id/map_comments/toggle_like
   def toggle_like
     @map_comment = MapComment.find(params[:map_comment_id])
-    @map = @map_comment.map
 
     if current_user.likes?(@map_comment)
       current_user.unlike!(@map_comment)

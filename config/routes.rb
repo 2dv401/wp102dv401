@@ -41,18 +41,22 @@ Wp102dv401::Application.routes.draw do
   resources :maps do
     post 'toggle'
     resources :marks
-    resources :status_updates do
-      post 'toggle_like'
-    end
-    resources :map_comments do
-      post 'toggle_like'
-    end
+    # tillåter bara att man skapar dessa genom maps. Alla andra routes går direkt
+    resources :status_updates, :only => [:create]
+    resources :map_comments, :only => [:create]
+  end
+
+  resources :map_comments do
+    post 'toggle_like'
   end
 
   resources :status_updates do
-    resources :status_comments do
-      post 'toggle_like'
-    end
+    post 'toggle_like'
+    resources :status_comments, :only => [:create]
+  end
+
+  resources :status_comments do
+    post 'toggle_like'
   end
 
   root :to => "home#index"
