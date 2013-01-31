@@ -47,6 +47,30 @@ module ApplicationHelper
     return @maps
   end
 
+  ##
+  # Follow räknare.
+  # Räknar antalet följare av ett followable-objekt
+  #
+  # @param Followable
+  # @return String
+  def follow_count_string(followable)
+    @count = followable.followers('User').count
+  end
+
+  ##
+  # Like räknare.
+  # Räknar antalet användare som gillar ett likable-objekt
+  # och returnerar olika svar.
+  # Möjliga svar är:
+  # Du och en person till...
+  # Du och :nr personer...
+  # :nr personer...
+  # Du...
+  # 1 person...
+  # ...gillar detta
+  #
+  # @param Likable
+  # @return String
   def like_count_string(likable)
     @count = likable.likers(User).count
     @user_likes = current_user.likes?(likable)
@@ -63,7 +87,7 @@ module ApplicationHelper
 
           # ... om användaren och en till person gillar
           if @count == 2
-            @count_string = "Du och en person till"
+            @count_string = "Du och #{ @count - 1 } person till"
           else
             @count_string = "Du och #{ @count - 1 } presoner till"
           end
@@ -82,7 +106,17 @@ module ApplicationHelper
   end
 
 
+  ##
   # DateTime formaterare
+  # Möjliga svar:
+  # idag kl. hh:mm
+  # igår kl. hh:mm
+  # den :date_nr :month kl. hh:mm
+  # den :date_nr :month :year kl. hh:mm
+  #
+  # @@param DateTime
+  # @return string
+
   def time_ago(time_format = nil)
     now = Time.now
     time = time_format

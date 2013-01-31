@@ -1,16 +1,34 @@
 <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
 
 <div class="row">
-  <div class="seven columns">
+  <div class="twelve columns">
     <h1><%= @map.name %></h1>
-    <p><%= @map.description %><p>
-  </div>
-  <div class="five columns">
     <% unless @map.user == current_user %>
-        <div class ="right" id="follow-button">
+        <div class="right" id="follow-button">
           <%= render 'maps/shared/follow_button'%>
         </div>
-    <% else %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <div class="map-info-wrapper">
+      <div class="map-description">
+        <p><%= @map.description %></p>
+      </div>
+      <div claes="map-created-at">
+        <span>Skapades: <%= time_ago(@map.created_at) %></span>
+      </div>
+      <div class="left" id="follow-count">
+        <%= render 'maps/shared/follow_count' %>
+      </div>
+    </div>
+
+
+  </div>
+  <% if @map.user == current_user %>
+      <div class="eight columns">
         <div class="right map-handler">
           <div class="status-update-form">
             <%= render "status_updates/shared/form" %>
@@ -19,8 +37,8 @@
           <%= link_to "Ändra karta", edit_profile_map_path(@map.user.slug, @map.slug) %> |
           <%= link_to "Ta bort karta", map_path(@map.id), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>
         </div>
-    <% end %>
-  </div>
+      </div>
+  <% end %>
 </div>
 
 <div class="row">
