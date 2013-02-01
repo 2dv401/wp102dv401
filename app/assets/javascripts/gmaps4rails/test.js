@@ -18,25 +18,23 @@ function activateLocationAdd(){
 	mapContainer.unbind('mouseover');
 	
 	var map = Gmaps.map.map;
-	
+
    google.maps.event.addListener(map, 'rightclick', function(event) {
 		var latLng = event.latLng;
 		var lat = latLng.lat();
 		var lng = latLng.lng();
-		/*if($("#markingInfo").length == 0){
-			var marker = new google.maps.Marker({ map: map });
-			temporaryMarker = marker;
-			marker.setPosition(latLng);
-			x = event.pixel.x;
-			y = event.pixel.y;
-			showMarkingCreationBox(lat,lng,mapContainer);
-			//fryser kartan
-			map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
-		}*/
 		
 		setFormLocation(lat,lng);
 	})
 	}
+}
+    
+function removeMarking(id){
+  for(var marker in Gmaps.map.markers){
+    if(Gmaps.map.markers[marker].id == id){
+      Gmaps.map.markers[marker].serviceObject.setMap(null)
+    }
+  }
 }
 
 function showMarkingCreationBox(latitude,longitude,container){
@@ -149,6 +147,10 @@ function onLocationSearchResponse(event, ui){
 	return false;
 }
 
+function isMarkingLink(url){
+  return true;
+}
+
 function useGeolocation(){
    navigator.geolocation.getCurrentPosition(move_map); 
 }
@@ -205,4 +207,11 @@ window.onready = function () {
 			}
 	});
 	
+  $("#map").ajaxComplete(function(event,request,settings){
+    if(isMarkingLink(settings.url)){
+      var id = settings.url.split("/").pop();
+      removeMarking(id);
+    }
+  }
+);
 }
