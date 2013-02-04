@@ -1,2 +1,2 @@
-var buttonId = "#status-comment-like-button-<%= @status_comment.id %>"
+var buttonId = "#status-comment-remote-button-<%= @status_comment.id %>"
 $(buttonId).html("<%= j render 'status_comments/shared/like_button', :comment => @status_comment %>");

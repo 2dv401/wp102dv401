@@ -1,0 +1,3 @@
+var mapCommentlistId = "#map-<%= @comment.map.id %>-comment-list";
+$(mapCommentlistId + " .map-comment-form").after("<%= j render 'map_comments/shared/map_comment', :comment => @comment %>");
+$(mapCommentlistId + " .map-comment-form input[type=text]").val('');

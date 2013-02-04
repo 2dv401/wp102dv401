@@ -1,4 +1,4 @@
-<%= form_for(@map_comment, :url => map_map_comments_path(@map.id, @map_comment)) do |f| %>
+<%= form_for(@map_comment, :url => map_map_comments_path(@map.id, @map_comment), :remote => true) do |f| %>
     <div class="content">
       <%= f.text_field :content, :placeholder => "Skriv en kommentar..." %>
     </div>

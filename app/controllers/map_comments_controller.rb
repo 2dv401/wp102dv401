@@ -9,7 +9,7 @@ class MapCommentsController < ApplicationController
     else
       current_user.like!(@map_comment)
     end
-    render :template => 'map_comments/like/toggle'
+    render :template => 'map_comments/remote/like-button-toggle'
   end
 
   # POST map/:id/map_comments
@@ -25,7 +25,7 @@ class MapCommentsController < ApplicationController
     else
       flash[:notice] = "Fel nar kommentaren skulle sparas"
     end
-    redirect_to profile_map_path(@comment.map.user.slug, @comment.map.slug)
+    render :template => 'map_comments/remote/render_new_map_comment'
   end
 
   # DELETE /maps/:id/map_comments/1
