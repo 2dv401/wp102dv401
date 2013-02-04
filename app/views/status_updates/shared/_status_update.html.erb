@@ -15,12 +15,12 @@
       </div>
     </div>
     <div class="status-comment-wrapper">
-      <ul class="status-comments">
+      <ul id="status-<%= update.id %>-comment-list" class="status-comments">
         <% if update.status_comments.any? %>
             <li class="status-update-comment-show">Visa alla kommentarer</li>
             <%= render "status_comments/shared/status_comments", :comments => update.status_comments %>
         <% end %>
-        <li><%= render "status_comments/shared/form", :update => update %></li>
+        <li class="status-comment-form"><%= render "status_comments/shared/form", :update => update %></li>
       </ul>
     </div>
   </article>
