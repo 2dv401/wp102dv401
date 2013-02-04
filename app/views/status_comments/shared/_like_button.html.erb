@@ -4,7 +4,7 @@
     <%= link_to '| Gilla ', status_comment_toggle_like_path(comment), :method => :post, :remote => true %>
 <% end %>
 <% if current_user == comment.user %>
-    <%= link_to '| Ta bort ', status_comment_path(comment), :confirm => 'Vill du ta bort statusuppdateringen?', :method => :delete %>
+    <%= link_to '| Ta bort ', status_comment_path(comment), :confirm => 'Vill du ta bort kommentaren?', :method => :delete, :remote => true %>
 <% end %>
 <div class="status-comment-statistics">
   <span class="status-update-likes"><%= like_count_string(comment) %></span>
