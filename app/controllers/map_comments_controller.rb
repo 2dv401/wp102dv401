@@ -9,7 +9,7 @@ class MapCommentsController < ApplicationController
     else
       current_user.like!(@map_comment)
     end
-    render :template => 'map_comments/remote/like-button-toggle'
+    render :template => 'map_comments/remote/like_button_toggle'
   end
 
   # POST map/:id/map_comments
@@ -32,7 +32,8 @@ class MapCommentsController < ApplicationController
   # DELETE /maps/:id/map_comments/1.json
   def destroy
     @comment = MapComment.find(params[:id])
-    @map = @comment.map
+    @destroyed_comment = @comment
+
     if current_user == @comment.user || current_user == @map.user
       if @comment.destroy
         flash[:notice] = "Kommentaren borttagen"
@@ -42,6 +43,6 @@ class MapCommentsController < ApplicationController
     else
       flash[:notice] = "Fel, bara personen som skrev kommentaren och agaren till kartan kan ta bort den."
     end
-    redirect_to profile_map_path(@map.user.slug, @map.slug)
+    render :template => 'map_comments/remote/remove_map_comment'
   end
 end
