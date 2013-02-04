@@ -2,7 +2,8 @@
 
 <div class="row">
   <div class="twelve columns">
-    <h1><%= @map.name %></h1>
+    <h1 class="map-header" ><%= @map.name %> </h1>
+    <h5 class="subheader map-header" > En karta av: <%= @map.user.username %></h5>
     <% unless @map.user == current_user %>
         <div class="right" id="follow-button">
           <%= render 'maps/shared/follow_button'%>
@@ -50,7 +51,6 @@
 <div class="row">
   <% if @map.status_updates.any? %>
       <div class="six columns">
-        <h3>Statusuppdateringar</h3>
         <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
       </div>
   <% end %>

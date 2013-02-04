@@ -1,13 +1,3 @@
 <% comments.each do |c| %>
-    <li class="status-comment">
-      <p class="status-comment-body">
-        <span class="author"><%= c.user.username %></span><%= format_text(c.content) %>
-      </p>
-      <div class="status-comment-footer">
-        <span class="created-at"><%= time_ago(c.created_at) %></span>
-        <div id="status-comment-like-button-<%= c.id %>">
-          <%= render 'status_comments/shared/like_button', :comment => c %>
-        </div>
-      </div>
-    </li>
+     <%= render 'status_comments/shared/status_comment', :comment => c %>
 <% end %>

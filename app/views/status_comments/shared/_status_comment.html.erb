@@ -1,0 +1,11 @@
+<li class="status-comment-<%= comment.id %>">
+  <p class="status-comment-body">
+    <span class="author"><%= comment.user.username %></span><%= format_text(comment.content) %>
+  </p>
+  <div class="status-comment-footer">
+    <span class="created-at"><%= time_ago(comment.created_at) %></span>
+    <div id="status-comment-like-button-<%= comment.id %>">
+      <%= render 'status_comments/shared/like_button', :comment => comment %>
+    </div>
+  </div>
+</li>
