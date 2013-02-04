@@ -11,7 +11,7 @@ Wp102dv401::Application.routes.draw do
 
   devise_scope :user do
     # Session routes
-    get "/login" => "devise/sessions#new", :as => :new_user_session
+    get "/logga-in" => "devise/sessions#new", :as => :new_user_session
     post "/login" => "devise/sessions#create", :as => :user_session
     delete "/logout" => "devise/sessions#destroy", :as => :destroy_user_session
     # Confirm routes
@@ -22,7 +22,7 @@ Wp102dv401::Application.routes.draw do
     post "/password" => "devise/passwords#create", :as => :user_password
     get "/password/edit" => "devise/passwords#edit", :as => :edit_user_password
     # Registration routes
-    get "/register" => "devise/registrations#new", :as => :new_user_registration
+    get "/registrera-dig" => "devise/registrations#new", :as => :new_user_registration
     post "/register" => "devise/registrations#create", :as => :user_registration
     get "/user/edit" => "devise/registrations#edit", :as => :edit_user_registration
     get "/register/cancel" => "devise/registrations#cancel", :as => :cancel_user_registration

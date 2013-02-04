@@ -20,6 +20,8 @@
 @import "status_updates.css.scss";
 @import "map_comments.css.scss";
 
+.header-name { display: inline-block; }
+h1.header-name { margin-right: 10px; }
 
 .profile-image-small {
   width: 24px;

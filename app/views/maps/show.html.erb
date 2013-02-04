@@ -1,9 +1,14 @@
 <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
+<% if @map.user == current_user %>
+    <% title @map.name %>
+<% else %>
+    <% title @map.user.username + "´s karta - " + @map.name %>
+<% end %>
 
 <div class="row">
   <div class="twelve columns">
-    <h1 class="map-header" ><%= @map.name %> </h1>
-    <h5 class="subheader map-header" > En karta av: <%= @map.user.username %></h5>
+    <h1 class="header-name" ><%= @map.name %> </h1>
+    <h5 class="subheader header-name" > En karta av: <%= @map.user.username %></h5>
     <% unless @map.user == current_user %>
         <div class="right" id="follow-button">
           <%= render 'maps/shared/follow_button'%>
