@@ -1,4 +1,4 @@
-var mapCommentForm = "#map-<%= @comment.map.id %>-comment-list";
+var mapCommentForm = "#map-<%= @comment.map.id %>-comment-list .map-comment-form";
 var html = "<%= j render 'map_comments/shared/map_comment', :comment => @comment %>";
 $(html).hide().insertAfter(mapCommentForm).slideDown('fast');
 $(mapCommentForm + " input[type=text]").val('');
