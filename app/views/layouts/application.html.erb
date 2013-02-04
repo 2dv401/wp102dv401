@@ -21,7 +21,9 @@
 </head>
 <body class='<%= controller.controller_name %>'>
 <div class="container">
+  <% if user_signed_in?%>
   <%= render "shared/top_nav_bar" %>
+  <% end %>
 
   <%= render "shared/flash_messages" %>
 

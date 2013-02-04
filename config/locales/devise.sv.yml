@@ -7,9 +7,11 @@ sv:
             username:
               taken: "Det finns redan en användare med det användarnamnet, försök igen."
             email:
+              blank: "En epost måste registreras, fyll i en epostaddress och försök igen."
               taken: "Det finns redan ett konto registrerat på denna epostadress"
               invalid: "Ogiltig epostadress"
             password:
+              blank: "Ett lösenord måste fyllas i, för bästa säkerhet använd minst 6 tecken och variera mellan bokstäver, siffror och tecken"
               too_short: "Lösenordet är för kort, det bör vara minst 6 tecken"
   errors:
     messages:
