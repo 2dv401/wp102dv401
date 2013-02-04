@@ -3,6 +3,7 @@
 // You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $(function() {
 
+  // Körs när kartan är genererad
   Gmaps.map.callback = function() {
     var newMark = new google.maps.Marker({
       position: new google.maps.LatLng(59, 18),
@@ -12,7 +13,10 @@ $(function() {
       }
     });
 
-    
+    var updateLocationFields = function(latitude, longitude) {
+      $('#mark_location_attributes_longitude').val(longitude);
+      $('#mark_location_attributes_latitude').val(latitude);
+    }
     /*
     Lyssnar på förflyttningar av markören
     Modifierar inputfälten för longitud och latitud när markören släpps
@@ -20,12 +24,11 @@ $(function() {
     TODO: REFACTOR
     */
     google.maps.event.addListener(newMark, 'dragend', function() {
-      
+
       //updateLocations('Dragging...');
       console.log(this.position.lat());
-      // Sätter longitud 
-      $('#mark_location_attributes_longitude').val(this.position.lng())
-      $('#mark_location_attributes_latitude').val(this.position.lat())
+
+      updateLocationFields(this.position.lat(), this.position.lng());
     });
 
 
@@ -33,6 +36,17 @@ $(function() {
     // http://rjshade.com/2012/03/27/Google-Maps-autocomplete-with-jQuery-UI/
     // Initierar google's geocoder
     var geocoder = new google.maps.Geocoder();
+
+
+    $('#geolocate_button').click(function() {
+      navigator.geolocation.getCurrentPosition(function(position){
+        updateLocationFields(position.coords.latitude, position.coords.longitude);
+
+        newMark.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+      });
+    })
+
+
 
     // jQuery UI Autocomplete funktion
     $("#locationTextField").autocomplete({
@@ -62,8 +76,8 @@ $(function() {
         var location = ui.item.geocode.geometry.location;
 
         // Sätter Lat/Lng-fälten i formuläret
-        $("#mark_location_attributes_latitude").val(location.lat());
-        $("#mark_location_attributes_longitude").val(location.lng());
+        // TODO: REFACTOR
+        updateLocationFields(location.lat(), location.lng());
 
         // Centrerar kartan över stället
         Gmaps.map.map.setCenter(location);
@@ -77,7 +91,5 @@ $(function() {
 
 
 $(function() {
-  $('#geolocate_button').click(function() {
-    console.log(Gmaps.map.map);
-  })
+  
 })
