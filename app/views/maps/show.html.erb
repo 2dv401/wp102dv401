@@ -55,18 +55,6 @@
       </div>
   <% end %>
   <div class="six columns">
-    <section class="map-comment-wrapper">
-      <h3>Kommentarer</h3>
-      <ul class="map-comments">
-        <% if @map.map_comments.any? %>
-            <%= render "map_comments/shared/map_comments", :comments => @map.map_comments %>
-        <% end %>
-        <li>
-          <div class="map-comment-form">
-            <%= render "map_comments/shared/form" %>
-          </div>
-        </li>
-      </ul>
-    </section>
+    <%= render "map_comments/shared/map_comments", :map => @map %>
   </div>
 </div>

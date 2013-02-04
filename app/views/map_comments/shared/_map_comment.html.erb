@@ -1,0 +1,11 @@
+<li class="map-comment">
+  <p class="map-comment-body">
+    <span class="author"><%= comment.user.username %> - </span><%= comment.content %>
+  </p>
+  <div class="map-comment-footer">
+    <span class="created-at"><%= time_ago(comment.created_at) %></span>
+    <div id="map-comment-like-button-<%= comment.id %>">
+      <%= render 'map_comments/shared/like_button', :comment => comment %>
+    </div>
+  </div>
+</li>
