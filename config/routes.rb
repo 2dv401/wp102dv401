@@ -1,13 +1,10 @@
 Wp102dv401::Application.routes.draw do
 
+  # Footer sidorna
   get "/om-kartr" => "pages#about", :as => :pages_about
   get "/anvandarvillkor" => "pages#terms", :as => :pages_terms
   get "/sekretess" => "pages#privacy", :as => :pages_privacy
   get "/hjalp" => "pages#help", :as => :pages_help
-
-  get "dashboard/index"
-
-  get "home/index"
 
   # Tell Devise in which controller we will implement Omniauth callbacks
   devise_for :users, :controllers => { :omniauth_callbacks => "authentications" }
@@ -33,30 +30,38 @@ Wp102dv401::Application.routes.draw do
     get "/users/auth/:provider" => "authentications#passthru"
   end
 
-  resources :dashboard
-  resources :profiles do
-    resources :maps
-  end
-  
-  resources :maps do
-    post 'toggle'
-    resources :marks
-    # tillåter bara att man skapar dessa genom maps. Alla andra routes går direkt
-    resources :status_updates, :only => [:create]
-    resources :map_comments, :only => [:create]
-  end
+  scope(:path_names => { :new => 'ny', :edit => 'redigera' }) do
 
-  resources :map_comments do
-    post 'toggle_like'
-  end
+    resources :home, :only => [:index], :path => 'hem'
 
-  resources :status_updates do
-    post 'toggle_like'
-    resources :status_comments, :only => [:create]
-  end
+    resources :dashboard, :only => [:index], :path => 'startsida'
 
-  resources :status_comments do
-    post 'toggle_like'
+    resources :profiles, :path => 'profil' do
+      resources :maps, :path => 'kartor'
+    end
+
+    resources :maps, :path => 'kartor' do
+      post 'toggle'
+      resources :marks, :path => 'markeringar'
+
+      # tillåter bara att man skapar dessa genom maps. Alla andra routes går direkt
+      resources :status_updates, :only => [:create], :path => 'uppdateringar'
+      resources :map_comments, :only => [:create], :path => 'kommentarer'
+    end
+
+    resources :map_comments, :path => 'kart-kommentarer' do
+      post 'toggle_like'
+    end
+
+    resources :status_updates, :path => 'status-uppdateringar' do
+      post 'toggle_like'
+      # Tillåter bara att skapa statuskommentarer genom statusuppdateringen.
+      resources :status_comments, :only => [:create], :path => 'kommentarer'
+    end
+
+    resources :status_comments, :path => 'status-kommentarer' do
+      post 'toggle_like'
+    end
   end
 
   root :to => "home#index"
