@@ -3,7 +3,6 @@ class MarksController < ApplicationController
   # GET /marks.json
   def index
     @marks = Mark.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @marks }

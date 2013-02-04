@@ -29,11 +29,14 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+gem "jquery-rails", "~> 2.1.4"
+
 gem 'gmaps4rails'
 gem 'gravatar_image_tag'
 
 gem 'friendly_id'
+
+gem 'jquery-ui-themes'
 
 
 

@@ -29,10 +29,7 @@
           <%= location_fields.text_field :longitude, :placeholder => "Longitud ex( 15.25 )" %>
       <% end %>
     </div>
-
-    <%= submit_tag "Där jag är", :type => "button", :id => "geolocate_button" %>
-    <%= text_field_tag "locationTextField", nil, :placeholder => "Sök startposition" %>
-    
+ 
     <div class="actions">
       <%= f.submit "Spara"%>
     </div>

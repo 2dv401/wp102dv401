@@ -42,14 +42,13 @@ Wp102dv401::Application.routes.draw do
   resources :dashboard
   resources :locations
   resources :profiles
-
   resources :profiles do
     resources :maps
   end
   
   resources :maps do
     post 'toggle'
-    resources :marks
+    resources :marks 
     resources :status_updates do
       post 'toggle_like'
       resources :status_comments do
