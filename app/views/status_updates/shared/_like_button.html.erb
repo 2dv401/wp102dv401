@@ -4,7 +4,7 @@
     <%= link_to '| Gilla ', status_update_toggle_like_path(update), :method => :post, :remote => true %>
 <% end %>
 <% if current_user == update.user %>
-    <%= link_to '| Ta bort ', status_update_path(update), :confirm => 'Vill du ta bort statusuppdateringen?', :method => :delete %>
+    <%= link_to '| Ta bort ', status_update_path(update), :confirm => 'Vill du ta bort statusuppdateringen?', :method => :delete, :remote => true %>
 <% end %>
 <div class="status-update-statistics">
   <span class="status-update-likes"><%= like_count_string(update) %></span>
