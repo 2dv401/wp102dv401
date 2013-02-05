@@ -7,16 +7,50 @@
   </div>
 </div>
 <div class="row">
-  <div class="four columns">
+  <div class="three columns">
     <h3>Alla användare</h3>
     <% (@User).each do |u| %>
         <p>E-Post: <%= u.email %></p>
         <p>Användarnamn: <%= link_to u.username, profile_path(u.slug)%></p>
         <hr />
     <% end %>
+
+    <h4>Nya kartor idag</h4>
+    <ul>
+      <% (@new_maps).each do |m| %>
+          <li>
+            <%= link_to m.name, profile_map_path(m.user.slug, m.slug)%>
+            <% if m.private %>
+                <span>(Privat)</span>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+
+    <h4>Alla kartor</h4>
+    <ul>
+      <%
+         ## Spruta ut alla kartor, tillfälligt i DEV-läge
+         (@all_maps).each do |m|
+      %>
+          <li>
+            <%= link_to m.name, profile_map_path(m.user.slug, m.slug)%>
+            <% if m.private %>
+                <span>(Privat)</span>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
   </div>
 
-  <div class="four columns">
+  <div class="six columns">
+    <h2 class="subheader" >Statusuppdateringar</h2>
+    <% followed_maps.each do |map| %>
+        <%= render "status_updates/shared/status_updates", :updates => map.status_updates %>
+    <% end %>
+  </div>
+
+  <div class="three columns">
     <h4>Mina kartor</h4>
     <ul>
       <% @maps.each do |map| %>
@@ -27,9 +61,7 @@
           </li>
       <% end %>
     </ul>
-  </div>
 
-  <div class="four columns">
     <h4>Kartor jag följer</h4>
     <ul>
       <% followed_maps.each do |map| %>
@@ -47,37 +79,6 @@
 <div class="row">
   <div class="four columns">
     <h4>Populära kartor</h4>
-  </div>
-
-  <div class="four columns">
-    <h4>Nya kartor idag</h4>
-    <ul>
-      <% (@new_maps).each do |m| %>
-          <li>
-            <%= link_to m.name, profile_map_path(m.user.slug, m.slug)%>
-            <% if m.private %>
-                <span>(Privat)</span>
-            <% end %>
-          </li>
-      <% end %>
-    </ul>
-  </div>
-
-  <div class="four columns">
-    <h4>Alla kartor</h4>
-    <ul>
-      <%
-         ## Spruta ut alla kartor, tillfälligt i DEV-läge
-         (@all_maps).each do |m|
-      %>
-          <li>
-            <%= link_to m.name, profile_map_path(m.user.slug, m.slug)%>
-            <% if m.private %>
-                <span>(Privat)</span>
-            <% end %>
-          </li>
-      <% end %>
-    </ul>
   </div>
 </div>
 

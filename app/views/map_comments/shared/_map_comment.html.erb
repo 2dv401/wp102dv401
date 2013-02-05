@@ -1,6 +1,6 @@
 <li id="map-comment-<%= comment.id %>" class="map-comment">
   <p class="map-comment-body">
-    <span class="author"><%= comment.user.username %> - </span><%= comment.content %>
+    <span class="author"><%= comment.user.name || comment.user.username %> - </span><%= comment.content %>
   </p>
   <div class="map-comment-footer">
     <span class="created-at"><%= time_ago(comment.created_at) %></span>

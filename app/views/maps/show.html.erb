@@ -1,14 +1,20 @@
 <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
 <% if @map.user == current_user %>
-    <% title @map.name %>
+
+
+    <% # Visar namnet på kartan om det är ägaren som besöker den
+       title @map.name
+    %>
 <% else %>
-    <% title @map.user.username + "´s karta - " + @map.name %>
+    <% # Annars visas :kartnamn, en karta av :användarens_namn
+       title @map.name + ", en karta av " + (@map.user.name ? @map.user.name : @map.user.username)
+    %>
 <% end %>
 
 <div class="row">
   <div class="twelve columns">
     <h1 class="header-name" ><%= @map.name %> </h1>
-    <h5 class="subheader header-name" > En karta av: <%= @map.user.username %></h5>
+    <h5 class="subheader header-name" > En karta av: <%= @map.user.name || @map.user.username %></h5>
     <% unless @map.user == current_user %>
         <div class="right" id="follow-button">
           <%= render 'maps/shared/follow_button'%>
@@ -56,6 +62,7 @@
 <div class="row">
   <% if @map.status_updates.any? %>
       <div class="six columns">
+        <h2 class="subheader" >Statusuppdateringar</h2>
         <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
       </div>
   <% end %>

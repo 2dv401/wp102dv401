@@ -1,6 +1,6 @@
 <li id="status-comment-<%= comment.id %>" class="status-comment">
   <p class="status-comment-body">
-    <span class="author"><%= comment.user.username %></span><%= format_text(comment.content) %>
+    <span class="author"><%= comment.user.name || comment.user.username %></span><%= format_text(comment.content) %>
   </p>
   <div class="status-comment-footer">
     <span class="created-at"><%= time_ago(comment.created_at) %></span>
