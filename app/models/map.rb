@@ -19,8 +19,8 @@ class Map < ActiveRecord::Base
   attr_accessor :longitude, :latitude
   attr_accessible :name, :description, :private, :zoom, :map_type, :location_attributes
 
-  validates	:name, :presence => true, :length => { :maximum => 45 }
-  validates	:description, :length => { :maximum => 250 }
+  validates	:name, :presence => true, :length => { :maximum => 50 }
+  validates	:description, :length => { :maximum => 5120 }
   validates :private, :inclusion => {:in => [true, false]}
   validates :map_type, :inclusion => MAP_TYPES
   validates :zoom, :numericality => { :only_integer => true }
