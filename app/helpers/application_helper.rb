@@ -48,16 +48,6 @@ module ApplicationHelper
   end
 
   ##
-  # Follow räknare.
-  # Räknar antalet följare av ett followable-objekt
-  #
-  # @param Followable
-  # @return String
-  def follow_count_string(followable)
-    @count = followable.followers('User').count
-  end
-
-  ##
   # Like räknare.
   # Räknar antalet användare som gillar ett likable-objekt
   # och returnerar olika svar.

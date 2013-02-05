@@ -12,18 +12,19 @@
   .map-created-at {
 
   }
-  #follow-count {
-    background-color: #d3d3d3;
-    margin: 10px 0;
-    border: 1px solid gray;
-    text-align: center;
-    padding: 10px;
-    .map-followers {
+}
 
-    }
-    span {
-      padding: 5px;
-      display: block;
-    }
+.map-count {
+  background-color: #d3d3d3;
+  margin: 10px 5px;
+  border: 1px solid gray;
+  text-align: center;
+  padding: 10px;
+  .map-followers {
+
+  }
+  span {
+    padding: 5px;
+    display: block;
   }
 }

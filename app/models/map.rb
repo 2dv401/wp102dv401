@@ -37,4 +37,16 @@ class Map < ActiveRecord::Base
   def latitude
     self.location.latitude
   end
+
+  def comment_count
+    self.map_comments.count
+  end
+
+  def follow_count
+    self.followers('User').count
+  end
+
+  def status_count
+    self.status_updates.count
+  end
 end

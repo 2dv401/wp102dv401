@@ -1,7 +1,5 @@
 <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
 <% if @map.user == current_user %>
-
-
     <% # Visar namnet på kartan om det är ägaren som besöker den
        title @map.name
     %>
@@ -24,7 +22,7 @@
 </div>
 
 <div class="row">
-  <div class="four columns">
+  <div class="five columns">
     <div class="map-info-wrapper">
       <div class="map-description">
         <p><%= @map.description %></p>
@@ -32,15 +30,24 @@
       <div claes="map-created-at">
         <span>Skapades: <%= time_ago(@map.created_at) %></span>
       </div>
-      <div class="left" id="follow-count">
-        <%= render 'maps/shared/follow_count' %>
-      </div>
     </div>
+  </div>
+</div>
 
-
+<div class="row">
+  <div class="seven columns">
+    <div class="left map-count" id="follow-count">
+      <%= render 'maps/shared/follow_count' %>
+    </div>
+    <div class="left map-count">
+      <%= render 'maps/shared/status_count' %>
+    </div>
+    <div class="left map-count">
+      <%= render 'maps/shared/comment_count' %>
+    </div>
   </div>
   <% if @map.user == current_user %>
-      <div class="eight columns">
+      <div class="five columns">
         <div class="right map-handler">
           <div class="status-update-form">
             <%= render "status_updates/shared/form" %>
