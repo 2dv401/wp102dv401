@@ -89,6 +89,13 @@ function saveMarking(longitude, latitude, name, description) {
   marker.setPosition(LatLng(latitude, longitude));
 }
 
+function removeMarking(id){
+  for(var marker in Gmaps.map.markers){
+  if(Gmaps.map.markers[marker].id == id){
+    Gmaps.map.markers[marker].serviceObject.setMap(null)
+    }
+  }
+}
 
 function setFormLocation(lat, lng) {
   $("#mark_location_attributes_longitude").val(lng);
