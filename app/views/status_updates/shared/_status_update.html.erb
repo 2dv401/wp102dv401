@@ -2,7 +2,7 @@
   <article>
     <div class="status-update-body">
       <div class="status-update-header">
-        <h3><%= link_to update.map.name, map_path(update.map) %></h3>
+        <h3><%= link_to update.map.name, profile_map_path(update.map.user, update.map) %></h3>
       </div>
       <div class="status-update-content">
         <p><%= update.content %></p>
