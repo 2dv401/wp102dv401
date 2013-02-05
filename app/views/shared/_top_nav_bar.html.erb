@@ -1,0 +1,17 @@
+<nav class="top-bar fixed">
+  <ul>
+    <li class="name"><h1><%= link_to "Kartr.se", root_url %></h1></li>
+    <li class="toggle-topbar">
+      <a href="#"></a>
+    </li>
+  </ul>
+  <% if user_signed_in?%>
+      <section>
+        <%= render "shared/dropdowns/maps" %>
+        <%= render "shared/dropdowns/main_menu" %>
+        <% if @map.present? and current_user == @map.user %>
+            <%= render "shared/dropdowns/map_settings", :map => @map %>
+        <% end %>
+      </section>
+  <% end %>
+</nav>

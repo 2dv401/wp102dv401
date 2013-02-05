@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   :omniauthable, :authentication_keys => [:login]
 
   # Virtual attribute for authenticating by either username or email
-  # This is in addition to a real persisted field like 'username'
+  # This is in addition to a real persisted field remote 'username'
   attr_accessor :login
 
   # Setup accessible (or protected) attributes for your model

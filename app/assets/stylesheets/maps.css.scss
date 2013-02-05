@@ -3,3 +3,27 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .map-handler { padding: 20px 0; }
+
+.map-info-wrapper {
+
+  .map-description {
+
+  }
+  .map-created-at {
+
+  }
+  #follow-count {
+    background-color: #d3d3d3;
+    margin: 10px 0;
+    border: 1px solid gray;
+    text-align: center;
+    padding: 10px;
+    .map-followers {
+
+    }
+    span {
+      padding: 5px;
+      display: block;
+    }
+  }
+}

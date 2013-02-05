@@ -1,6 +1,8 @@
 class MapsController < ApplicationController
   before_filter :authenticate_user!
+
   def index
+    ## Hämtar alla kartor användaren äger
     @maps = Map.order("created_at ASC").find_all_by_user_id(current_user.id)
   end
 
@@ -23,20 +25,28 @@ class MapsController < ApplicationController
       m.build_location
     end
 
-    # Referens till ett Map-objekt
     @map = Map.find(params[:id])
+
+    # Kontrollerar om användaren har behörighet att titta på kartan.
+    if @map.private? and @map.user != current_user
+      flash[:notice] = "Kartan du forsoker titta pa ar privat!"
+      redirect_to root_path
+    end
 
     display_map(@map)
   end
 
   def new
-    @map = Map.new
-    #todo: h�mta default-koordinater n�nstans/anv�nds geolocation som default
-    @map.location = Location.new do |l|
-      l.latitude = 60
-      l.longitude = 15
+    # skapar ett map-objekt och ett sätter map-location till default
+    @map = Map.new do |map|
+      map.location = Location.new do |l|
+        l.latitude = 60
+        l.longitude = 15
+      end
+      map.zoom = 5
     end
-    @map.zoom = 5
+    #todo: h�mta default-koordinater n�nstans/anv�nds geolocation som default
+
     display_map(@map)
   end
 
@@ -57,20 +67,29 @@ class MapsController < ApplicationController
 
   end
 
-  # GET /maps/:slug/edit
+  # GET profiles/:username/maps/:slug/edit
   def edit
-    @map = Map.find(params[:id])
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = User.find(params[:profile_id])
+
+    # Hämtar rätt karta från användarens samling
+    @map = @user.maps.find(params[:id])
+
     display_map(@map)
     unless current_user == @map.user
       flash[:notice] = "Fel, bara agaren till kartan kan andra den."
-      redirect_to profile_map_path(@map.user.slug, @map.slug)
+      redirect_to profile_map_path(@user.slug, @map.slug)
     end
-
   end
 
   # PUT /maps/:slug/edit
   def update
+    # Hämtar rätt karta från användarens samling
     @map = Map.find(params[:id])
+
+    # Sparar undan sluggen om namn-fältet är tomt
+    @slug = @map.slug
+
     display_map(@map)
     if current_user == @map.user
       if @map.update_attributes(params[:map])
@@ -79,17 +98,17 @@ class MapsController < ApplicationController
         redirect_to profile_map_path(@map.user.slug, @map.slug)
       else
         flash[:error] = "Fel intraffade nar kartan skulle sparas."
-        redirect_to edit_profile_map_path(@map.user.slug, @map.slug)
+        redirect_to edit_profile_map_path(@map.user.slug, @slug)
       end
     else
       flash[:notice] = "Fel, bara agaren till kartan kan uppdatera den."
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
-
   end
 
   def destroy
     @map = Map.find(params[:id])
+
     if current_user == @map.user
       if @map.destroy
         flash[:notice] = "Kartan borttagen"
@@ -104,6 +123,7 @@ class MapsController < ApplicationController
 
   # Sets options for map
   def display_map(map)
+
     @display_map =  {
         "map_options" => {
             "auto_zoom" => true,

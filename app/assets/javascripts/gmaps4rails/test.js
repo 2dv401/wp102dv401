@@ -118,19 +118,8 @@ function searchFieldSelect(event, ui) {
   return false;
 }
 
-function onLocationSearchResponse(event, ui) {
-  var locations = new Array();
-
-  for(var i = 0; i < ui.content.length; i++) {
-    var location = new Array();
-    location.push(ui.content[i].label);
-    location.push(ui.content[i].value.$a);
-    location.push(ui.content[i].value.ab);
-
-    locations.push(location);
-  }
-
-  return false;
+function isMarkingLink(url) {
+  return true;
 }
 
 function useGeolocation() {
@@ -142,12 +131,11 @@ function move_map(position) {
   var longitude = position.coords.longitude;
 
   Gmaps.map.map.setCenter(new google.maps.LatLng(latitude, longitude));
-  Gmaps.map.map.setZoom(9);
+  Gmaps.map.map.setZoom(30);
 
   $('#latitude').val(latitude);
   $('#longitude').val(longitude);
 }
-
 
 window.onready = function() {
   var submit = document.getElementById("submit");
@@ -156,6 +144,8 @@ window.onready = function() {
   var searchField = document.getElementById("locationTextField");
   var map = $("#map");
   var mapCreation = $("#mapCreation");
+
+
   if(submit) {
     submit.onclick = click;
   }
@@ -170,16 +160,27 @@ window.onready = function() {
     navigation.onclick = useGeolocation;
   }
 
+
   if(map.is('*') && mapCreation.length < 1) {
     map.mouseover(activateLocationAdd);
   }
+
+  $('.showCords').click(function(e) {
+    e.preventDefault();
+    console.log('hello');
+    $('.fieldCords').slideToggle();
+  });
 
   $(document).keyup(function(e) {
     if(e.keyCode == 27) {
       closeMarkingCreationBox();
     }
   });
+
+  $("#map").ajaxComplete(function(event, request, settings) {
+    if(isMarkingLink(settings.url)) {
+      var id = settings.url.split("/").pop();
+      removeMarking(id);
+    }
+  });
 }
-
-
-

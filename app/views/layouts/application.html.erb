@@ -21,79 +21,11 @@
 </head>
 <body class='<%= controller.controller_name %>'>
 <div class="container">
-  <nav class="top-bar fixed">
+  <% if user_signed_in?%>
+  <%= render "shared/top_nav_bar" %>
+  <% end %>
 
-    <ul>
-      <li class="name">
-        <h1><%= link_to "Kartr.se", root_url %></h1>
-      </li>
-      <li class="toggle-topbar">
-        <a href="#">toggle-topbar</a>
-      </li>
-    </ul>
-
-    <section>
-      <ul class="left">
-        <li class="divider">divider</li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-      </ul>
-      <% if user_signed_in? %>
-          <ul class="right">
-            <li class="has-dropdown">
-              <a href="#">
-                <% #@TODO: Bryta ut detta till en helper %>
-                <% if current_user.provider? %>
-                    <img src="<%= current_user.profile_image %>" alt="" class="profile-image-small" />
-                    <%= current_user.name%>
-                <% else %>
-                    <%= gravatar_image_tag(current_user.email,
-                       :alt => current_user.email,
-                       :class => 'profile-image-small',
-                       :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
-                    <%= current_user.username%>
-                <% end %>
-              </a>
-              <ul class="dropdown">
-                <li><%= link_to raw('<i class="foundicon-settings"></i> Inställningar'), edit_user_registration_path %> </li>
-                <li><%= link_to raw('<i class="foundicon-location"></i> Mina kartor'), profile_maps_path(current_user.slug) %></li>
-                <li><%= link_to raw('<i class="foundicon-lock"></i> Logga ut'), destroy_user_session_path, :method => :delete %></li>
-              </ul>
-            </li>
-          </ul>
-          <ul>
-            <li class="has-dropdown">
-              <a href="#">
-               Kartor
-              </a>
-              <ul class="dropdown">
-                <li><%= link_to "Ny karta...", new_profile_map_path(current_user.slug) %></li>
-                <%= top_bar_edit_map_link %>
-                <%= top_bar_delete_map_link %>
-                <li class="divider"></li>
-                <li><label>Mina kartor</label></li>
-                <% current_user.maps.find_each do |map| %>
-                  <li><%= link_to map.name, profile_map_path(current_user.slug, map.slug) %></li>
-                <% end %>
-              </ul>
-            </li>
-          </ul>
-      <% end %>
-    </section>
-
-  </nav>
-
-  <div class="row" id="flash">
-    <div class="twelve columns">
-      <% flash.each do |name, msg| %>
-          <div class="alert-box">
-            <%= content_tag :div, msg, :id => "flash_#{name}" %>
-            <a href="" class="close">&times;</a>
-          </div>
-      <% end %>
-    </div>
-  </div>
+  <%= render "shared/flash_messages" %>
 
   <section class="row" id="content">
     <div class="twelve columns">

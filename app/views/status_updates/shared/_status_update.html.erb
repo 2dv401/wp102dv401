@@ -1,0 +1,27 @@
+<li id="status-update-<%= update.id %>" class="status-update">
+  <article>
+    <div class="status-update-body">
+      <div class="status-update-header">
+        <h3><%= link_to update.map.name, map_path(update.map) %></h3>
+      </div>
+      <div class="status-update-content">
+        <p><%= update.content %></p>
+      </div>
+      <div class="status-update-footer">
+        <span class="created-at"><%= time_ago(update.created_at) %></span>
+        <div id="status-update-like-button-<%= update.id %>">
+          <%= render 'status_updates/shared/like_button', :update => update %>
+        </div>
+      </div>
+    </div>
+    <div class="status-comment-wrapper">
+      <ul id="status-<%= update.id %>-comment-list" class="status-comments">
+        <% if update.status_comments.any? %>
+            <li class="status-update-comment-show">Visa alla kommentarer</li>
+            <%= render "status_comments/shared/status_comments", :comments => update.status_comments %>
+        <% end %>
+        <li class="status-comment-form"><%= render "status_comments/shared/form", :update => update %></li>
+      </ul>
+    </div>
+  </article>
+</li>

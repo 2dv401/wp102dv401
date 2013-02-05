@@ -1,16 +1,40 @@
 <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
+<% if @map.user == current_user %>
+    <% title @map.name %>
+<% else %>
+    <% title @map.user.username + "´s karta - " + @map.name %>
+<% end %>
 
 <div class="row">
-  <div class="seven columns">
-    <h1><%= @map.name %></h1>
-    <p><%= @map.description %><p>
-  </div>
-  <div class="five columns">
+  <div class="twelve columns">
+    <h1 class="header-name" ><%= @map.name %> </h1>
+    <h5 class="subheader header-name" > En karta av: <%= @map.user.username %></h5>
     <% unless @map.user == current_user %>
-        <div class ="right" id="follow-button">
-          <%= render 'maps/shared/follow_button', :map => @map %>
+        <div class="right" id="follow-button">
+          <%= render 'maps/shared/follow_button'%>
         </div>
-    <% else %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <div class="map-info-wrapper">
+      <div class="map-description">
+        <p><%= @map.description %></p>
+      </div>
+      <div claes="map-created-at">
+        <span>Skapades: <%= time_ago(@map.created_at) %></span>
+      </div>
+      <div class="left" id="follow-count">
+        <%= render 'maps/shared/follow_count' %>
+      </div>
+    </div>
+
+
+  </div>
+  <% if @map.user == current_user %>
+      <div class="eight columns">
         <div class="right map-handler">
           <div class="status-update-form">
             <%= render "status_updates/shared/form" %>
@@ -18,11 +42,9 @@
           <%= link_to "Lägg till markering", new_map_mark_path(@map) %> |
           <%= link_to "Ändra karta", edit_profile_map_path(@map.user.slug, @map.slug) %> |
           <%= link_to "Ta bort karta", map_path(@map.id), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>
-          <% top_bar_edit_map_link @map %>
-          <% top_bar_delete_map_link @map%>
         </div>
-    <% end %>
-  </div>
+      </div>
+  <% end %>
 </div>
 
 <div class="row">
@@ -34,23 +56,10 @@
 <div class="row">
   <% if @map.status_updates.any? %>
       <div class="six columns">
-        <h3>Statusuppdateringar</h3>
-        <%= render "status_updates/shared/status_updates", :map => @map, :updates => @map.status_updates %>
+        <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
       </div>
   <% end %>
   <div class="six columns">
-    <section class="map-comment-wrapper">
-      <h3>Kommentarer</h3>
-      <ul class="map-comments">
-        <% if @map.map_comments.any? %>
-            <%= render "map_comments/shared/map_comments", :map => @map, :comments => @map.map_comments %>
-        <% end %>
-        <li>
-          <div class="map-comment-form">
-            <%= render "map_comments/shared/form" %>
-          </div>
-        </li>
-      </ul>
-    </section>
+    <%= render "map_comments/shared/map_comments", :map => @map %>
   </div>
 </div>

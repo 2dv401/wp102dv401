@@ -9,4 +9,5 @@ class MapComment < ActiveRecord::Base
 
   # validation
   validates :content, presence: true, length: { :maximum => 5120 }
+
 end

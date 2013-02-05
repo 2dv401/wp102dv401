@@ -1,4 +1,4 @@
-<p>
+﻿<p>
   <b>Name:</b>
   <%= mark.name %>
 </p>
@@ -8,4 +8,10 @@
   <%= mark.description %>
 </p>
 
+<p>
+  <%= link_to "Ändra markering", edit_map_mark_path(mark.map,mark) %>
+</p>
 
+<p>
+   <%= link_to 'Ta bort', map_mark_path(mark.map,mark), :confirm => 'Vill du ta bort markeringen?', :id => "delete-marker-link",:method => :delete, :remote => true %>
+</p>

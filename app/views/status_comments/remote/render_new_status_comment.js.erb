@@ -1,0 +1,4 @@
+var statusCommentForm = "#status-<%= @comment.status_update.id %>-comment-list .status-comment-form";
+var html = "<%= j render 'status_comments/shared/status_comment', :comment => @comment %>";
+$(html).hide().insertBefore(statusCommentForm).slideDown('fast');
+$(statusCommentForm + " input[type=text]").val('');

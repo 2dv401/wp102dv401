@@ -1,0 +1,10 @@
+<ul class="right">
+  <li class="has-dropdown">
+    <a href="#"><i class="foundicon-settings"></i> <%= map.name %></a>
+    <ul class="dropdown">
+      <li><%= link_to "Redigera karta...", edit_profile_map_path(map.user.slug, map.slug) %></li>
+      <li><%= link_to "Ny markering...", new_map_mark_path(map.slug) %></li>
+      <li><%= link_to "Ta bort kartan", map_path(map.id), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %></li>
+    </ul>
+  </li>
+</ul>

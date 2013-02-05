@@ -6,8 +6,8 @@ class Map < ActiveRecord::Base
   belongs_to :location
 
   has_many :marks, :dependent => :destroy
-  has_many :status_updates, :dependent => :destroy
-  has_many :map_comments, :dependent => :destroy
+  has_many :status_updates, :order => "created_at DESC", :dependent => :destroy
+  has_many :map_comments, :order => "created_at DESC", :dependent => :destroy
 
   acts_as_followable
   acts_as_gmappable

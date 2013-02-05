@@ -2,7 +2,6 @@ class StatusUpdatesController < ApplicationController
   before_filter :authenticate_user!
 
   def toggle_like
-    @map = Map.find(params[:map_id])
     @update = StatusUpdate.find(params[:status_update_id])
 
     if current_user.likes?(@update)
@@ -11,7 +10,7 @@ class StatusUpdatesController < ApplicationController
       current_user.like!(@update)
     end
 
-    render :template => 'status_updates/like/toggle'
+    render :template => 'status_updates/remote/like_button_toggle'
   end
 
   def create
@@ -30,7 +29,8 @@ class StatusUpdatesController < ApplicationController
 
   def destroy
     @update = StatusUpdate.find(params[:id])
-    @map = @update.map
+    @destroyed_update = @update
+
     if current_user == @update.user
       if @update.destroy
         flash[:notice] = "Statusen borttagen"
@@ -40,6 +40,6 @@ class StatusUpdatesController < ApplicationController
     else
       flash[:notice] = "Fel, bara agaren till kartan kan ta bort statusen."
     end
-    redirect_to profile_map_path(@map.user.slug, @map.slug )
+    render :template => 'status_updates/remote/remove_status_update'
   end
 end

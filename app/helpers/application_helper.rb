@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-	# En hjälpmetod för att lägga till information i titeln
+  # En hjälpmetod för att lägga till information i titeln
   def title(title = nil)
     if title.present?
       content_for :title, title
@@ -36,27 +36,87 @@ module ApplicationHelper
     end
   end
 
-  # En hjälpmetod för att lägga till edit-länk i top-bar
-  def top_bar_edit_map_link(map = nil)
-    if map.present?
-      link =  link_to "Redigera karta...", edit_profile_map_path(map.user.slug, map.slug)
-      content_for :edit_map_link, link
-    else
-      content_for?(:edit_map_link) ? raw('<li>' + content_for(:edit_map_link) + '</li>') : ''
+  def followed_maps
+    @maps = []
+    # Hämtar alla Follow-objekt som är kopplad till current_user...
+    Follow.find_all_by_follower_id_and_followable_type(current_user.id, 'Map').each do |follow|
+      # ... hämtar den kartan som menas
+      @maps << Map.find(follow.followable_id)
+    end
+
+    return @maps
+  end
+
+  ##
+  # Follow räknare.
+  # Räknar antalet följare av ett followable-objekt
+  #
+  # @param Followable
+  # @return String
+  def follow_count_string(followable)
+    @count = followable.followers('User').count
+  end
+
+  ##
+  # Like räknare.
+  # Räknar antalet användare som gillar ett likable-objekt
+  # och returnerar olika svar.
+  # Möjliga svar är:
+  # Du och en person till...
+  # Du och :nr personer...
+  # :nr personer...
+  # Du...
+  # 1 person...
+  # ...gillar detta
+  #
+  # @param Likable
+  # @return String
+  def like_count_string(likable)
+    @count = likable.likers(User).count
+    @user_likes = current_user.likes?(likable)
+    @count_string = ""
+
+    # kontrollerar först om någon gillar...
+    if @count > 0
+
+      # ... om fler än en person gillar...
+      if @count > 1
+
+        # ...  och användaren är en av dom
+        if @user_likes
+
+          # ... om användaren och en till person gillar
+          if @count == 2
+            @count_string = "Du och #{ @count - 1 } person till"
+          else
+            @count_string = "Du och #{ @count - 1 } presoner till"
+          end
+
+        else
+          @count_string = "#{ @count } personer"
+        end
+      # ... om det inte är fler än en person som gillar och användaren är en av dom
+      elsif @user_likes
+        @count_string = "Du"
+      else
+        @count_string = "#{ @count } person"
+      end
+      @count_string += " gillar detta"
     end
   end
 
-  # En hjälpmetod för att lägga till destroy-länk i top-bar
-  def top_bar_delete_map_link(map = nil)
-    if map.present?
-      link = link_to "Ta bort kartan", profile_map_path(@map.user.slug, @map.slug), :method=>:delete, :confirm=>"Vill du ta bort kartan?"
-      content_for :delete_map_link, link
-    else
-      content_for?(:delete_map_link) ? raw('<li>' + content_for(:delete_map_link) + '</li>') : ''
-    end
-  end
 
+  ##
   # DateTime formaterare
+  # Möjliga svar:
+  # idag kl. hh:mm
+  # igår kl. hh:mm
+  # den :date_nr :month kl. hh:mm
+  # den :date_nr :month :year kl. hh:mm
+  #
+  # @@param DateTime
+  # @return string
+
   def time_ago(time_format = nil)
     now = Time.now
     time = time_format
@@ -67,11 +127,11 @@ module ApplicationHelper
     if time.today?
       time.strftime("idag kl. %H:%M")
 
-    # Är det igar?
+      # Är det igar?
     elsif time.day == now.yesterday.day
       time.strftime("igar kl. %H:%M")
 
-    # Är det iår?
+      # Är det iår?
     elsif time.year == now.year
       time.strftime("den %d "+ month +" kl. %H:%M")
 

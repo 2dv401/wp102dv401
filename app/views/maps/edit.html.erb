@@ -1,3 +1,7 @@
+<% title @map.name %>
 <h2>Redigera karta</h2>
-
-<%= render 'maps/shared/form' %>
+<div id="mapCreation">
+  <%= form_for(@map, :url => map_path(@map.id), :method => :put, :html => { :id => "map_form" }) do |f| %>
+      <%= render 'maps/shared/form', :f => f %>
+  <% end %>
+</div>

@@ -15,12 +15,14 @@
 // Application imports
 @import "foundation";
 @import "foundation_icons_general/sass/general_foundicons";
-
+@import "home.css.scss";
 @import "maps.css.scss";
 @import "gmaps4rails.css.scss";
 @import "status_updates.css.scss";
 @import "map_comments.css.scss";
 
+.header-name { display: inline-block; }
+h1.header-name { margin-right: 10px; }
 
 .profile-image-small {
   width: 24px;
@@ -50,3 +52,6 @@ span.emoticon {
 .heart {
     background-image: url('http://static.ak.fbcdn.net/rsrc.php/v2/yr/x/Ob2Er7b1NpV.png');
 } 
+.fieldCords {
+	display: none;
+}
