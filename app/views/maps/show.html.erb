@@ -40,10 +40,10 @@
       <%= render 'maps/shared/follow_count' %>
     </div>
     <div class="left map-count">
-      <%= render 'maps/shared/status_count' %>
+      <%= render 'status_updates/shared/status_count', :map => @map %>
     </div>
-    <div class="left map-count">
-      <%= render 'maps/shared/comment_count' %>
+    <div class="left map-count" id="comment-count">
+      <%= render 'map_comments/shared/comment_count', :map => @map %>
     </div>
   </div>
   <% if @map.user == current_user %>
