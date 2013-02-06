@@ -1,12 +1,4 @@
-// Skapar en sträng med sökvägen till platsen där commentaren skall sättas in.
 var mapCommentForm = "#map-<%= @comment.map.id %>-comment-list .map-comment-form";
-
-// Skapar den html som skall renderas
 var html = "<%= j render 'map_comments/shared/map_comment', :comment => @comment %>";
-
-// Sätter in html:en på sin rätta plats
 $(html).hide().insertAfter(mapCommentForm).slideDown('fast');
 $(mapCommentForm + " input[type=text]").val('');
-
-// Rendera om den div som visar antal kartkommentarer
-$("#comment-count").html("<%= j render 'map_comments/shared/comment_count', :map => @comment.map %>");

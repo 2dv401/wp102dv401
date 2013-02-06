@@ -1,0 +1,60 @@
+
+
+<h3>API Dokumentation</h3>
+<div class="alert-box alert">
+    Denna del utav kartr.se är fortfarande under utveckling!
+</div>
+
+<%
+  ## Om användaren är inloggad.
+  if user_signed_in?
+%>
+
+<div class="row">
+  <div class="twelve columns">
+    <% @maps.each do |map| %>
+    <dl class="tabs">
+      <dd class="active"><a href="#name-<%= map.id%>"><%= map.name %></a></dd>
+      <dd><a href="#code-<%= map.id%>">Kod</a></dd>
+      <dd><a href="#key-<%= map.id%>">Nyckel</a></dd>
+    </dl>
+    <ul class="tabs-content">
+      <li class="active" id="name-<%= map.id%>Tab">
+        <h4><%= map.name %></h4>
+        Totalt antal sidvisningar: <%= map.map_views %>
+        <hr />
+      </li>
+      <li id="code-<%= map.id%>Tab">
+          <p>Använd koden på din webbsida</p>
+          <code>
+            &lt;iframe src="http://kartr.se/embed/<%= map.api_key %>>" width="100%" height="100%" frameBorder="0">&lt;/iframe>
+          </code>
+            <p>
+              Du kan ställa in bredd och höjd till önskat värde
+            </p>
+
+            <div class="panel">
+              Avancerad API-kod kommer inom kort...
+            </div>
+        <hr />
+      </li>
+      <li id="key-<%= map.id%>Tab">
+        <code>
+          <%= map.api_key %>
+          <hr />
+        </code>
+      </li>
+    </ul>
+  </div>
+    <% end %>
+</div>
+<% end %>
+
+
+<div class="row">
+    <div class="twelve columns">
+        <div class="panel">
+            API-dokumentation kommer här..
+        </div>
+    </div>
+</div>

@@ -3,13 +3,16 @@ class DashboardController < ApplicationController
 
   def index
 
+    ## Alla kartor
     @User = User.all
 
-    @maps = Map.all(:conditions => { "user_id" => current_user.id })
+    ## Mina kartor
+    @my_maps = current_user.maps
 
     followed_maps_ids = Follow.find_all_by_follower_type_and_followable_type_and_follower_id(
         'User','Map',current_user.id).map(&:followable_id)
 
+    ## Kartor jag följer
     @followed_maps = Map.find(followed_maps_ids)
 
     # Kommer användas så att det går att kommentera statusuppdateringarna

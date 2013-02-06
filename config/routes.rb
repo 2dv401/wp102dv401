@@ -1,10 +1,19 @@
 Wp102dv401::Application.routes.draw do
 
+  get "javascripts/maps"
+
   # Footer sidorna
   get "/om-kartr" => "pages#about", :as => :pages_about
   get "/anvandarvillkor" => "pages#terms", :as => :pages_terms
   get "/sekretess" => "pages#privacy", :as => :pages_privacy
   get "/hjalp" => "pages#help", :as => :pages_help
+
+  get "/api" => "pages#api", :as => :pages_api
+  get "maps/foo" => "maps#foo"
+
+  match "javascripts/maps.:format" => "javascripts#maps"
+
+  match "embed/:api_key" => "maps#embed", :as => :embed
 
   # Tell Devise in which controller we will implement Omniauth callbacks
   devise_for :users, :controllers => { :omniauth_callbacks => "authentications" }

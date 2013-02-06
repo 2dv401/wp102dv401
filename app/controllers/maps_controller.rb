@@ -1,5 +1,7 @@
 class MapsController < ApplicationController
   before_filter :authenticate_user!
+  ## Skippa validering på embeddade kartor.
+  skip_before_filter :authenticate_user!, :only => ['embed']
 
   def index
     ## Hämtar alla kartor användaren äger
@@ -29,8 +31,14 @@ class MapsController < ApplicationController
 
     # Kontrollerar om användaren har behörighet att titta på kartan.
     if @map.private? and @map.user != current_user
-      flash[:notice] = "Kartan du forsoker titta pa ar privat!"
-      redirect_to root_path
+      render :template => 'maps/show_private.html.erb'
+      return
+    end
+
+    ## Räkna sidvisningar på kartan, men inte på egna kartor.
+    if @map.user.id != current_user.id
+      @map.increment :map_views
+      @map.save
     end
 
     display_map(@map)
@@ -45,9 +53,17 @@ class MapsController < ApplicationController
       end
       map.zoom = 5
     end
-    #todo: h�mta default-koordinater n�nstans/anv�nds geolocation som default
+
+
 
     display_map(@map)
+
+
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: {:map => @map, :display_map => @display_map }}
+    end
   end
 
   def create
@@ -143,17 +159,86 @@ class MapsController < ApplicationController
                             :width   => 32,
                             :height  => 32
                            })
-
             # Titeln
             marker.title   mark.name
-            
             # Sidebar - inte implementerat
             #marker.sidebar "i'm the sidebar"
-
             # Om man vill lägga till fler fält till markeringen i jsonformat
             marker.json({ :id => mark.id, :foo => "bar" })
           end
         }
     }
+  end
+
+
+
+  ### UNDER UTVECKLING!
+  ### ANVÄND EJ!
+  ### PILLA INTE SÖNDER KOD!
+  ### EJ SLUTGILTLIG VERSION!
+  ## ------------------------------
+
+  ## Genererar en karta utifrån angiven API-nyckel
+  def embed
+    ## Beroende
+    require 'json'
+    ## API nyckel
+    key = params[:api_key]
+    ## Standard värden för höj bredd och enhet samt karttyp.
+    if(params.has_key?(:width))
+      @width = params[:width]
+    else
+      @width = '100'
+    end
+
+    if(params.has_key?(:height))
+      @height = params[:height]
+    else
+      @height = '100'
+    end
+
+    if(params.has_key?(:unit))
+      @unit = params[:unit]
+    else
+      @unit = '%'
+    end
+
+    if(params.has_key?(:mapType))
+      @map_type = params[:mapType]
+    else
+      @map_type = 'ROADMAP'
+    end
+    ## Hämtar aktuell karta.
+    @embed_map = Map.find_by_api_key(key)
+
+    if @embed_map.private?
+      output = {'error' => 'Kan ej badda in privata kartor.'}.to_json
+      render :json => output
+      return
+    end
+    ## Map i json
+    @map = @embed_map.to_json
+
+    ## Göra om koordinater till korrekt json
+    @marks = @embed_map.marks.to_gmaps4rails
+
+    ## Locations i JSON
+    @location = @embed_map.location.to_json
+
+
+    respond_to do |format|
+      format.html { render :html => {:map => @map,
+                                     :marks => @marks,
+                                     :location => @location}, :layout => false }
+      format.xml  { render :xml => {:map => @map,
+                                    :marks => @marks,
+                                    :location => @location} }
+      format.json { render :json =>  {:map => @map,
+                                      :marks => @marks,
+                                      :location => @location} }
+    end
+
+
+    ##render :layout => false
   end
 end

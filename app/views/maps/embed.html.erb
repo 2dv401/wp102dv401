@@ -1,0 +1,72 @@
+<script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+
+
+    /*
+    EJ KOMPLETT KOD!
+    PILLA EJ, NY VERSION UNDER UTVECKLING!
+     */
+
+
+	var $kartr_se = jQuery.noConflict();
+		// DOM-Ready
+		$kartr_se(document).ready(function() {
+      var map_info = <%= raw(@map) %>
+      var center = <%= raw(@location) %>
+      var map;
+      var bound = new google.maps.LatLngBounds();
+      var markers = <%= raw(@marks) %>;
+
+      console.log(map_info);
+        var myOptions = {
+          mapTypeId: google.maps.MapTypeId.<%= @map_type.upcase %>
+        };
+
+       map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+
+
+      // Om kartan har markeringar, loopa ut dessa.
+      if ( markers.length ) {
+        for(var i in markers) {
+          var myLatLng = new google.maps.LatLng(markers[i].lat, markers[i].lng);
+          bound.extend(myLatLng);
+
+          var mark = {}
+
+          var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map
+          });
+        }
+      }
+      else {
+        var centerLatLng = new google.maps.LatLng(center.latitude, center.longitude);
+        bound.extend(centerLatLng);
+        map.setZoom(6);
+
+        var marker = new google.maps.Marker({
+          position: centerLatLng,
+          map: map
+        });
+      }
+      map.fitBounds(bound);
+
+      // Lägger in overlayer så att man ser kartnamnet i kartan.
+      var mapTitle = document.createElement('h3');
+      mapTitle.style.color = '#444';
+      mapTitle.innerHTML = map_info.name;
+
+      var copyrightText = document.createElement('p');
+      copyrightText.style.color = '#444';
+      copyrightText.innerHTML = "&copy; kartr.se";
+
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(mapTitle);
+      map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(copyrightText);
+		});
+
+    </script>
+
+<div id="map-canvas" style="width:<%= @width %><%= @unit%>; height:<%= @height%><%= @unit%>">
+
+</div>
