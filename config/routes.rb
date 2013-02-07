@@ -1,5 +1,9 @@
 Wp102dv401::Application.routes.draw do
 
+  get "instagram/index"
+
+  get "instagram/new"
+
   get "javascripts/maps"
 
   # Footer sidorna
@@ -72,6 +76,14 @@ Wp102dv401::Application.routes.draw do
       post 'toggle_like'
     end
   end
+
+  ### TEST MED INSTAGRAM
+  get "/instagram" => "instagram#index"
+  get "/instagram/activate" => "instagram#activate"
+  get "/instagram/auth" => "instagram#auth"
+  get "/instagram/callback" => "instagram#callback"
+
+
 
   root :to => "home#index"
 

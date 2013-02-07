@@ -38,6 +38,8 @@ gem 'friendly_id'
 
 gem 'jquery-ui-themes'
 
+gem 'instagram'
+
 
 
 #gem "jammit", :git => "git://github.com/documentcloud/jammit.git"

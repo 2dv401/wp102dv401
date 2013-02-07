@@ -11,6 +11,7 @@ class Map < ActiveRecord::Base
   has_many :marks, :dependent => :destroy
   has_many :status_updates, :order => "created_at DESC", :dependent => :destroy
   has_many :map_comments, :order => "created_at DESC", :dependent => :destroy
+  has_many :instagrams, :dependent => :destroy
 
   acts_as_followable
   acts_as_gmappable
