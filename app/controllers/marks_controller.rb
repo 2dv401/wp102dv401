@@ -39,6 +39,7 @@ class MarksController < ApplicationController
   def edit
     # Inte 100%
     @mark = Mark.find(params[:id])
+    @map = @mark.map
     display_map(@mark.map)
     respond_to do |format|
       format.html # new.html.erb
@@ -79,10 +80,11 @@ class MarksController < ApplicationController
     # 
     # 
     @mark = Mark.find(params[:id])
-
+    @map = @mark.map
+    
     respond_to do |format|
       if @mark.update_attributes(params[:mark])
-        format.html { redirect_to @map, notice: 'Mark was successfully updated.' }
+        format.html { redirect_to @map, notice: 'Markeringen har uppdaterats.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
