@@ -54,8 +54,6 @@ class MapsController < ApplicationController
       map.zoom = 5
     end
 
-
-
     display_map(@map)
 
 
@@ -67,18 +65,22 @@ class MapsController < ApplicationController
   end
 
   def create
+    # Tar bort IDt från en tidigare sparad location (om valideringen failats)
+    # Tar man bort denna rad kastas undantag för det inte går att assiciera en 
+    # redan befintlig location med ett objekt som inte än är skapad (kartan)
+    params[:map][:location_attributes][:id] = nil
+
     @map = Map.new(params[:map]) do |m|
       m.user = current_user
       m.location = Location.find_by_latitude_and_longitude(m.latitude, m.longitude) || m.location
     end
-    display_map(@map)
-
+    
     if @map.save
-      flash[:notice] = "Kartan sparades!"
-      redirect_to profile_map_path(@map.user.slug, @map.slug)
+      redirect_to profile_map_path(@map.user.slug, @map.slug), notice: "Kartan #{@map.name} sparades!"
     else
-      flash[:error] = "Fel intraffade nar kartan skulle sparas."
-      render :action => "new"
+      display_map(@map)      
+      flash[:error] = "Ett eller flera fel intraffade nar kartan skulle sparas."
+      render action: "new"
     end
 
   end
