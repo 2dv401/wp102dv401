@@ -25,17 +25,38 @@
         <hr />
       </li>
       <li id="code-<%= map.id%>Tab">
-          <p>Använd koden på din webbsida</p>
-          <code>
-            &lt;iframe src="http://kartr.se/embed/<%= map.api_key %>>" width="100%" height="100%" frameBorder="0">&lt;/iframe>
-          </code>
-            <p>
-              Du kan ställa in bredd och höjd till önskat värde
-            </p>
+        <div class="panel">
+          <strong>Iframe</strong>
+<pre>
+&lt;iframe src="http://kartr.se/embed/<%= map.api_key %>>" width="100%" height="100%" frameBorder="0">&lt;/iframe>
+</pre>
+        </div>
 
-            <div class="panel">
-              Avancerad API-kod kommer inom kort...
-            </div>
+        <div class="panel">
+          <strong>JavaScript</strong>
+
+<pre>
+&lt;script type="text/javascript">
+  /* * * Konfigurations variabler * * */
+  var kartr_api_key = '<%= map.api_key %>'; // API-nyckel
+  var kartr_map_width = 700; // Kartans bredd i pixlar
+  var kartr_map_height = 500; // Kartans höjd i pixlar
+
+  /* * * Redigera inte under denna rad om du inte vet vad du gör. * * */
+  $(function(){
+    var kartr = document.createElement('script'); kartr.type = 'text/javascript'; kartr.async = true;
+    kartr.src = 'http://kartr.se/javascripts/maps.js?api_key=' + kartr_api_key;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(kartr);
+  });
+&lt;/script>
+</pre>
+          <strong>Beroenden</strong>
+          <p>Du måste själv ansvara för att följande beroende uppfylls.</p>
+          <ul>
+            <li>jQuery</li>
+            <li>Google Maps</li>
+          </ul>
+        </div>
         <hr />
       </li>
       <li id="key-<%= map.id%>Tab">
