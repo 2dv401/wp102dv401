@@ -1,3 +1,4 @@
+require File.dirname('') + '/config/environment.rb'
 class MapsController < ApplicationController
   before_filter :authenticate_user!
   ## Skippa validering på embeddade kartor.
@@ -19,6 +20,12 @@ class MapsController < ApplicationController
   end
 
   def show
+    begin
+      @map = Map.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render :template => 'maps/404', :status => 404
+      return
+    end
     #Nya objekt som kan skapas på maps-sidan
     @status_update = StatusUpdate.new
     @status_comment = StatusComment.new
@@ -27,7 +34,7 @@ class MapsController < ApplicationController
       m.build_location
     end
 
-    @map = Map.find(params[:id])
+    
 
     # Kontrollerar om användaren har behörighet att titta på kartan.
     if @map.private? and @map.user != current_user
