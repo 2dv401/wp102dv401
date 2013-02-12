@@ -1,0 +1,20 @@
+<% title "Hittades inte!" %>
+
+<div class="row">
+  <div class="twelve columns">
+    <h2>Hoppsan! :(</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <p>Kartan du efterfrågade hittades inte.</p>
+    <p>Du blir strax flyttad till <%= link_to 'startsidan', root_path %></p>
+  </div>
+</div>
+
+
+<script>
+  setTimeout(function() {
+  window.location.href = "<%= root_path %>";
+}, 5000)
+</script>
