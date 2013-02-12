@@ -130,10 +130,16 @@ module ApplicationHelper
     end
   end
 
+  # Gör om text-baserade smilies till...span-taggar som kan ändras efter behov
   def format_text(text)
-    text.gsub!(/\:\-?\)/, '<span class="emoticon smile"></span>')
-    text.gsub!(/\;\-?\)/, '<span class="emoticon blink"></span>')
-    text.gsub!(/\<\-?3/, '<span class="emoticon heart"></span>')
+    # HTML-escapar strängen så script-taggar och annat okul inte visas på sajten
+    text = ERB::Util::html_escape(text)
+    puts "&lt;3"
+    # Byter ut smilies till spantaggar
+    text.gsub!(/\:\-?\)/, '<span class="emoticon smile"></span><span class="hide">:)</span>')
+    text.gsub!(/\&lt;3/, '<span class="emoticon heart"></span><span class="hide"><3</span>')
+
+    # Markerar strängen som HTML-safe (eftersom den är icke-safe med span-taggar i sig)
     text.html_safe
   end
 end

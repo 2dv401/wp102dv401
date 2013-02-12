@@ -56,8 +56,6 @@ class MapsController < ApplicationController
 
     display_map(@map)
 
-
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: {:map => @map, :display_map => @display_map }}
