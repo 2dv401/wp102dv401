@@ -25,7 +25,7 @@
   <div class="five columns">
     <div class="map-info-wrapper">
       <div class="map-description">
-        <p><%= @map.description %></p>
+        <p><%= format_text(@map.description) %></p>
       </div>
       <div claes="map-created-at">
         <span>Skapades: <%= time_ago(@map.created_at) %></span>
