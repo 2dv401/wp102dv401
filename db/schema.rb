@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(:version => 20130204132558) do
   add_index "map_comments", ["user_id"], :name => "index_map_comments_on_user_id"
 
   create_table "maps", :force => true do |t|
-    t.string   "name",        :limit => 50,    :default => "",       :null => false
+    t.string   "name",        :limit => 50,                          :null => false
     t.text     "description", :limit => 15360, :default => "",       :null => false
     t.boolean  "private",                      :default => false,    :null => false
     t.boolean  "gmaps",                        :default => true,     :null => false

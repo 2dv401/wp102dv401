@@ -35,8 +35,6 @@ class MapsController < ApplicationController
       m.build_location
     end
 
-    
-
     # Kontrollerar om användaren har behörighet att titta på kartan.
     if @map.private? and @map.user != current_user
       render :template => 'maps/show_private.html.erb'
@@ -61,7 +59,6 @@ class MapsController < ApplicationController
       end
       map.zoom = 5
     end
-
     display_map(@map)
 
     respond_to do |format|

@@ -13,7 +13,7 @@
 <%= f.text_field :name, :autofocus => true %>
 
 <%= f.label :description, "Beskrivning" %>
-<%= f.text_field :description %>
+<%= f.text_area :description, size: "30x8" %>
 
 <%= f.label :private, "Vem ska få se kartan?" %>
 <%= f.radio_button :private, true, { :checked => @map.private } %> Synlig enbart för mig och de jag bjuder in <br />

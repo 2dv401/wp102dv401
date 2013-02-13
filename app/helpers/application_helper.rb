@@ -137,7 +137,12 @@ module ApplicationHelper
     puts "&lt;3"
     # Byter ut smilies till spantaggar
     text.gsub!(/\:\-?\)/, '<span class="emoticon smile"></span><span class="hide">:)</span>')
+    text.gsub!(/\:\-?\D/, '<span class="emoticon big-smile"></span><span class="hide">:)</span>')
+    text.gsub!(/\=\-?\)/, '<span class="emoticon smile"></span><span class="hide">:)</span>')
+    text.gsub!(/\=\-?\D/, '<span class="emoticon big-smile"></span><span class="hide">:)</span>')
+    text.gsub!(/\;\-?\)/, '<span class="emoticon wink"></span><span class="hide">:)</span>')
     text.gsub!(/\&lt;3/, '<span class="emoticon heart"></span><span class="hide"><3</span>')
+    text.gsub!(/\:\-?\(/, '<span class="emoticon sad"></span><span class="hide">:)</span>')
 
     # Markerar strängen som HTML-safe (eftersom den är icke-safe med span-taggar i sig)
     text.html_safe
