@@ -238,9 +238,7 @@ class MapsController < ApplicationController
       format.html { render :html => {:map => @map,
                                      :marks => @marks,
                                      :location => @location}, :layout => false }
-      format.xml  { render :xml => {:map => @map,
-                                    :marks => @marks,
-                                    :location => @location} }
+
       format.json { render :json =>  {:map => @map,
                                       :marks => @marks,
                                       :location => @location} }
