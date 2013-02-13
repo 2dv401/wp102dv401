@@ -24,6 +24,11 @@ class MarksController < ApplicationController
   # GET /marks/new.json
   def new
     @map = Map.find_by_slug(params[:map_id])
+    
+    if @map.user.id != current_user.id
+      redirect_to profile_map_path(@map.user.slug, @map.slug)
+    end
+    
     @mark = Mark.new do |m|
       m.map = @map
       m.build_location
@@ -37,9 +42,13 @@ class MarksController < ApplicationController
 
   # GET /marks/1/edit
   def edit
-    # Inte 100%
     @mark = Mark.find(params[:id])
     @map = @mark.map
+    
+    if @mark.user.id != current_user.id
+      redirect_to profile_map_path(@map.user.slug, @map.slug)
+    end
+    
     display_map(@mark.map)
     respond_to do |format|
       format.html # new.html.erb
@@ -97,11 +106,17 @@ class MarksController < ApplicationController
   # DELETE /marks/1.json
   def destroy
     @mark = Mark.find(params[:id])
-    @mark.destroy
+    
+    if @mark.user.id != current_user.id
+      redirect_to profile_map_path(@mark.map.user.slug, @mark.map.slug)
+    else
+      @mark.destroy
 
-    respond_to do |format|
-      format.html { redirect_to marks_url }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to marks_url }
+        format.json { head :no_content }
+      end
+
     end
   end
 
