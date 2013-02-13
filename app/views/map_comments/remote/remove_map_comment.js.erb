@@ -1,2 +1,3 @@
 var mapComment = "#map-comment-<%= @destroyed_comment.id %>";
 $(mapComment).slideUp('normal', function() { $(this).remove() });
+$("#comment-count").html("<%= j render 'maps/shared/comment_count' %>");
