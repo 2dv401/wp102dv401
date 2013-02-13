@@ -98,7 +98,7 @@ class MapsController < ApplicationController
 
     display_map(@map)
     unless current_user == @map.user
-      flash[:notice] = "Fel, bara agaren till kartan kan andra den."
+      flash[:error] = "Fel, bara agaren till kartan kan andra den."
       redirect_to profile_map_path(@user.slug, @map.slug)
     end
   end
@@ -115,14 +115,14 @@ class MapsController < ApplicationController
     if current_user == @map.user
       if @map.update_attributes(params[:map])
         @map.location = Location.find_or_create_by_latitude_and_longitude(@map.latitude, @map.longitude)
-        flash[:notice] = "Kartan sparades!"
+        flash[:success] = "Kartan sparades!"
         redirect_to profile_map_path(@map.user.slug, @map.slug)
       else
         flash[:error] = "Fel intraffade nar kartan skulle sparas."
-        redirect_to edit_profile_map_path(@map.user.slug, @slug)
+        render :action => "edit"
       end
     else
-      flash[:notice] = "Fel, bara agaren till kartan kan uppdatera den."
+      flash[:error] = "Fel, bara agaren till kartan kan uppdatera den."
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
   end
@@ -132,12 +132,12 @@ class MapsController < ApplicationController
 
     if current_user == @map.user
       if @map.destroy
-        flash[:notice] = "Kartan borttagen"
+        flash[:success] = "Kartan togs bort"
       else
-        flash[:notice] = "Fel nar kartan skulle tagas bort"
+        flash[:error] = "Fel nar kartan skulle tagas bort"
       end
     else
-      flash[:notice] = "Fel, bara agaren till kartan kan ta bort den."
+      flash[:error] = "Fel, bara agaren till kartan kan ta bort den."
     end
     redirect_to root_path
   end
