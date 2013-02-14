@@ -22,10 +22,16 @@
 </div>
 
 <div class="row">
-  <div class="five columns">
+  <div class="twelve columns">
     <div class="map-info-wrapper">
       <div class="map-description">
-        <p><%= format_text(@map.description) %></p>
+        <p>
+          <% if @map.description.present? %>
+              <%= format_text(@map.description) %>
+          <% else %>
+              Denna karta saknar beskrivning...
+          <% end %>
+        </p>
       </div>
       <div claes="map-created-at">
         <span>Skapades: <%= time_ago(@map.created_at) %></span>
@@ -55,7 +61,7 @@
           <%= link_to "Lägg till markering", new_map_mark_path(@map) %> |
           <%= link_to "Ändra karta", edit_profile_map_path(@map.user.slug, @map.slug) %> |
           <%= link_to "Ta bort karta", map_path(@map.id), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>
-         <p>Sidvisningar: <%= @map.map_views %></p>
+          <p>Sidvisningar: <%= @map.map_views %></p>
         </div>
       </div>
   <% end %>

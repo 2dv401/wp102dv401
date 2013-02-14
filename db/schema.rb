@@ -74,19 +74,19 @@ ActiveRecord::Schema.define(:version => 20130207153207) do
   add_index "map_comments", ["user_id"], :name => "index_map_comments_on_user_id"
 
   create_table "maps", :force => true do |t|
-    t.string   "name",        :limit => 50,                        :null => false
-    t.text     "description", :limit => 256,                       :null => false
-    t.boolean  "private",                    :default => false,    :null => false
-    t.boolean  "gmaps",                      :default => true,     :null => false
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.string   "name",        :limit => 50,                          :null => false
+    t.text     "description", :limit => 15360, :default => "",       :null => false
+    t.boolean  "private",                      :default => false,    :null => false
+    t.boolean  "gmaps",                        :default => true,     :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.string   "slug"
     t.integer  "location_id"
     t.integer  "user_id"
-    t.integer  "zoom",                       :default => 8,        :null => false
-    t.string   "map_type",                   :default => "HYBRID", :null => false
+    t.integer  "zoom",                         :default => 8,        :null => false
+    t.string   "map_type",                     :default => "HYBRID", :null => false
     t.string   "api_key"
-    t.integer  "map_views",                  :default => 0,        :null => false
+    t.integer  "map_views",                    :default => 0,        :null => false
   end
 
   add_index "maps", ["location_id"], :name => "index_maps_on_location_id"

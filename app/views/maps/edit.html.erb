@@ -1,4 +1,4 @@
-<% title @map.name %>
+<% title 'Ändra i ' + @map.name %>
 <h2>Redigera karta</h2>
 <div id="mapCreation">
   <%= form_for(@map, :url => map_path(@map.id), :method => :put, :html => { :id => "map_form" }) do |f| %>
