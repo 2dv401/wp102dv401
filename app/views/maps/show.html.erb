@@ -27,7 +27,7 @@
       <div class="map-description">
         <p>
           <% if @map.description.present? %>
-              <%= format_text(@map.description) %>
+              <%= simple_format(@map.description) %>
           <% else %>
               Denna karta saknar beskrivning...
           <% end %>
