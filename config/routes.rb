@@ -11,10 +11,9 @@ Wp102dv401::Application.routes.draw do
   get "/api" => "pages#api", :as => :pages_api
   get "maps/foo" => "maps#foo"
 
+
+  ## API routes
   match "javascripts/maps.:format" => "javascripts#maps"
-
-  #match "embed/:api_key" => "maps#embed", :as => :embed
-
   match "/api/v1/:api_key.:format" => "maps#embed", :as => :embed
 
   # Tell Devise in which controller we will implement Omniauth callbacks

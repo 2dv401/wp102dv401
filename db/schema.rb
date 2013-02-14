@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130207153207) do
+ActiveRecord::Schema.define(:version => 20130204132558) do
 
   create_table "follows", :force => true do |t|
     t.string   "follower_type"
@@ -34,14 +34,6 @@ ActiveRecord::Schema.define(:version => 20130207153207) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], :name => "index_friendly_id_slugs_on_slug_and_sluggable_type", :unique => true
   add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
   add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
-
-  create_table "instagrams", :force => true do |t|
-    t.string   "hashtag"
-    t.integer  "user_id",    :null => false
-    t.integer  "map_id",     :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
   create_table "likes", :force => true do |t|
     t.string   "liker_type"
