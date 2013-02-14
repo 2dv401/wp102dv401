@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-gem "socialization"
+gem 'socialization'
 
 gem 'rails', '3.2.9'
-gem "geocoder", "~> 1.1.5" # http://www.rubygeocoder.com/
+gem 'geocoder', '~> 1.1.5' # http://www.rubygeocoder.com/
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
@@ -29,7 +29,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem "jquery-rails", "~> 2.1.4"
+gem 'jquery-rails', '~> 2.1.4'
 
 gem 'gmaps4rails'
 gem 'gravatar_image_tag'
