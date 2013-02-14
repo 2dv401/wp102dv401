@@ -1,5 +1,8 @@
 sv:
   activerecord:
+    models:
+      map:
+        created: "Kartan %{map} har sparats!"
     attributes:
       mark:
         location: "Plats"

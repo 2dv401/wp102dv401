@@ -20,7 +20,6 @@
   <div class="three columns">
     <% unless user_signed_in? %>
         <%= render "users/shared/login_form" %>
-        <% #link_to "Logga in", new_user_session_path %>
         <h4 class="right"><%= link_to "Registrera dig!", new_user_registration_path %></h4>
     <% end %>
   </div>

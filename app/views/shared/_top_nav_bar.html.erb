@@ -9,7 +9,7 @@
       <section>
         <%= render "shared/dropdowns/maps" %>
         <%= render "shared/dropdowns/main_menu" %>
-        <% if @map.id.present? and current_user == @map.user %>
+        <% if @map.present? and @map.id.present? and current_user == @map.user %>
             <%= render "shared/dropdowns/map_settings", :map => @map %>
         <% end %>
       </section>

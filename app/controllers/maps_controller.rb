@@ -79,7 +79,8 @@ class MapsController < ApplicationController
     end
     
     if @map.save
-      redirect_to profile_map_path(@map.user.slug, @map.slug), notice: "Kartan #{@map.name} sparades!"
+      flash[:success] = t :created, :map => @map.name, :scope => [:activerecord, :models, :map]
+      redirect_to profile_map_path(@map.user.slug, @map.slug)
     else
       display_map(@map)      
       flash[:error] = "Ett eller flera fel intraffade nar kartan skulle sparas."
