@@ -16,7 +16,7 @@ class MapsController < ApplicationController
     else
       current_user.follow!(@map)
     end
-    render :template => 'maps/follow/toggle'
+    render template: 'maps/follow/toggle'
   end
 
   def show
@@ -24,7 +24,7 @@ class MapsController < ApplicationController
       @map = Map.find(params[:id])
       @user = current_user
     rescue ActiveRecord::RecordNotFound
-      render :template => 'maps/404', :status => 404
+      render template: 'maps/404', status: 404
       return
     end
     #Nya objekt som kan skapas på maps-sidan
@@ -37,8 +37,8 @@ class MapsController < ApplicationController
 
     # Kontrollerar om användaren har behörighet att titta på kartan.
     if @map.private? and @map.user != current_user
-      flash[:error] = t :private, :scope => [:maps]
-      render :template => 'maps/show_private.html.erb'
+      flash[:error] = t :private, scope: [:maps]
+      render template: 'maps/show_private.html.erb'
       return
     end
 
@@ -64,7 +64,7 @@ class MapsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: {:map => @map, :display_map => @display_map }}
+      format.json { render json: {map: @map, display_map: @display_map }}
     end
   end
 
@@ -80,11 +80,11 @@ class MapsController < ApplicationController
     end
     
     if @map.save
-      flash[:success] = t :created, :map => @map.name, :scope => [:maps]
+      flash[:success] = t :created, map: @map.name, scope: [:maps]
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     else
       display_map(@map)
-      flash[:error] = t :failed_to_create, :scope => [:maps]
+      flash[:error] = t :failed_to_create, scope: [:maps]
       render action: "new"
     end
 
@@ -116,11 +116,11 @@ class MapsController < ApplicationController
     if current_user == @map.user
       if @map.update_attributes(params[:map])
         @map.location = Location.find_or_create_by_latitude_and_longitude(@map.latitude, @map.longitude)
-        flash[:success] = t :updated, :map => @map.name, :scope => [:maps]
+        flash[:success] = t :updated, map: @map.name, scope: [:maps]
         redirect_to profile_map_path(@map.user.slug, @map.slug)
       else
-        flash[:error] = t :failed_to_update, :scope => [:maps]
-        render :action => "edit"
+        flash[:error] = t :failed_to_update, scope: [:maps]
+        render action: "edit"
       end
     else
       flash[:error] = t :access_denied
@@ -133,9 +133,9 @@ class MapsController < ApplicationController
     @map_name = @map.name
     if current_user == @map.user
       if @map.destroy
-        flash[:success] = t :removed, :map => @map_name, :scope => [:maps]
+        flash[:success] = t :removed, map: @map_name, scope: [:maps]
       else
-        flash[:error] = t :failed_to_remove, :scope => [:maps]
+        flash[:error] = t :failed_to_remove, scope: [:maps]
       end
     else
       flash[:error] = t :access_denied

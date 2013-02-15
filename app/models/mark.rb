@@ -8,8 +8,8 @@ class Mark < ActiveRecord::Base
   attr_accessible :description, :name, :location_attributes
 
 
-  validates	:name, :presence => true, :length => { :maximum => 240 }
-  validates	:description, :presence => true, :length => { :maximum => 5120 }
+  validates	:name, presence: true, length: { maximum: 240 }
+  validates	:description, length: { maximum: 5120 }
 
   def longitude
     self.location.longitude

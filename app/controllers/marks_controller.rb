@@ -24,19 +24,21 @@ class MarksController < ApplicationController
   # GET /marks/new.json
   def new
     @map = Map.find_by_slug(params[:map_id])
-    
-    if @map.user.id != current_user.id
+
+    # Kontrollerar att användaren är kartans ägare
+    if @map.user == current_user
+      @mark = Mark.new do |m|
+        m.map = @map
+        m.build_location
+      end
+      display_map(@mark.map)
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @mark }
+      end
+    else
+      flash[:error] = t :access_denied
       redirect_to profile_map_path(@map.user.slug, @map.slug)
-    end
-    
-    @mark = Mark.new do |m|
-      m.map = @map
-      m.build_location
-    end
-    display_map(@mark.map)
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @mark }
     end
   end
 
@@ -44,61 +46,85 @@ class MarksController < ApplicationController
   def edit
     @mark = Mark.find(params[:id])
     @map = @mark.map
-    
-    if @mark.user.id != current_user.id
+
+    # Kollar så att användaren är ägare till markeringen eller kartan
+    if @mark.user == current_user or @map.user == current_user
+      display_map(@mark.map)
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @mark }
+      end
+    else
+      flash[:error] = t :access_denied
       redirect_to profile_map_path(@map.user.slug, @map.slug)
-    end
-    
-    display_map(@mark.map)
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @mark }
     end
   end
 
   # POST /marks
   # POST /marks.json
   def create
-    @mark = Mark.new(params[:mark]) do |m|
-      m.map = Map.find_by_slug(params[:map_id])
-      m.user = current_user
-      m.location = Location.find_by_latitude_and_longitude(m.latitude, m.longitude) || m.location
-    end
+    @map = Map.find_by_slug(params[:map_id])
 
-    unless @mark.exists_in_map?
-      respond_to do |format|
-        if @mark.save
-          format.html { redirect_to @mark.map, notice: 'Markeringen har sparats' }
-          format.json { render json: @mark, status: :created, location: @mark.map }
-        else
-          format.html { redirect_to new_map_mark_path(@mark.map, @mark)}
-          format.json { render json: @mark.errors, status: :unprocessable_entity }
+    # kontrollerar att användaren är ägare till kartan
+    if @map.user == current_user
+      @mark = Mark.new(params[:mark]) do |m|
+        m.map = @map
+        m.user = current_user
+        m.location = Location.find_by_latitude_and_longitude(m.latitude, m.longitude) || m.location
+      end
+
+      unless @mark.exists_in_map?
+        display_map(@mark.map)
+        respond_to do |format|
+          if @mark.save
+            format.html {
+              flash[:success] = t :created, mark: @mark.name, scope: [:marks]
+              redirect_to profile_map_path(@mark.map.user.slug, @mark.map.slug)
+            }
+            format.json { render json: @mark, status: :created, location: @mark.map }
+          else
+            format.html {
+              flash[:error] = t :failed_to_create, scope: [:marks]
+              render action: "new"
+            }
+            format.json { render json: @mark.errors, status: :unprocessable_entity }
+          end
         end
+      else
+        flash[:error] = t :mark_exists_in_map, scope: [:marks]
+        render action: "new"
       end
     else
-      flash[:notice] = "Det finns redan en markering med denna position!"
-      redirect_to new_map_mark_path(@mark.map, @mark)
+      flash[:error] = t :access_denied
+      redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
   end
 
   # PUT /marks/1
   # PUT /marks/1.json
   def update
-
-    # Inte 100% än
-    # 
-    # 
     @mark = Mark.find(params[:id])
     @map = @mark.map
-    
-    respond_to do |format|
-      if @mark.update_attributes(params[:mark])
-        format.html { redirect_to @map, notice: 'Markeringen har uppdaterats.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @mark.errors, status: :unprocessable_entity }
+
+    # Kollar så att användaren är ägare till markeringen eller kartan
+    if @mark.user == current_user or @map.user == current_user
+      respond_to do |format|
+        if @mark.update_attributes(params[:mark])
+          format.html {
+            flash[:success] = t :updated, mark: @mark.name, scope: [:marks]
+            redirect_to profile_map_path(@mark.map.user.slug, @mark.map.slug)
+          }
+          format.json { head :no_content }
+        else
+          format.html {
+            flash[:error] = t :failed_to_update, scope: [:marks]
+            render action: "edit" }
+          format.json { render json: @mark.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      flash[:error] = t :access_denied
+      redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
   end
 
@@ -106,18 +132,23 @@ class MarksController < ApplicationController
   # DELETE /marks/1.json
   def destroy
     @mark = Mark.find(params[:id])
-    
-    if @mark.user.id != current_user.id
-      redirect_to profile_map_path(@mark.map.user.slug, @mark.map.slug)
-    else
-      @mark.destroy
+    @map = @mark.map
 
+    # Kollar så att användaren är ägare till markeringen eller kartan
+    if @mark.user == current_user or @map.user == current_user
       respond_to do |format|
-        format.html { redirect_to marks_url }
-        format.json { head :no_content }
+        if @mark.destroy
+          format.html { flash[:success] = t :removed, mark: @mark.name, scope: [:marks] }
+          format.json { head :no_content }
+        else
+          format.html { flash[:error] = t :failed_to_remove, scope: [:marks] }
+          format.json { render json: @mark.errors, status: :unprocessable_entity }
+        end
       end
-
+    else
+      flash[:error] = t :access_denied
     end
+    redirect_to profile_map_path(@mark.map.user.slug, @mark.map.slug)
   end
 
   # Sets options for map
