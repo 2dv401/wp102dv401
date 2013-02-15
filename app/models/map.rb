@@ -44,8 +44,8 @@ class Map < ActiveRecord::Base
   ## Genererar en API nyckel på alla nya kartor.  - alla nycklar blir unika.
   def generate_api_key
     begin
-      api_key = SecureRandom.urlsafe_base64
-    end while Map.where(:api_key => api_key).exists?
+      @api_key = SecureRandom.urlsafe_base64
+    end while Map.where(api_key: @api_key).exists?
     self.api_key = api_key
   end
   def comment_count

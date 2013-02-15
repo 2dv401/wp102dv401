@@ -46,7 +46,7 @@
   <div class="six columns">
     <h2 class="subheader" >Statusuppdateringar</h2>
     <% followed_maps.each do |map| %>
-        <%= render "status_updates/shared/status_updates", :updates => map.status_updates %>
+        <%= render "status_updates/shared/status_updates", updates: map.status_updates %>
     <% end %>
   </div>
 
