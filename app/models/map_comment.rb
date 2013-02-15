@@ -8,6 +8,6 @@ class MapComment < ActiveRecord::Base
   attr_accessible :content
 
   # validation
-  validates :content, presence: true, length: { :maximum => 5120 }
+  validates :content, presence: true, length: { maximum: 5120 }
 
 end

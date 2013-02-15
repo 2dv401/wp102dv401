@@ -85,14 +85,14 @@ class MarksController < ApplicationController
           else
             format.html {
               flash[:error] = t :failed_to_create, scope: [:marks]
-              render action: "new"
+              render action: :new
             }
             format.json { render json: @mark.errors, status: :unprocessable_entity }
           end
         end
       else
         flash[:error] = t :mark_exists_in_map, scope: [:marks]
-        render action: "new"
+        render action: :new
       end
     else
       flash[:error] = t :access_denied
@@ -119,7 +119,7 @@ class MarksController < ApplicationController
           format.html {
             flash[:error] = t :failed_to_update, scope: [:marks]
             display_map(@mark.map)
-            render action: "edit" }
+            render action: :edit }
           format.json { render json: @mark.errors, status: :unprocessable_entity }
         end
       end

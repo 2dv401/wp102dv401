@@ -2,7 +2,7 @@ require File.dirname('') + '/config/environment.rb'
 class MapsController < ApplicationController
   before_filter :authenticate_user!
   ## Skippa validering på embeddade kartor.
-  skip_before_filter :authenticate_user!, :only => ['embed']
+  skip_before_filter :authenticate_user!, only: ['embed']
 
   def index
     ## Hämtar alla kartor användaren äger
@@ -85,7 +85,7 @@ class MapsController < ApplicationController
     else
       display_map(@map)
       flash[:error] = t :failed_to_create, scope: [:maps]
-      render action: "new"
+      render action: :new
     end
 
   end
@@ -120,7 +120,7 @@ class MapsController < ApplicationController
         redirect_to profile_map_path(@map.user.slug, @map.slug)
       else
         flash[:error] = t :failed_to_update, scope: [:maps]
-        render action: "edit"
+        render action: :edit
       end
     else
       flash[:error] = t :access_denied

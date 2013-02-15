@@ -1,5 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
-  before_filter :authenticate_user!, :only => :token
+  before_filter :authenticate_user!, only: :token
 
   def new
     super
@@ -10,11 +10,11 @@ class RegistrationsController < Devise::RegistrationsController
     super
     @user = User.new(params[:user])
     if @user.save
-      flash[:notice] = "You have signed up successfully. If enabled, a confirmation was sent to your e-mail."
+      flash[:success] = t :signed_up, scope: [:devise, :registrations]
       redirect_to root_url
     else
-      flash[:error] = "Fellll"
-      render :action => :new
+      flash[:error] = t :failed_to_register, scope: [:devise, :registrations]
+      render action: :new
     end
   end
 

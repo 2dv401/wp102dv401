@@ -15,15 +15,15 @@ class OmniauthController < ApplicationController
 
 	puts "_____________________INSTAGRAM_________"
 
-	 Instagram.authorize_url(:redirect_uri => CALLBACK_URL)
+	 Instagram.authorize_url(redirect_uri: CALLBACK_URL)
 
-	redirect_to :action => "callback"
+	redirect_to action: "callback"
 
 
   end
 
   def callback
-  		response = Instagram.get_access_token(params[:code], :redirect_uri => CALLBACK_URL)
+  		response = Instagram.get_access_token(params[:code], redirect_uri: CALLBACK_URL)
 
   		puts response
 

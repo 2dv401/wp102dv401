@@ -43,24 +43,41 @@ sv:
 
   # Felmeddelanden från controllers
   map_comments:
-    created: 'Kommentaren har sparats.'
-    failed_to_create: 'Fel uppstod och kommentaren kunde inte sparas.'
+    created: 'Kommentaren har skapats.'
+    failed_to_create: 'Fel uppstod och kommentaren kunde inte skapas.'
+    updated: 'Ändringarna i kommentaren har sparats.'
+    failed_to_update: 'Fel uppstod och ändringarna kunde inte sparas.'
     removed: 'Kommentaren är nu borttagen.'
     failed_to_remove: 'Fel uppstod och kommentaren togs inte bort.'
   maps:
-    created: 'Kartan "%{map}" har sparats.'
-    failed_to_create: 'Fel uppstod och kartan kunde inte sparas.'
+    created: 'Kartan "%{map}" har skapas.'
+    failed_to_create: 'Fel uppstod och kartan kunde inte skapas.'
     private: 'Du saknar tillstånd att besöka denna privata karta.'
     updated: 'Ändringarna i kartan "%{map}" har sparats.'
     failed_to_update: 'Fel uppstod och ändringarna kunde inte sparas.'
     removed: 'Kartan "%{map}" är nu borttagen.'
     failed_to_remove: 'Fel uppstod och kartan togs inte bort.'
   marks:
-    created: 'Markeringen "%{mark}" har sparats.'
-    failed_to_create: 'Fel uppstod och markeringen kunde inte sparas.'
+    created: 'Markeringen "%{mark}" har skapas.'
+    failed_to_create: 'Fel uppstod och markeringen kunde inte skapas.'
     mark_exists_in_map: 'Det finns redan en markering med denna position!'
     updated: 'Ändringarna i markeringen "%{mark}" har sparats.'
     failed_to_update: 'Fel uppstod och ändringarna kunde inte sparas.'
     removed: 'Markeringen "%{mark}" är nu borttagen.'
     failed_to_remove: 'Fel uppstod och markeringen togs inte bort.'
+  status_comments:
+    created: 'Kommentaren har skapats.'
+    failed_to_create: 'Fel uppstod och kommentaren kunde inte skapas.'
+    updated: 'Ändringarna i kommentaren har sparats.'
+    failed_to_update: 'Fel uppstod och ändringarna kunde inte sparas.'
+    removed: 'Kommentaren är nu borttagen.'
+    failed_to_remove: 'Fel uppstod och kommentaren togs inte bort.'
+  status_updates:
+    created: 'Uppdateringen har skapats.'
+    failed_to_create: 'Fel uppstod och uppdateringen kunde inte skapas.'
+    updated: 'Ändringarna i uppdateringen har sparats.'
+    failed_to_update: 'Fel uppstod och ändringarna kunde inte sparas.'
+    removed: 'Uppdateringen är nu borttagen.'
+    failed_to_remove: 'Fel uppstod och uppdateringen togs inte bort.'
+
 #felmeddelanden för user-modellen finns i "devise.sv.yml"

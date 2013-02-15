@@ -6,5 +6,5 @@ class StatusComment < ActiveRecord::Base
 
   attr_accessible :content
 
-  validates :content, presence: true, length: { :maximum => 5120 }
+  validates :content, presence: true, length: { maximum: 5120 }
 end

@@ -5,7 +5,7 @@ class StatusUpdate < ActiveRecord::Base
 
   acts_as_likeable
 
-  has_many :status_comments, :dependent => :destroy
+  has_many :status_comments, dependent: :destroy
 
 	attr_accessible :content
 

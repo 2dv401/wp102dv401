@@ -1,11 +1,11 @@
 class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :username, use: [:slugged, :history]
-  
-  has_many :status_updates, :dependent => :destroy
-  has_many :status_comments, :dependent => :destroy
-  has_many :maps, :dependent => :destroy
-  has_many :marks, :dependent => :destroy
+
+  has_many :status_updates, dependent: :destroy
+  has_many :status_comments, dependent: :destroy
+  has_many :maps, dependent: :destroy
+  has_many :marks, dependent: :destroy
 
   acts_as_follower
   acts_as_liker
@@ -20,9 +20,9 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,:validatable,
-  :recoverable, :rememberable, :trackable,
-  :omniauthable, :authentication_keys => [:login]
+  devise :database_authenticatable, :registerable, :validatable,
+         :recoverable, :rememberable, :trackable,
+         :omniauthable, authentication_keys: [:login]
 
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field remote 'username'
@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
                   :name, :login, :profile_image, :likes
 
   validates_uniqueness_of :username
-  validates_uniqueness_of :email, :case_sensitive => false, :allow_blank => true
+  validates_uniqueness_of :email, case_sensitive: false, allow_blank: true
 
   ## Ser till att e-post inte behövs vid Twitter registrering.
   def email_required?
@@ -49,19 +49,20 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
+
   # Hittar användare eller registrerar en ny
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
-    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    user = User.where(provider: auth.provider, uid: auth.uid).first
     unless user
-      user = User.new(name:auth.extra.raw_info.name,
-                        username:auth.extra.raw_info.username,
-                        provider:auth.provider,
-                        uid:auth.uid,
-                        profile_image:auth.info.image,
-                        email:auth.info.email,
-                        password:Devise.friendly_token[0,20]
-                      )
+      user = User.new(
+          name: auth.extra.raw_info.name,
+          username: auth.extra.raw_info.username,
+          provider: auth.provider,
+          uid: auth.uid,
+          profile_image: auth.info.image,
+          email: auth.info.email,
+          password: Devise.friendly_token[0,20]
+      )
       user.skip_confirmation!
       user.save
     end
@@ -70,21 +71,22 @@ class User < ActiveRecord::Base
 
 
   def self.find_for_twitter_oauth(auth, signed_in_resource=nil)
-    user = User.where(:provider => auth.provider, :uid => auth.uid).first
-      
+    user = User.where(provider: auth.provider, uid: auth.uid).first
+
     # Fullösning. Fixa
     nummer = rand(1+1000)+1000
     foonummer = nummer.to_s << "@gmail.com"
- 
+
 
     unless user
-      user = User.new(name:auth.extra.raw_info.name,
-                          username:auth.info.nickname,
-                          provider:auth.provider,
-                          uid:auth.uid,
-                          profile_image:auth.info.image,
-                          password:Devise.friendly_token[0,20]
-                        )
+      user = User.new(
+          name: auth.extra.raw_info.name,
+          username: auth.info.nickname,
+          provider: auth.provider,
+          uid: auth.uid,
+          profile_image: auth.info.image,
+          password: Devise.friendly_token[0,20]
+      )
       user.skip_confirmation!
       user.save
     end
@@ -96,17 +98,13 @@ class User < ActiveRecord::Base
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { value: login.downcase }]).first
     else
       where(conditions).first
     end
   end
 
   def skip_confirmation!
-   self.confirmed_at = Time.now
+    self.confirmed_at = Time.now
   end
-
-
-
-
 end
