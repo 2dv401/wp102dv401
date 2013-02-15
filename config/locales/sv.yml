@@ -31,8 +31,8 @@ sv:
             content:
               blank: "Det går inte att ladda upp en tom kommentar."
               too_long: "Kommentaren är för lång, korta ner texten och försök igen."
-  shared:
-    access_denied: "Du saknar tillstånd att utföra denna åtgärd"
+
+  access_denied: "Du saknar tillstånd att utföra denna åtgärd"
   maps:
     created: 'Kartan "%{map}" har sparats.'
     failed_to_create: 'Fel uppstod och kartan kunde inte sparas.'
@@ -41,4 +41,9 @@ sv:
     failed_to_update: 'Fel uppstod och ändringarna kunde inte sparas.'
     removed: 'Kartan "%{map}" är nu borttagen.'
     failed_to_remove: 'Fel uppstod och kartan togs inte bort.'
+  map_comments:
+    created: 'Kommentaren har sparats.'
+    failed_to_create: 'Fel uppstod och kommentaren kunde inte sparas.'
+    removed: 'Kommentaren är nu borttagen.'
+    failed_to_remove: 'Fel uppstod och kommentaren togs inte bort.'
 #felmeddelanden för user-modellen finns i "devise.sv.yml"
