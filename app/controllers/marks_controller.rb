@@ -118,6 +118,7 @@ class MarksController < ApplicationController
         else
           format.html {
             flash[:error] = t :failed_to_update, scope: [:marks]
+            display_map(@mark.map)
             render action: "edit" }
           format.json { render json: @mark.errors, status: :unprocessable_entity }
         end
