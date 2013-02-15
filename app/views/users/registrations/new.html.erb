@@ -24,10 +24,12 @@
           <%= f.password_field :password_confirmation, :placeholder => "Bekräfta lösenord" %>
         </div>
 
-        <div><%= f.submit "Registrera", :class => 'button' %></div>
+        <div><%= f.submit facebook? ? "Koppla samman kontona" : "Registrera", :class => 'button' %></div>
     <% end %>
 
     <%= link_to "Tillbaka", root_path %>
   </div>
 </div>
+
+
 

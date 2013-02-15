@@ -53,11 +53,6 @@ class User < ActiveRecord::Base
   # Hittar användare eller registrerar en ny
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
-
-  require('json')
-    puts "hej hej Facebook"
-    puts auth.to_json
-
     unless user
       user = User.new(name:auth.extra.raw_info.name,
                         username:auth.extra.raw_info.username,
