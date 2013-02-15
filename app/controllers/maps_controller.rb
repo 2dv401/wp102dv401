@@ -37,6 +37,7 @@ class MapsController < ApplicationController
 
     # Kontrollerar om användaren har behörighet att titta på kartan.
     if @map.private? and @map.user != current_user
+      flash[:error] = t :private, :scope => [:maps]
       render :template => 'maps/show_private.html.erb'
       return
     end
@@ -79,11 +80,11 @@ class MapsController < ApplicationController
     end
     
     if @map.save
-      flash[:success] = t :created, :map => @map.name, :scope => [:activerecord, :models, :map]
+      flash[:success] = t :created, :map => @map.name, :scope => [:maps]
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     else
-      display_map(@map)      
-      flash[:error] = "Ett eller flera fel intraffade nar kartan skulle sparas."
+      display_map(@map)
+      flash[:error] = t :failed_to_create, :scope => [:maps]
       render action: "new"
     end
 
@@ -99,7 +100,7 @@ class MapsController < ApplicationController
 
     display_map(@map)
     unless current_user == @map.user
-      flash[:error] = "Fel, bara agaren till kartan kan andra den."
+      flash[:error] = t :access_denied
       redirect_to profile_map_path(@user.slug, @map.slug)
     end
   end
@@ -108,7 +109,6 @@ class MapsController < ApplicationController
   def update
     # Hämtar rätt karta från användarens samling
     @map = Map.find(params[:id])
-
     # Sparar undan sluggen om namn-fältet är tomt
     @slug = @map.slug
 
@@ -116,29 +116,29 @@ class MapsController < ApplicationController
     if current_user == @map.user
       if @map.update_attributes(params[:map])
         @map.location = Location.find_or_create_by_latitude_and_longitude(@map.latitude, @map.longitude)
-        flash[:success] = "Kartan sparades!"
+        flash[:success] = t :updated, :map => @map.name, :scope => [:maps]
         redirect_to profile_map_path(@map.user.slug, @map.slug)
       else
-        flash[:error] = "Fel intraffade nar kartan skulle sparas."
+        flash[:error] = t :failed_to_update, :scope => [:maps]
         render :action => "edit"
       end
     else
-      flash[:error] = "Fel, bara agaren till kartan kan uppdatera den."
+      flash[:error] = t :access_denied
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
   end
 
   def destroy
     @map = Map.find(params[:id])
-
+    @map_name = @map.name
     if current_user == @map.user
       if @map.destroy
-        flash[:success] = "Kartan togs bort"
+        flash[:success] = t :removed, :map => @map_name, :scope => [:maps]
       else
-        flash[:error] = "Fel nar kartan skulle tagas bort"
+        flash[:error] = t :failed_to_remove, :scope => [:maps]
       end
     else
-      flash[:error] = "Fel, bara agaren till kartan kan ta bort den."
+      flash[:error] = t :access_denied
     end
     redirect_to root_path
   end
