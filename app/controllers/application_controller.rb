@@ -11,4 +11,20 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+
+  def after_sign_in_path_for(user)
+    # Mergar kontona informationen från facebook-session med användaren som försöker logga in
+    # OM sessionfinns OCH användaren som loggar in inte har facebook-koppling OCH om uid inte är kopplat
+    if session["facebook_data"] && current_user.provider != "facebook" && current_user.uid.nil?
+      current_user.provider = session["facebook_data"]["provider"]
+      current_user.uid = session["facebook_data"]["uid"]
+      current_user.name = session["facebook_data"]["info"]["name"]
+      current_user.profile_image = session["facebook_data"]["info"]["image"]
+      current_user.save(:validate => false)
+    end
+    # Tar bort sessionen
+    session.keys.grep(/^facebook/).each { |k| session.delete(k) }
+    super
+  end
 end
