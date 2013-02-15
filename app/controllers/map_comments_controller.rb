@@ -22,9 +22,9 @@ class MapCommentsController < ApplicationController
     end
 
     if @comment.save
-      flash[:notice] = "Kommentaren sparad"
+      flash[:success] = t :created, :scope => [:map_comments]
     else
-      flash[:notice] = "Fel nar kommentaren skulle sparas"
+      flash[:error] = t :failed_to_create, :scope => [:map_comments]
     end
     render :template => 'map_comments/remote/render_new_map_comment'
   end
@@ -39,12 +39,12 @@ class MapCommentsController < ApplicationController
 
     if current_user == @comment.user || current_user == @map.user
       if @comment.destroy
-        flash[:notice] = "Kommentaren borttagen"
+        flash[:success] = t :removed, :scope => [:map_comments]
       else
-        flash[:notice] = "Fel nar kommentaren skulle tagas bort"
+        flash[:error] = t :failed_to_remove, :scope => [:map_comments]
       end
     else
-      flash[:notice] = "Fel, bara personen som skrev kommentaren och agaren till kartan kan ta bort den."
+      flash[:error] = t :access_denied
     end
     render :template => 'map_comments/remote/remove_map_comment'
   end

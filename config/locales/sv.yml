@@ -1,38 +1,52 @@
 sv:
   activerecord:
-    attributes:
-      mark:
-        location: "Plats"
+    # Fel meddelanden för modelvalideringarna
     errors:
       models:
+        location:
+          attributes:
+            longitude:
+              blank: 'Longitud för markeringen saknas.'
+            latitude:
+              blank: 'Latitude för markeringen saknas.'
         mark:
           attributes:
-            location: ""
+            name:
+              blank: 'Markeringen måste ha ett namn'
+              too_long: 'Namnet är för långt, korta ner namnet och försök igen.'
+            description:
+              too_long: 'Beskrivningen är för lång, korta ner och försök igen.'
         map:
           attributes:
             name:
-              blank: "Kartan måste ha ett namn."
-              too_long: "Namnet är för långt, Korta ner namnet och försök igen."
+              blank: 'Kartan måste ha ett namn.'
+              too_long: 'Namnet är för långt, korta ner namnet och försök igen.'
             description:
-              blank: "Kartan måste ha en beskrivning."
-              too_long: "Beskrivningen är för lång, korta ner och försök igen."
+              too_long: 'Beskrivningen är för lång, korta ner och försök igen.'
         map_comment:
           attributes:
             content:
-              blank: "Det går inte att ladda upp en tom kommentar."
-              too_long: "Kommentaren är för lång, korta ner texten och försök igen."
+              blank: 'Det går inte att ladda upp en tom kommentar.'
+              too_long: 'Kommentaren är för lång, korta ner texten och försök igen.'
         status_update:
           attributes:
             content:
-              blank: "Det går inte att ladda upp en tom status."
-              too_long: "Statusen är för lång, korta ner texten och försök igen."
+              blank: 'Det går inte att ladda upp en tom status.'
+              too_long: 'Statusen är för lång, korta ner texten och försök igen.'
         status_comment:
           attributes:
             content:
-              blank: "Det går inte att ladda upp en tom kommentar."
-              too_long: "Kommentaren är för lång, korta ner texten och försök igen."
-  shared:
-    access_denied: "Du saknar tillstånd att utföra denna åtgärd"
+              blank: 'Det går inte att ladda upp en tom kommentar.'
+              too_long: 'Kommentaren är för lång, korta ner texten och försök igen.'
+  # Globalt felmeddelande
+  access_denied: 'Du saknar tillstånd att utföra denna åtgärd'
+
+  # Felmeddelanden från controllers
+  map_comments:
+    created: 'Kommentaren har sparats.'
+    failed_to_create: 'Fel uppstod och kommentaren kunde inte sparas.'
+    removed: 'Kommentaren är nu borttagen.'
+    failed_to_remove: 'Fel uppstod och kommentaren togs inte bort.'
   maps:
     created: 'Kartan "%{map}" har sparats.'
     failed_to_create: 'Fel uppstod och kartan kunde inte sparas.'
@@ -41,4 +55,12 @@ sv:
     failed_to_update: 'Fel uppstod och ändringarna kunde inte sparas.'
     removed: 'Kartan "%{map}" är nu borttagen.'
     failed_to_remove: 'Fel uppstod och kartan togs inte bort.'
+  marks:
+    created: 'Markeringen "%{mark}" har sparats.'
+    failed_to_create: 'Fel uppstod och markeringen kunde inte sparas.'
+    mark_exists_in_map: 'Det finns redan en markering med denna position!'
+    updated: 'Ändringarna i markeringen "%{mark}" har sparats.'
+    failed_to_update: 'Fel uppstod och ändringarna kunde inte sparas.'
+    removed: 'Markeringen "%{mark}" är nu borttagen.'
+    failed_to_remove: 'Fel uppstod och markeringen togs inte bort.'
 #felmeddelanden för user-modellen finns i "devise.sv.yml"

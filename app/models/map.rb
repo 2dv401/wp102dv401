@@ -1,6 +1,6 @@
 class Map < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :name, :use => :scoped, :scope => :user
+  friendly_id :name, use: :scoped, scope: :user
 
   ## Skapa api nyckel
   before_create :generate_api_key
@@ -8,9 +8,9 @@ class Map < ActiveRecord::Base
   belongs_to :user
   belongs_to :location
 
-  has_many :marks, :dependent => :destroy
-  has_many :status_updates, :order => "created_at DESC", :dependent => :destroy
-  has_many :map_comments, :order => "created_at DESC", :dependent => :destroy
+  has_many :marks, dependent: :destroy
+  has_many :status_updates, order: "created_at DESC", dependent: :destroy
+  has_many :map_comments, order: "created_at DESC", dependent: :destroy
 
   acts_as_followable
   acts_as_gmappable
@@ -22,11 +22,11 @@ class Map < ActiveRecord::Base
   attr_accessor :longitude, :latitude
   attr_accessible :name, :description, :private, :zoom, :map_type, :location_attributes
 
-  validates	:name, :presence => true, :length => { :maximum => 50 }
-  validates	:description, :length => { :maximum => 15360 }
-  validates :private, :inclusion => {:in => [true, false]}
-  validates :map_type, :inclusion => MAP_TYPES
-  validates :zoom, :numericality => { :only_integer => true }
+  validates	:name, presence: true, length: { maximum: 50 }
+  validates	:description, length: { maximum: 15360 }
+  validates :private, inclusion: {in: [true, false]}
+  validates :map_type, inclusion: MAP_TYPES
+  validates :zoom, numericality: { only_integer: true }
 
   def follow(user)
     @follower = Follower.new()
