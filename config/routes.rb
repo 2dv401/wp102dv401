@@ -21,24 +21,18 @@ Wp102dv401::Application.routes.draw do
 
   devise_scope :user do
     # Session routes
-    get "/logga-in" => "devise/sessions#new", :as => :new_user_session
-    post "/login" => "devise/sessions#create", :as => :user_session
-    delete "/logout" => "devise/sessions#destroy", :as => :destroy_user_session
+    delete "/logga-ut" => "devise/sessions#destroy", :as => :destroy_user_session
     # Confirm routes
-    get "/confirmation" => "devise/confirmations#new", :as => :new_user_confirmation
-    post "/confirmation" => "devise/confirmations#create", :as => :user_confirmation
+    get "/ny-bekraftelse" => "devise/confirmations#new", :as => :new_user_confirmation
     # Password routes
-    get "/password" => "devise/passwords#new", :as => :new_user_password
-    post "/password" => "devise/passwords#create", :as => :user_password
-    get "/password/edit" => "devise/passwords#edit", :as => :edit_user_password
+    get "/nytt-losenord" => "devise/passwords#new", :as => :new_user_password
     # Registration routes
-    get "/registrera-dig" => "devise/registrations#new", :as => :new_user_registration
-    post "/register" => "devise/registrations#create", :as => :user_registration
-    get "/user/edit" => "devise/registrations#edit", :as => :edit_user_registration
-    get "/register/cancel" => "devise/registrations#cancel", :as => :cancel_user_registration
+    get "/registrering" => "devise/registrations#new", :as => :new_user_registration
+    get "/redigera-profil" => "devise/registrations#edit", :as => :edit_user_registration
     # Routes for provider authentication
     get "/users/auth/:provider" => "authentications#passthru"
   end
+
 
   scope(:path_names => { :new => 'ny', :edit => 'redigera' }) do
 
@@ -46,9 +40,10 @@ Wp102dv401::Application.routes.draw do
 
     resources :dashboard, :only => [:index], :path => 'startsida'
 
-    resources :profiles, :path => 'profil' do
+    resources :profiles, :only => [], :path => '' do
       resources :maps, :path => 'kartor'
     end
+    resources :profiles, :path => 'profil'
 
     resources :maps, :path => 'kartor' do
       post 'toggle'

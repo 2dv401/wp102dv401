@@ -38,8 +38,8 @@ sv:
       timeout: 'Din session är inte längre giltig, vänligen logga in igen för att fortsätta.'
       inactive: 'Ditt konto har inte aktiverats ännu.'
     sessions:
-      signed_in: 'Loggade in.'
-      signed_out: 'Loggade ut.'
+      signed_in: 'Du är nu inloggad.'
+      signed_out: 'Du är nu utloggad.'
     passwords:
       send_instructions: 'Du kommer få epost med instruktioner om hur du kan återställa ditt lösenord inom några minuter.'
       updated: 'Ditt lösenord har uppdaterats. Du är nu inloggad.'
