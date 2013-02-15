@@ -139,17 +139,20 @@ class MarksController < ApplicationController
     if @mark.user == current_user or @map.user == current_user
       respond_to do |format|
         if @mark.destroy
-          format.html { flash[:success] = t :removed, mark: @mark.name, scope: [:marks] }
+          format.html {
+            flash[:success] = t :removed, mark: @mark.name, scope: [:marks]
+          }
           format.json { head :no_content }
         else
-          format.html { flash[:error] = t :failed_to_remove, scope: [:marks] }
+          format.html {
+            flash[:error] = t :failed_to_remove, scope: [:marks]
+          }
           format.json { render json: @mark.errors, status: :unprocessable_entity }
         end
       end
     else
       flash[:error] = t :access_denied
     end
-    redirect_to profile_map_path(@mark.map.user.slug, @mark.map.slug)
   end
 
   # Sets options for map
