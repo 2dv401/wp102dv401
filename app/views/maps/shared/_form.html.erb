@@ -1,37 +1,37 @@
 <% if @map.errors.messages[:name].present? %>
-    <%= f.label :name, "Namn på kartan", :class => "error" %>
-    <%= f.text_field :name, :autofocus => true, :class => "error" %>
+    <%= f.label :name, "Namn på kartan", class: 'error' %>
+    <%= f.text_field :name, autofocus: true, class: 'error' %>
     <small class="error"><%= @map.errors.messages[:name].first %></small>
 <% else %>
     <%= f.label :name, "Namn på kartan" %>
-    <%= f.text_field :name, :autofocus => true %>
+    <%= f.text_field :name, autofocus: true %>
 <% end %>
 
 <% if @map.errors.messages[:description].present? %>
-    <%= f.label :description, "Beskrivning", :class => "error"  %>
-    <%= f.text_area :description, size: "30x8", :class => "error"  %>
+    <%= f.label :description, "Beskrivning", class: 'error'  %>
+    <%= f.text_area :description, size: "30x8", class: 'error'  %>
     <small class="error"><%= @map.errors.messages[:description].first %></small>
 <% else %>
     <%= f.label :description, "Beskrivning" %>
     <%= f.text_area :description, size: "30x8" %>
 <% end %>
 <%= f.label :private, "Vem ska få se kartan?" %>
-<%= f.radio_button :private, true, { :checked => @map.private } %> Synlig enbart för mig och de jag bjuder in <br />
-<%= f.radio_button :private, false, { :checked => !@map.private } %> Publik
+<%= f.radio_button :private, true, { checked: @map.private } %> Synlig enbart för mig och de jag bjuder in <br />
+<%= f.radio_button :private, false, { checked: !@map.private } %> Publik
 
 <br />
 <br />
 <div class="field">
   <%= f.fields_for :location do |location_fields| %>
-      <%= location_fields.hidden_field :latitude, :value => @map.latitude, :id => "latitude" %>
-      <%= location_fields.hidden_field :longitude, :value => @map.longitude, :id => "longitude" %>
+      <%= location_fields.hidden_field :latitude, value: @map.latitude, id: "latitude" %>
+      <%= location_fields.hidden_field :longitude, value: @map.longitude, id: "longitude" %>
   <% end %>
 </div>
 
-<%= submit_tag "Hitta min position", :type => "button", :id => "geolocate_button" %>
+<%= submit_tag "Hitta min position", type: "button", class: "small button", id: "geolocate_button" %>
 
-<%= text_field_tag "locationTextField", nil, :placeholder => "Sök startposition" %>
+<%= text_field_tag "locationTextField", nil, placeholder: "Sök startposition" %>
 
 <%= gmaps(@display_map) %>
 
-<%= f.submit "Spara karta", :id => "saveMapButton" %>
+<%= f.submit "Spara karta", class: "button", id: "saveMapButton" %>

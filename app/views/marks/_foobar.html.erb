@@ -15,7 +15,7 @@
 </p>
 
 <p>
-   <%= link_to 'Ta bort', map_mark_path(mark.map,mark), :confirm => 'Vill du ta bort markeringen?', :id => "delete-marker-link",:method => :delete, :remote => true %>
+   <%= link_to 'Ta bort', map_mark_path(mark.map,mark), confirm: 'Vill du ta bort markeringen?', id: "delete-marker-link", method: :delete, remote: true %>
 </p>
 
 <% end %>

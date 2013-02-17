@@ -1,5 +1,5 @@
-<%= form_for(@status_update, :url => map_status_updates_path(@map.id, @map_comment)) do |f| %>
+<%= form_for(@status_update, url: map_status_updates_path(@map.id, @map_comment)) do |f| %>
     <div class="content">
-      <%= f.text_field :content, :placeholder => "Berätta det senaste..." %>
+      <%= f.text_field :content, placeholder: "Berätta det senaste..." %>
     </div>
 <% end %>

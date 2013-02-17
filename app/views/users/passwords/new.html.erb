@@ -1,6 +1,6 @@
 <h2>Glömt ditt lösenord?</h2>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
   <%= devise_error_messages! %>
 <p>Ett epostmeddelande med tillfälliga inloggningsuppgifter och instruktioner på hur du skall gå till väga kommer att skickas till den epostadress du anger nedan.<br>
 	Ange den epostadress du är registrerad med:</p>

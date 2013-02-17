@@ -3,73 +3,71 @@ Wp102dv401::Application.routes.draw do
   get "javascripts/maps"
 
   # Footer sidorna
-  get "/om-kartr" => "pages#about", :as => :pages_about
-  get "/anvandarvillkor" => "pages#terms", :as => :pages_terms
-  get "/sekretess" => "pages#privacy", :as => :pages_privacy
-  get "/hjalp" => "pages#help", :as => :pages_help
+  get "/om-kartr" => "pages#about", as: :pages_about
+  get "/anvandarvillkor" => "pages#terms", as: :pages_terms
+  get "/sekretess" => "pages#privacy", as: :pages_privacy
+  get "/hjalp" => "pages#help", as: :pages_help
 
-  get "/api" => "pages#api", :as => :pages_api
-  get "maps/foo" => "maps#foo"
-
+  get "/api" => "pages#api", as: :pages_api
 
   ## API routes
   match "javascripts/maps.:format" => "javascripts#maps"
-  match "/api/v1/:api_key.:format" => "maps#embed", :as => :embed
+  match "/api/v1/:api_key.:format" => "maps#embed", as: :embed
 
   # Tell Devise in which controller we will implement Omniauth callbacks
-  devise_for :users, :controllers => { :omniauth_callbacks => "authentications" }
+  devise_for :users, controllers: { omniauth_callbacks: "authentications" }
 
   devise_scope :user do
     # Session routes
-    delete "/logga-ut" => "devise/sessions#destroy", :as => :destroy_user_session
+    delete "/logga-ut" => "devise/sessions#destroy", as: :destroy_user_session
     # Confirm routes
-    get "/ny-bekraftelse" => "devise/confirmations#new", :as => :new_user_confirmation
+    get "/ny-bekraftelse" => "devise/confirmations#new", as: :new_user_confirmation
     # Password routes
-    get "/nytt-losenord" => "devise/passwords#new", :as => :new_user_password
+    get "/nytt-losenord" => "devise/passwords#new", as: :new_user_password
     # Registration routes
-    get "/registrering" => "devise/registrations#new", :as => :new_user_registration
-    get "/redigera-profil" => "devise/registrations#edit", :as => :edit_user_registration
+    get "/registrering" => "devise/registrations#new", as: :new_user_registration
+    get "/redigera-profil" => "devise/registrations#edit", as: :edit_user_registration
     # Routes for provider authentication
     get "/users/auth/:provider" => "authentications#passthru"
   end
 
 
-  scope(:path_names => { :new => 'ny', :edit => 'redigera' }) do
+  scope(path_names: { new: "ny", edit: "redigera" }) do
 
-    resources :home, :only => [:index], :path => 'hem'
+    resources :home, only: [:index], path: "hem"
 
-    resources :dashboard, :only => [:index], :path => 'startsida'
+    resources :dashboard, only: [:index], path: "startsida"
 
-    resources :profiles, :only => [], :path => '' do
-      resources :maps, :path => 'kartor'
+    resources :profiles, only: [], path: '' do
+      resources :maps, path: "kartor"
     end
-    resources :profiles, :path => 'profil'
+    resources :profiles, path: "profil"
 
-    resources :maps, :path => 'kartor' do
-      post 'toggle'
-      resources :marks, :path => 'markeringar'
+    resources :maps, path: "kartor" do
+      post "toggle"
+      resources :marks, path: "markeringar"
 
       # tillåter bara att man skapar dessa genom maps. Alla andra routes går direkt
-      resources :status_updates, :only => [:create], :path => 'uppdateringar'
-      resources :map_comments, :only => [:create], :path => 'kommentarer'
+      resources :status_updates, only: [:create], path: "uppdateringar"
+      resources :map_comments, only: [:create], path: "kommentarer"
     end
 
-    resources :map_comments, :path => 'kart-kommentarer' do
-      post 'toggle_like'
+    resources :map_comments, path: "kart-kommentarer" do
+      post "toggle_like"
     end
 
-    resources :status_updates, :path => 'status-uppdateringar' do
-      post 'toggle_like'
+    resources :status_updates, path: "status-uppdateringar" do
+      post "toggle_like"
       # Tillåter bara att skapa statuskommentarer genom statusuppdateringen.
-      resources :status_comments, :only => [:create], :path => 'kommentarer'
+      resources :status_comments, only: [:create], path: "kommentarer"
     end
 
-    resources :status_comments, :path => 'status-kommentarer' do
-      post 'toggle_like'
+    resources :status_comments, path: "status-kommentarer" do
+      post "toggle_like"
     end
   end
 
-  root :to => "home#index"
+  root to: "home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

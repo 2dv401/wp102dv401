@@ -60,7 +60,7 @@
           </div>
           <%= link_to "Lägg till markering", new_map_mark_path(@map) %> |
           <%= link_to "Ändra karta", edit_profile_map_path(@map.user.slug, @map.slug) %> |
-          <%= link_to "Ta bort karta", map_path(@map.id), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>
+          <%= link_to "Ta bort karta", map_path(@map.id), method: :delete, confirm: "Vill du ta bort kartan?" %>
           <p>Sidvisningar: <%= @map.map_views %></p>
         </div>
       </div>
@@ -77,10 +77,10 @@
   <% if @map.status_updates.any? %>
       <div class="six columns">
         <h2 class="subheader" >Statusuppdateringar</h2>
-        <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
+        <%= render "status_updates/shared/status_updates", updates: @map.status_updates %>
       </div>
   <% end %>
   <div class="six columns">
-    <%= render "map_comments/shared/map_comments", :map => @map %>
+    <%= render "map_comments/shared/map_comments", map: @map %>
   </div>
 </div>

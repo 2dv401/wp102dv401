@@ -6,8 +6,8 @@
   </div>
   <div class="four columns">
     <%= gmaps(@display_map) %>
-    <%= text_field_tag "locationTextField", nil, :placeholder => "Sök startposition" %>
-    <%= submit_tag "Där jag är", :type => "button", :id => "geolocate_button" %>
+    <%= text_field_tag "locationTextField", nil, placeholder: "Sök startposition" %>
+    <%= submit_tag "Där jag är", type: "button", class: "button", id: "geolocate_button" %>
   </div>
 </div>
 <%= link_to 'Avbryt', map_path(@map) %>

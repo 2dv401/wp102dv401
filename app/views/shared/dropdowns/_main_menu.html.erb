@@ -7,16 +7,16 @@
           <%= current_user.name%>
       <% else %>
           <%= gravatar_image_tag(current_user.email,
-                                 :alt => current_user.email,
-                                 :class => 'profile-image-small',
-                                 :gravatar => { :default => 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
+                                 alt: current_user.email,
+                                 class: "profile-image-small",
+                                 gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
           <%= current_user.username%>
       <% end %>
     </a>
     <ul class="dropdown">
       <li><%= link_to raw('<i class="foundicon-settings"></i> Inställningar'), edit_user_registration_path %></li>
       <li><%= link_to raw('<i class="foundicon-location"></i> Mina kartor'), profile_maps_path(current_user.slug) %></li>
-      <li><%= link_to raw('<i class="foundicon-lock"></i> Logga ut'), destroy_user_session_path, :method => :delete %></li>
+      <li><%= link_to raw('<i class="foundicon-lock"></i> Logga ut'), destroy_user_session_path, method: :delete %></li>
     </ul>
   </li>
 </ul>
