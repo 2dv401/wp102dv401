@@ -6,6 +6,6 @@ class Location < ActiveRecord::Base
 
   attr_accessible :latitude, :longitude
 
-  validates	:longitude, presence: true
-  validates	:latitude, presence: true
+  validates	:longitude, presence: true, format: { with: /^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,18})?|180(?:\.0{1,18})?)$/ }
+  validates	:latitude, presence: true, format: { with: /^(-?[1-8]?\d(?:\.\d{1,18})?|90(?:\.0{1,18})?)$/ }
 end
