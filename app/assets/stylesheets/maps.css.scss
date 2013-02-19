@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "shared/_colors.css.scss";
+
 .map-handler { padding: 20px 0; }
 
 .map-info-wrapper {
@@ -29,5 +31,22 @@
   span {
     padding: 5px;
     display: block;
+  }
+}
+
+// Page: Mina kartor
+#my-maps {
+  .row {
+    border-bottom: 1px solid $light-light-gray;
+    padding: 5px 0px;
+    margin-bottom: 13px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  #my-maps {
+    .row {
+      padding-bottom: 15px;
+    }
   }
 }
