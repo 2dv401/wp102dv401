@@ -116,14 +116,24 @@ class MapsController < ApplicationController
     if current_user == @map.user
       if @map.update_attributes(params[:map])
         @map.location = Location.find_or_create_by_latitude_and_longitude(@map.latitude, @map.longitude)
-        flash[:success] = t :updated, map: @map.name, scope: [:maps]
+        
+        if not request.xhr?
+          flash[:success] = t :updated, map: @map.name, scope: [:maps]
+        end
+        
         redirect_to profile_map_path(@map.user.slug, @map.slug)
       else
-        flash[:error] = t :failed_to_update, scope: [:maps]
+        if not request.xhr?
+          flash[:error] = t :failed_to_update, scope: [:maps]
+        end
+        
         render action: :edit
       end
     else
-      flash[:error] = t :access_denied
+      if not request.xhr?
+        flash[:error] = t :access_denied
+      end
+      
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
   end

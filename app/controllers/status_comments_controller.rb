@@ -21,9 +21,13 @@ class StatusCommentsController < ApplicationController
     end
 
     if @comment.save
-      flash[:success] = t :created, scope: [:status_comment]
+      if not request.xhr?
+        flash[:success] = t :created, scope: [:status_comment]
+      end
     else
-      flash[:error] = t :failed_to_create, scope: [:status_comment]
+      if not request.xhr?
+        flash[:error] = t :failed_to_create, scope: [:status_comment]
+      end
     end
     render template: 'status_comments/remote/render_new_status_comment'
   end
