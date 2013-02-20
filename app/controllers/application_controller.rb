@@ -12,7 +12,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   def after_sign_in_path_for(user)
     # Mergar kontona informationen från facebook-session med användaren som försöker logga in
     # OM sessionfinns OCH användaren som loggar in inte har facebook-koppling OCH om uid inte är kopplat
