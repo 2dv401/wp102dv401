@@ -1,0 +1,82 @@
+
+<ol id="map-tutorial">
+
+    <%= render 'maps/shared/first_map_greeting' %>
+  <!-- Kartans namn -->
+  <li data-id="map_name" data-button="nästa">
+    <h5 class="tip-header">Kartans namn</h5>
+    <p class="tip-body">Namnet är obligatoriskt och kan innehålla upp till 50 tecken. Det går att ändra namnet vid ett senare tillfälle om du önskar.
+      <span class="tip-footer">
+        <span class="tip-tips">Tips:</span> Skriv ett namn som relaterar till kartans innehåll för att underlätta för de användare som kommer besöka din karta.</span>
+    </p>
+  </li>
+
+  <!-- Beskrivningen -->
+  <li data-id="map_description" data-button="nästa">
+    <h5 class="tip-header">Beskrivning av kartan</h5>
+    <p class="tip-body">Beskrivningen kan vara väldigt lång om du så vill, den är inget måste men vi rekommenderar ändå att du skriver lite kort om vad du tänkt dig med din karta för att underlätta för dina besökare.
+      Precis som med namnet kan du redigera beskrivningen efterhand som innehållet kommer att uppdateras.
+      <span class="tip-footer">
+        <span class="tip-tips">Tips:</span> Skriv en beskrivning som relaterar till kartans innehåll. Håll din beskrivning uppdaterad med innehållet på kartan</span>
+    </p>
+  </li>
+
+  <!-- Privat -->
+  <li data-id="map-private" data-button="nästa">
+    <h5 class="tip-header">Gör din karta privat</h5>
+    <p class="tip-body">Att göra din karta privat innebär att bara de som blir inbjudna får tillgång till kartan.
+      De publika kartorna kan ses av alla på Kartr.se
+      <span class="tip-footer">
+        <span class="tip-tips">Tips:</span> Privata kartor kan vara bra till grupper med gemensamma intressen som: sport, resor, festivaler och andra musikhändelser osv.</span>
+    </p>
+  </li>
+
+  <!-- Kartan -->
+  <li data-id="map-options" data-button="klar!">
+    <h5 class="tip-header">Så över till själva kartan</h5>
+    <p class="tip-body">Kartan är centrerad runt Sverige till en början men det är nu upp till dig att ställa in ett eget område.
+      Du behöver först sätta ett området din karta ska täcka. Ställ sedan in zoomen på kartan till önskat läge.
+      <span class="tip-footer">
+        <span class="tip-tips">Tips:</span> Tänk på att kartans zoom sparas i det läge du valt så vilket sätt du än använt för att hitta en position kan du fortfarande zooma ut om du vill att din karta ska täcka ett större område.</span>
+      Det finns tre olika sett att hitta en position:
+    </p>
+    <ol>
+      <li>"Hitta min position" - Här kommer din karta att centreras runt den position du för tillfället befinner dig på.</li>
+      <li>Sök startposition - Här hittar du positioner genom att söka på ex. städer och adresser</li>
+      <li>Använd kartan - När du ändrar på kartan kommer även centrumpositionen att ändra sig så ställ in kartan som du vill.</li>
+    </ol>
+  </li>
+</ol>
+
+<% content_for :end_of_body do %>
+    <!-- Startar foundations joyride till tutorial:en  -->
+    <script>
+        $(window).load(function() {
+            $("#map-tutorial").joyride({
+                tipLocation: 'bottom',
+                Animation:'pop',
+                postStepCallback: function(index) {
+                    var targetTip = index + 1;
+                    var targetInput = '';
+
+                    if (targetTip === 1) {
+                        targetInput =  '#map_name';
+
+                    }
+                    else if(targetTip === 2) {
+                        targetInput =  '#map_description';
+                    }
+                    else if(targetTip === 4) {
+                        targetInput =  '#locationTextField';
+                    }
+                    else if (targetTip === 5) {
+                        targetInput =  '#saveMapButton';
+                    }
+                    map_private_false
+                    $(targetInput).focus();
+                    console.log(targetTip);
+                }
+            });
+        });
+    </script>
+<% end %>

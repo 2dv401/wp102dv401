@@ -2,6 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+// inlänkade hjälpmedel
+@import "shared/_colors.css.scss";
+
 .map-handler { padding: 20px 0; }
 
 .map-info-wrapper {
@@ -30,4 +33,21 @@
     padding: 5px;
     display: block;
   }
+}
+#map-tutorial { display: none; }
+
+.joyride-content-wrapper {
+  padding: 30px;
+
+  .tip-header { margin-bottom: 10px; }
+  .tip-body {
+    padding-top: 10px;
+    border-top: solid 2px $gray;
+  }
+  .tip-footer {
+    padding-top: 20px;
+    display: block;
+    .tip-tips { display: block; font-weight: bold; }
+  }
+  h6 { margin-bottom: 20px; }
 }

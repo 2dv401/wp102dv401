@@ -1,0 +1,15 @@
+<li data-button="Börja">
+  <% if current_user.sign_in_count === 1 %>
+      <h5 class="tip-header">Hej och välkommen till Kartr.se!</h5>
+      <p class="tip-body">
+        Vad kul att du ville prova vår karttjänst. För att hjälpa dig att komma igång finns det här en genomgång av hur det går till när du skapar din första karta.
+        Om du inte vill ta del av vår hjälp stänger du bara denna ruta, annars klickar du på "börja" och följ instruktionerna så har du snart din första karta klar, lycka till!</p>
+      </p>
+  <% elsif first_map? %>
+      <h5 class="tip-header">Detta verkar vara din första karta!</h5>
+      <p class="tip-body">För att hjälpa dig att komma igång finns det här en genomgång av hur det går till när du skapar din första karta.
+        Bara stäng denna ruta om du inte prova själv eller klicka på "börja" och följ instruktionerna så har du snart din första karta klar.
+      </p>
+      <h6>lycka till!</h6>
+  <% end %>
+</li>

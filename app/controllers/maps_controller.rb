@@ -21,8 +21,12 @@ class MapsController < ApplicationController
 
   def show
     begin
-      @map = Map.find(params[:id])
-      @user = current_user
+      # Hämtar användaren som äger kartan för att filtrera
+      @user = User.find(params[:profile_id])
+
+      # Hämtar rätt karta från användarens samling
+      @map = @user.maps.find(params[:id])
+
     rescue ActiveRecord::RecordNotFound
       render template: 'maps/404', status: 404
       return

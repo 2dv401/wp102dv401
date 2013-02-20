@@ -15,7 +15,10 @@ Wp102dv401::Application.routes.draw do
   match "/api/v1/:api_key.:format" => "maps#embed", as: :embed
 
   # Tell Devise in which controller we will implement Omniauth callbacks
-  devise_for :users, controllers: { omniauth_callbacks: "authentications" }
+  devise_for :users, controllers: {
+      omniauth_callbacks: "authentications",
+      registrations: "registrations"
+  }
 
   devise_scope :user do
     # Session routes
@@ -25,12 +28,12 @@ Wp102dv401::Application.routes.draw do
     # Password routes
     get "/nytt-losenord" => "devise/passwords#new", as: :new_user_password
     # Registration routes
-    get "/registrering" => "devise/registrations#new", as: :new_user_registration
-    get "/redigera-profil" => "devise/registrations#edit", as: :edit_user_registration
+    get "/registrering" => "registrations#new", as: :new_user_registration
+    post "/registrering" => "registrations#create", as: :user_registration
+    get "/redigera-profil" => "registrations#edit", as: :edit_user_registration
     # Routes for provider authentication
     get "/users/auth/:provider" => "authentications#passthru"
   end
-
 
   scope(path_names: { new: "ny", edit: "redigera" }) do
 
