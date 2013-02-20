@@ -160,7 +160,7 @@ class MapsController < ApplicationController
   # Sets options for map
   def display_map(map)
 
-    @display_map =  {
+    @display_map = {
         "map_options" => {
             "auto_zoom" => true,
             "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
