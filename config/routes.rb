@@ -74,19 +74,15 @@ Wp102dv401::Application.routes.draw do
     end
   end
 
-<<<<<<< HEAD
+
   ### TEST MED INSTAGRAM
-  get "/instagram" => "instagram#index"
-  get "/instagram/activate" => "instagram#activate"
-  get "/instagram/auth" => "instagram#auth"
-  get "/instagram/callback" => "instagram#callback"
+  #get "/instagram" => "instagram#index"
+  #get "/instagram/activate" => "instagram#activate"
+  #get "/instagram/auth" => "instagram#auth"
+  #get "/instagram/callback" => "instagram#callback"
 
-
-
-  root :to => "home#index"
-=======
   root to: "home#index"
->>>>>>> development
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
