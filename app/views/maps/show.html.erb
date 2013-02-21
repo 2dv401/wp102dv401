@@ -50,6 +50,7 @@
 
 <div class="row">
   <div class="six columns push-six">
+    <% if @map.user == current_user %>
     <div class="right map-handler">
       <div class="status-update-form">
         <%= render "status_updates/shared/form" %>
@@ -59,6 +60,7 @@
       <%= link_to "Ta bort karta", map_path(@map.id), method: :delete, confirm: "Vill du ta bort kartan?" %>
       <p>Sidvisningar: <%= @map.map_views %></p>
     </div>
+    <% end %>
   </div>
   <div class="six columns pull-six">
     <div class="row">
