@@ -13,6 +13,7 @@ sv:
             password:
               blank: "Ett lösenord måste fyllas i, för bästa säkerhet använd minst 6 tecken och variera mellan bokstäver, siffror och tecken"
               too_short: "Lösenordet är för kort, det bör vara minst 6 tecken"
+              confirmation: "Bekräftelsen matchar inte lösenordet, försök igen."
   errors:
     messages:
       expired: "Har löpt ut, vad god begär en ny"
@@ -37,8 +38,8 @@ sv:
       timeout: 'Din session är inte längre giltig, vänligen logga in igen för att fortsätta.'
       inactive: 'Ditt konto har inte aktiverats ännu.'
     sessions:
-      signed_in: 'Loggade in.'
-      signed_out: 'Loggade ut.'
+      signed_in: 'Du är nu inloggad.'
+      signed_out: 'Du är nu utloggad.'
     passwords:
       send_instructions: 'Du kommer få epost med instruktioner om hur du kan återställa ditt lösenord inom några minuter.'
       updated: 'Ditt lösenord har uppdaterats. Du är nu inloggad.'
@@ -49,7 +50,8 @@ sv:
       confirmed: 'Ditt konto har bekräftats. Du är nu inloggad.'
     registrations:
       signed_up: 'Ett nytt konto har skapats. En bekräftelse har skickats till din epost.'
-      signed_up_but_unconfirmed: "Ett konto har skapats men inte bekräftats."
+      failed_to_register: 'Fel uppstod och registreringen kunde inte genomföras.'
+      signed_up_but_unconfirmed: 'Ett konto har skapats men inte bekräftats.'
       inactive_signed_up: 'Ett nytt konto har skapats. Du kunde inte logga in, för ditt konto är %{reason}.'
       updated: 'Ditt konto har uppdaterats.'
       destroyed: 'Hej då! Ditt konto har avregistrerats. Vi hoppas få se dig snart igen.'

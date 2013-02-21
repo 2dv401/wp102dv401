@@ -1,0 +1,21 @@
+﻿<p>
+  <b>Name:</b>
+  <%= mark.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= mark.description %>
+</p>
+
+<% if mark.map.user.id == @user.id%>
+
+<p>
+  <%= link_to "Ändra markering", edit_map_mark_path(mark.map,mark) %>
+</p>
+
+<p>
+   <%= link_to 'Ta bort', map_mark_path(mark.map,mark), confirm: 'Vill du ta bort markeringen?', id: "delete-marker-link", method: :delete, remote: true %>
+</p>
+
+<% end %>

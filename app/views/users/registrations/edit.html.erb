@@ -1,21 +1,21 @@
 <h2>Redigera användare</h2>
 
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
     <%= devise_error_messages! %>
     <div class="username">
         <%= f.label :username, "Användarnamn" %>
-        <%= f.text_field :username, :autocomplete => "off", :disabled => true %>
+        <%= f.text_field :username, autocomplete: "off", disabled: true %>
     </div>
 
     <div class="email">
         <%= f.label :email, "Epost" %>
-        <%= f.email_field :email, :autocomplete => "off", :disabled => true %>
+        <%= f.email_field :email, autocomplete: "off", disabled: true %>
     </div>
 
     <div class="password">
         <%= f.label :password, "Nytt lösenord" %>
-        <%= f.password_field :password, :autocomplete => "off" %>
+        <%= f.password_field :password, autocomplete: "off" %>
     </div>
 
     <div class="password">
@@ -33,6 +33,6 @@
 
 <h3>Radera konto</h3>
 
-<p><%= link_to "Ta bort konto", registration_path(resource_name), :data => { :confirm => "Är du säker?" }, :method => :delete %>.</p>
+<p><%= link_to "Ta bort konto", registration_path(resource_name), data: { confirm: "Är du säker?" }, method: :delete %>.</p>
 
 <%= link_to "Tillbaka", :back %>

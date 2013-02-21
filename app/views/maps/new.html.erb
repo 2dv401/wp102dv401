@@ -1,7 +1,13 @@
 <% title "Skapa ny karta" %>
+
 <h2>Skapa ny karta</h2>
+
+<% if first_map? %>
+    <%= render 'maps/shared/map_tutorial' %>
+<% end %>
+
 <div id="mapCreation">
-  <%= form_for(@map, :html => { :id => "map_form" }) do |f| %>
-      <%= render 'maps/shared/form', :f => f %>
+  <%= form_for([current_user, @map], url: profile_maps_path, html: { id: "map-form" }) do |f| %>
+      <%= render 'maps/shared/form', f: f %>
   <% end %>
 </div>

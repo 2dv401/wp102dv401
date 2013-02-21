@@ -1,33 +1,23 @@
-/*
-    UTVECKLING PÅGÅR.
-    EJ FÄRDIG VERSION
-    KOD KAN KOMMA ATT ERSÄTTAS MED NYA VERSION
-    // LP
- */
-
-
 var $kartr_se = jQuery.noConflict();
-
-
-
 $kartr_se(document).ready(function() {
 
-  var map_info = <%= raw(@map) %>
-  var center = <%= raw(@location) %>
-  var map;
-  var markers = <%= raw(@marks) %>
+  console.log(kartr_map_width);
 
+  var map_info = <%= raw(@map) %>,
+      center = <%= raw(@location) %>,
+      markers = <%= raw(@marks_coordinates) %>,
+      markers_info = <%= raw(@marks_info) %>,
+      bound = new google.maps.LatLngBounds(),
+      myOptions = {
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoom: 6
+      },
+      mapElement = document.getElementById( "kartr-maps" ),
+      map = new google.maps.Map( mapElement, myOptions ),
+      infowindow = new google.maps.InfoWindow();
 
-  var bound = new google.maps.LatLngBounds();
-
-
-  console.log(map_info);
-  var myOptions = {
-    mapTypeId: google.maps.MapTypeId.SATTELITE
-  };
-
-  map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-
+  mapElement.style.width = kartr_map_width + 'px';
+  mapElement.style.height = kartr_map_height + 'px';
 
   // Om kartan har markeringar, loopa ut dessa.
   if ( markers.length ) {
@@ -35,12 +25,18 @@ $kartr_se(document).ready(function() {
       var myLatLng = new google.maps.LatLng(markers[i].lat, markers[i].lng);
       bound.extend(myLatLng);
 
-      var mark = {}
-
       var marker = new google.maps.Marker({
         position: myLatLng,
         map: map
       });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(markers_info[i].name);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+
     }
   }
   else {

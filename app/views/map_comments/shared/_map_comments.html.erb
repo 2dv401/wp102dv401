@@ -6,7 +6,7 @@
     </li>
     <% if map.map_comments.any? %>
         <% map.map_comments.each do |c| %>
-            <%= render 'map_comments/shared/map_comment', :comment => c %>
+            <%= render 'map_comments/shared/map_comment', comment: c %>
         <% end %>
     <% end %>
   </ul>

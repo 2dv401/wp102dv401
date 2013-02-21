@@ -39,6 +39,14 @@ function activateLocationAdd() {
   }
 }
 
+function removeMarking(id){
+  for(var marker in Gmaps.map.markers){
+    if(Gmaps.map.markers[marker].id == id){
+      Gmaps.map.markers[marker].serviceObject.setMap(null)
+    }
+  }
+}
+
 function showMarkingCreationBox(latitude, longitude, container) {
   //Hämta map-id ur URL
   var a = $(location).attr('href').split("//");

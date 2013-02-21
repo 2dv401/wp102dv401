@@ -1,6 +1,7 @@
-<% @maps.each do |map| %>
-     <%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
-     <br>
-<% end %>
+<!-- Presenterar alla användarens kartor -->
 
-<h3><%= link_to "Ny karta", new_profile_map_path(current_user.slug) %></h3>
+<%= title "Mina kartor" %>
+
+<%= render "maps/shared/my_maps" %>
+
+<h4><%= link_to "Ny karta", new_profile_map_path(current_user.slug) %></h4>

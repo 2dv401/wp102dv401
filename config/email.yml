@@ -3,12 +3,12 @@ development:
   :port: 587
   :authentication: plain
   :user_name: info@kartr.se
-  :password: qAFapha6
+  :password: qAFapha6         ## Ej skarpt lösenord
   :enable_starttls_auto: true
 production:
   :address: smtp.kartr.se
   :port: 587
   :authentication: plain
   :user_name: info@kartr.se
-  :password: qAFapha6
+  :password: qAFapha6           ## Ej skarpt lösenord
   :enable_starttls_auto: true

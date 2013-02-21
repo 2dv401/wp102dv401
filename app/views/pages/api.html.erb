@@ -1,0 +1,84 @@
+
+
+<h3>API Dokumentation</h3>
+<div class="alert-box alert">
+    Denna del utav kartr.se är fortfarande under utveckling!
+</div>
+
+<%
+  ## Om användaren är inloggad.
+  if user_signed_in?
+%>
+
+<div class="row">
+  <div class="twelve columns">
+    <% @maps.each do |map| %>
+    <dl class="tabs">
+      <dd class="active"><a href="#name-<%= map.id%>"><%= map.name %></a></dd>
+      <dd><a href="#code-<%= map.id%>">Kod</a></dd>
+      <dd><a href="#key-<%= map.id%>">Nyckel</a></dd>
+    </dl>
+    <ul class="tabs-content">
+      <li class="active" id="name-<%= map.id%>Tab">
+        <h4><%= map.name %></h4>
+        Totalt antal sidvisningar: <%= map.map_views %>
+        <hr />
+      </li>
+      <li id="code-<%= map.id%>Tab">
+        <div class="panel">
+          <strong>Iframe</strong>
+<pre>
+&lt;iframe src="http://kartr.se/embed/<%= map.api_key %>.html>" width="100%" height="100%" frameBorder="0">&lt;/iframe>
+</pre>
+        </div>
+
+        <div class="panel">
+          <strong>JavaScript</strong>
+<pre>
+&lt;script type="text/javascript">
+  /* * * Konfigurations variabler * * */
+  var kartr_api_key = '<%= map.api_key %>'; // API-nyckel
+  var kartr_map_width = 700; // Kartans bredd i pixlar
+  var kartr_map_height = 500; // Kartans höjd i pixlar
+
+  /* * * Redigera inte under denna rad om du inte vet vad du gör. * * */
+  $(function(){
+    var kartr = document.createElement('script'); kartr.type = 'text/javascript'; kartr.async = true;
+    kartr.src = 'http://kartr.se/javascripts/maps.js?api_key=' + kartr_api_key;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(kartr);
+  });
+&lt;/script>
+</pre>
+          <strong>Beroenden</strong>
+          <p>Du måste själv ansvara för att följande beroende uppfylls.</p>
+          <ul>
+            <li>jQuery</li>
+            <li>Google Maps</li>
+          </ul>
+        </div>
+        <hr />
+      </li>
+      <li id="key-<%= map.id%>Tab">
+        <code>
+          <%= map.api_key %>
+          <hr />
+        </code>
+      </li>
+    </ul>
+  </div>
+    <% end %>
+</div>
+<% end %>
+
+
+<div class="row">
+    <div class="twelve columns">
+        <div class="panel">
+          <h4>Hämta specifik karta med tillhörande markeringar</h4>
+          <ul>
+            <li>URL: http://kartr.se/api/v1/</li>
+            <li>Resurs: :api_key.json</li>
+          </ul>
+        </div>
+    </div>
+</div>

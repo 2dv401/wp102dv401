@@ -10,7 +10,7 @@ class StatusUpdatesController < ApplicationController
       current_user.like!(@update)
     end
 
-    render :template => 'status_updates/remote/like_button_toggle'
+    render template: 'status_updates/remote/like_button_toggle'
   end
 
   def create
@@ -18,11 +18,14 @@ class StatusUpdatesController < ApplicationController
     @update = StatusUpdate.new(params[:status_update])
     @update.user = current_user
     @update.map = Map.find(params[:map_id])
-
-    if @update.save
-      flash[:notice] = "Statusuppdatering sparad"
+    if current_user == @update.map.user
+      if @update.save
+        flash[:success] = t :created, scope: [:status_updates]
+      else
+        flash[:error] = t :failed_to_create, scope: [:status_updates]
+      end
     else
-      flash[:notice] = "Fel nar statusuppdatering skulle sparas"
+      flash[:error] = t :access_denied
     end
     redirect_to profile_map_path(@update.map.user.slug, @update.map.slug)
   end
@@ -33,13 +36,13 @@ class StatusUpdatesController < ApplicationController
 
     if current_user == @update.user
       if @update.destroy
-        flash[:notice] = "Statusen borttagen"
+        flash[:success] = t :removed, scope: [:status_updates]
       else
-        flash[:notice] = "Fel nar statusen skulle tagas bort"
+        flash[:error] = t :failed_to_remove, scope: [:status_updates]
       end
     else
-      flash[:notice] = "Fel, bara agaren till kartan kan ta bort statusen."
+      flash[:error] = t :access_denied
     end
-    render :template => 'status_updates/remote/remove_status_update'
+    render template: 'status_updates/remote/remove_status_update'
   end
 end

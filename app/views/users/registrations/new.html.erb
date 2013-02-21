@@ -1,33 +1,35 @@
 <div class="row">
   <div class="seven columns">
     <h2>Registrering</h2>
-    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= devise_error_messages! %>
 
         <div class="username">
           <%# f.label :username, "Användarnamn" %>
-          <%= f.text_field :username, :placeholder => "Användarnamn" %>
+          <%= f.text_field :username, placeholder: "Användarnamn" %>
         </div>
 
         <div class="email">
           <%# f.label :email, "Epost" %>
-          <%= f.text_field :email, :placeholder => "Epost" %>
+          <%= f.text_field :email, placeholder: "Epost" %>
         </div>
 
         <div class="password">
           <%# f.label :password, "Lösenord" %>
-          <%= f.password_field :password, :placeholder => "Lösenord" %>
+          <%= f.password_field :password, placeholder: "Lösenord" %>
         </div>
 
         <div class="password">
           <%# f.label :password_confirmation, "Bekräfta lösenord" %>
-          <%= f.password_field :password_confirmation, :placeholder => "Bekräfta lösenord" %>
+          <%= f.password_field :password_confirmation, placeholder: "Bekräfta lösenord" %>
         </div>
 
-        <div><%= f.submit "Registrera", :class => 'button' %></div>
+        <div><%= f.submit facebook? ? "Koppla samman kontona" : "Registrera", class: "button" %></div>
     <% end %>
 
     <%= link_to "Tillbaka", root_path %>
   </div>
 </div>
+
+
 

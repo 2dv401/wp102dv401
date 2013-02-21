@@ -1,7 +1,8 @@
+require File.dirname('') + '/config/environment.rb'
 class MapsController < ApplicationController
   before_filter :authenticate_user!
   ## Skippa validering på embeddade kartor.
-  skip_before_filter :authenticate_user!, :only => ['embed']
+  skip_before_filter :authenticate_user!, only: ['embed']
 
   def index
     ## Hämtar alla kartor användaren äger
@@ -15,10 +16,21 @@ class MapsController < ApplicationController
     else
       current_user.follow!(@map)
     end
-    render :template => 'maps/follow/toggle'
+    render template: 'maps/follow/toggle'
   end
 
   def show
+    begin
+      # Hämtar användaren som äger kartan för att filtrera
+      @user = User.find(params[:profile_id])
+
+      # Hämtar rätt karta från användarens samling
+      @map = @user.maps.find(params[:id])
+
+    rescue ActiveRecord::RecordNotFound
+      render template: 'maps/404', status: 404
+      return
+    end
     #Nya objekt som kan skapas på maps-sidan
     @status_update = StatusUpdate.new
     @status_comment = StatusComment.new
@@ -27,11 +39,10 @@ class MapsController < ApplicationController
       m.build_location
     end
 
-    @map = Map.find(params[:id])
-
     # Kontrollerar om användaren har behörighet att titta på kartan.
     if @map.private? and @map.user != current_user
-      render :template => 'maps/show_private.html.erb'
+      flash[:error] = t :private, scope: [:maps]
+      render template: 'maps/show_private.html.erb'
       return
     end
 
@@ -53,32 +64,32 @@ class MapsController < ApplicationController
       end
       map.zoom = 5
     end
-
-
-
     display_map(@map)
-
-
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: {:map => @map, :display_map => @display_map }}
+      format.json { render json: {map: @map, display_map: @display_map }}
     end
   end
 
   def create
+    # Tar bort IDt från en tidigare sparad location (om valideringen failats)
+    # Tar man bort denna rad kastas undantag för det inte går att assiciera en 
+    # redan befintlig location med ett objekt som inte än är skapad (kartan)
+    params[:map][:location_attributes][:id] = nil
+
     @map = Map.new(params[:map]) do |m|
       m.user = current_user
       m.location = Location.find_by_latitude_and_longitude(m.latitude, m.longitude) || m.location
     end
-    display_map(@map)
-
+    
     if @map.save
-      flash[:notice] = "Kartan sparades!"
+      flash[:success] = t :created, map: @map.name, scope: [:maps]
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     else
-      flash[:error] = "Fel intraffade nar kartan skulle sparas."
-      render :action => "new"
+      display_map(@map)
+      flash[:error] = t :failed_to_create, scope: [:maps]
+      render action: :new
     end
 
   end
@@ -93,7 +104,7 @@ class MapsController < ApplicationController
 
     display_map(@map)
     unless current_user == @map.user
-      flash[:notice] = "Fel, bara agaren till kartan kan andra den."
+      flash[:error] = t :access_denied
       redirect_to profile_map_path(@user.slug, @map.slug)
     end
   end
@@ -102,7 +113,6 @@ class MapsController < ApplicationController
   def update
     # Hämtar rätt karta från användarens samling
     @map = Map.find(params[:id])
-
     # Sparar undan sluggen om namn-fältet är tomt
     @slug = @map.slug
 
@@ -110,29 +120,39 @@ class MapsController < ApplicationController
     if current_user == @map.user
       if @map.update_attributes(params[:map])
         @map.location = Location.find_or_create_by_latitude_and_longitude(@map.latitude, @map.longitude)
-        flash[:notice] = "Kartan sparades!"
+        
+        if not request.xhr?
+          flash[:success] = t :updated, map: @map.name, scope: [:maps]
+        end
+        
         redirect_to profile_map_path(@map.user.slug, @map.slug)
       else
-        flash[:error] = "Fel intraffade nar kartan skulle sparas."
-        redirect_to edit_profile_map_path(@map.user.slug, @slug)
+        if not request.xhr?
+          flash[:error] = t :failed_to_update, scope: [:maps]
+        end
+        
+        render action: :edit
       end
     else
-      flash[:notice] = "Fel, bara agaren till kartan kan uppdatera den."
+      if not request.xhr?
+        flash[:error] = t :access_denied
+      end
+      
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
   end
 
   def destroy
     @map = Map.find(params[:id])
-
+    @map_name = @map.name
     if current_user == @map.user
       if @map.destroy
-        flash[:notice] = "Kartan borttagen"
+        flash[:success] = t :removed, map: @map_name, scope: [:maps]
       else
-        flash[:notice] = "Fel nar kartan skulle tagas bort"
+        flash[:error] = t :failed_to_remove, scope: [:maps]
       end
     else
-      flash[:notice] = "Fel, bara agaren till kartan kan ta bort den."
+      flash[:error] = t :access_denied
     end
     redirect_to root_path
   end
@@ -140,7 +160,7 @@ class MapsController < ApplicationController
   # Sets options for map
   def display_map(map)
 
-    @display_map =  {
+    @display_map = {
         "map_options" => {
             "auto_zoom" => true,
             "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
@@ -230,9 +250,7 @@ class MapsController < ApplicationController
       format.html { render :html => {:map => @map,
                                      :marks => @marks,
                                      :location => @location}, :layout => false }
-      format.xml  { render :xml => {:map => @map,
-                                    :marks => @marks,
-                                    :location => @location} }
+
       format.json { render :json =>  {:map => @map,
                                       :marks => @marks,
                                       :location => @location} }

@@ -1,8 +1,12 @@
-<h2>Logga in</h2>
-
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+<% if facebook? %>
+  <h2>Hej <%= session["facebook_data"]["info"]["name"] %> <img src='<%= session["facebook_data"]["info"]["image"] %>' /></h2>
+  <p>Epost-adress (<%= session["facebook_data"]["info"]["email"] %>) som du använder på facebook används redan på Kartr. Vill du koppla ihop dessa konton, skriv in dina uppgifter nedan!</p>
+<% else %>
+  <h2>Logga in</h2>
+<% end %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="login">
-  	<%= f.label :login, "Epost eller användarnamn" %>
+  	<%= f.label :login,  facebook? ? session["facebook_data"]["info"]["email"] : "Epost eller användarnamn" %>
   	<%= f.text_field :login %>
   </div>
 
@@ -15,7 +19,7 @@
     <div><%= f.check_box :remember_me %> <%= f.label :remember_me, "Kom ihåg mig" %></div>
   <% end -%>
 
-  <div><%= f.submit "Logga in" %></div>
+  <div><%= f.submit facebook? ? "Koppla samman dina konton!" : "Logga in" %></div>
 <% end %>
 
-<%= render "users/shared/links" %>
+<%# render "users/shared/links" %>

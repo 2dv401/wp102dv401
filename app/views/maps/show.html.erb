@@ -10,55 +10,35 @@
 <% end %>
 
 <div class="row">
-  <div class="twelve columns">
+  <div class="ten columns">
     <h1 class="header-name" ><%= @map.name %> </h1>
-    <h5 class="subheader header-name" > En karta av: <%= @map.user.name || @map.user.username %></h5>
+  </div>
+  <div class="two columns">
     <% unless @map.user == current_user %>
-        <div class="right" id="follow-button">
           <%= render 'maps/shared/follow_button'%>
-        </div>
     <% end %>
   </div>
 </div>
 
-<div class="row">
-  <div class="five columns">
-    <div class="map-info-wrapper">
-      <div class="map-description">
-        <p><%= @map.description %></p>
-      </div>
-      <div claes="map-created-at">
-        <span>Skapades: <%= time_ago(@map.created_at) %></span>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="row">
-  <div class="seven columns">
-    <div class="left map-count" id="follow-count">
-      <%= render 'maps/shared/follow_count' %>
-    </div>
-    <div class="left map-count">
-      <%= render 'maps/shared/status_count' %>
-    </div>
-    <div class="left map-count">
-      <%= render 'maps/shared/comment_count' %>
+  <div class="twelve columns">
+    <div class="map-info-wrapper">
+      <div class="map-description">
+        <p>
+          <% if @map.description.present? %>
+              <%= simple_format(@map.description) %>
+          <% else %>
+              Denna karta saknar beskrivning...
+          <% end %>
+        </p>
+      </div>
+      <div class="map-created-at">
+        <span>Skapad av <%= link_to @map.user.name || @map.user.username, profile_path(@map.user.slug) %>
+        <%= time_ago(@map.created_at) %></span>
+      </div>
     </div>
   </div>
-  <% if @map.user == current_user %>
-      <div class="five columns">
-        <div class="right map-handler">
-          <div class="status-update-form">
-            <%= render "status_updates/shared/form" %>
-          </div>
-          <%= link_to "Lägg till markering", new_map_mark_path(@map) %> |
-          <%= link_to "Ändra karta", edit_profile_map_path(@map.user.slug, @map.slug) %> |
-          <%= link_to "Ta bort karta", map_path(@map.id), :method=>:delete, :confirm=>"Vill du ta bort kartan?" %>
-         <p>Sidvisningar: <%= @map.map_views %></p>
-        </div>
-      </div>
-  <% end %>
 </div>
 
 <div class="row">
@@ -67,7 +47,36 @@
   </div>
 </div>
 
+
 <div class="row">
+  <div class="six columns push-six">
+    <div class="right map-handler">
+      <div class="status-update-form">
+        <%= render "status_updates/shared/form" %>
+      </div>
+      <%= link_to "Lägg till markering", new_map_mark_path(@map) %> |
+      <%= link_to "Ändra karta", edit_profile_map_path(@map.user.slug, @map.slug) %> |
+      <%= link_to "Ta bort karta", map_path(@map.id), method: :delete, confirm: "Vill du ta bort kartan?" %>
+      <p>Sidvisningar: <%= @map.map_views %></p>
+    </div>
+  </div>
+  <div class="six columns pull-six">
+    <div class="row">
+        <div class="map-count three columns">
+          <%= render 'maps/shared/follow_count' %>  
+        </div>
+        <div class="map-count five columns middle">
+          <%= render 'maps/shared/status_count' %>  
+        </div>
+        <div class="map-count three columns">
+          <%= render 'maps/shared/comment_count' %>    
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row hide-for-small">
   <% if @map.status_updates.any? %>
       <div class="six columns">
         <h2 class="subheader" >Statusuppdateringar</h2>
@@ -76,5 +85,25 @@
   <% end %>
   <div class="six columns">
     <%= render "map_comments/shared/map_comments", :map => @map %>
+  </div>
+</div>
+
+<div class="row show-for-small">
+  <div class="twelve columns">
+    <% if @map.status_updates.any? %>
+    <div id="show-updates">
+      <a href="#" class="secondary button radius show-content">Visa statusuppdateringar</a>
+        <div class="content">
+         <h2 class="subheader">Statusuppdateringar</h2>
+         <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
+        </div>
+    </div>
+    <% end %>
+    <div id="show-comments">
+      <a href="#" class="secondary radius button show-content">Visa kommentarer</a>
+        <div class="content">
+          <%= render "map_comments/shared/map_comments", :map => @map %>
+        </div>
+    </div>
   </div>
 </div>

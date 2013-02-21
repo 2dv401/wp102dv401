@@ -1,25 +1,27 @@
 <fieldset class="loggin-fieldset">
   <legend>Logga in</legend>
-  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="login">
         <%# f.label :login, "Epost eller användarnamn" %>
-        <%= f.text_field :login, :placeholder => 'Epost eller användarnamn' %>
+        <%= f.text_field :login, placeholder: "Epost eller användarnamn" %>
       </div>
 
       <div class="password">
         <%# f.label :password, "Lösenord" %>
-        <%= f.password_field :password, :placeholder => 'Lösenord' %>
+        <%= f.password_field :password, placeholder: "Lösenord" %>
       </div>
 
       <% if devise_mapping.rememberable? -%>
-          <div><%= f.check_box :remember_me, :class => 'remember-me' %> <%= f.label :remember_me, "Kom ihåg mig", :class => 'remember-me' %></div>
+          <div><%= f.check_box :remember_me, class: "remember-me" %> <%= f.label :remember_me, "Kom ihåg mig", class: "remember-me" %></div>
       <% end -%>
 
-      <div><%= f.submit "Logga in", :class => 'right button loggin' %></div>
+      <div><%= f.submit "Logga in", class: "right button loggin" %></div>
   <% end %>
 </fieldset>
 <fieldset class="loggin-fieldset">
   <legend> Använd eget konto </legend>
-  <%= link_to image_tag("login_with_facebook.png"), user_omniauth_authorize_path(:facebook) %>
-  <%= link_to image_tag("login_with_twitter.png"), user_omniauth_authorize_path(:twitter) %>
+  <div class="account-login">
+    <%= link_to image_tag("login_with_facebook.png", alt: "logga in med facebook"), user_omniauth_authorize_path(:facebook), title: "Logga in med facebook" %>
+    <%= link_to image_tag("login_with_twitter.png", alt: "logga in med twitter"), user_omniauth_authorize_path(:twitter), title: "Logga in med twitter"  %>
+  </div>
 </fieldset>

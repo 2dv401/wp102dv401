@@ -10,7 +10,7 @@ class StatusCommentsController < ApplicationController
       current_user.like!(@status_comment)
     end
 
-    render :template => 'status_comments/remote/like_button_toggle'
+    render template: 'status_comments/remote/like_button_toggle'
   end
 
   def create
@@ -21,11 +21,15 @@ class StatusCommentsController < ApplicationController
     end
 
     if @comment.save
-      flash[:notice] = "Kommentaren sparad"
+      if not request.xhr?
+        flash[:success] = t :created, scope: [:status_comment]
+      end
     else
-      flash[:notice] = "Fel nar kommentaren skulle sparas"
+      if not request.xhr?
+        flash[:error] = t :failed_to_create, scope: [:status_comment]
+      end
     end
-    render :template => 'status_comments/remote/render_new_status_comment'
+    render template: 'status_comments/remote/render_new_status_comment'
   end
 
   def destroy
@@ -34,13 +38,13 @@ class StatusCommentsController < ApplicationController
 
     if current_user == @comment.user || current_user == @map.user
       if @comment.destroy
-        flash[:notice] = "Kommentaren borttagen"
+        flash[:success] = t :removed, scope: [:status_comment]
       else
-        flash[:notice] = "Fel nar kommentaren skulle tagas bort"
+        flash[:error] = t :failed_to_remove, scope: [:status_comment]
       end
     else
-      flash[:notice] = "Fel, bara personen som skrev kommentaren och agaren till kartan kan ta bort den."
+      flash[:error] = t :access_denied
     end
-    render :template => 'status_comments/remote/remove_status_comment'
+    render template: 'status_comments/remote/remove_status_comment'
   end
 end
