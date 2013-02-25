@@ -10,7 +10,7 @@
     <%= submit_tag "Där jag är", type: "button", class: "button", id: "geolocate_button" %>
   </div>
 </div>
-<%= link_to 'Avbryt', map_path(@map) %>
+<%= link_to 'Avbryt', profile_map_path(@map.user.slug, @map.slug)%>
 
 <% content_for :end_of_body do %>
 
