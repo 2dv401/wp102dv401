@@ -15,7 +15,7 @@
   </div>
   <div class="two columns">
     <% unless @map.user == current_user %>
-          <%= render 'maps/shared/follow_button'%>
+        <%= render 'maps/shared/follow_button'%>
     <% end %>
   </div>
 </div>
@@ -32,10 +32,15 @@
               Denna karta saknar beskrivning...
           <% end %>
         </p>
+        <% if @map.tag_list.present? %>
+            <div class="map-tags">
+              <span>Kartans taggar: <%= @map.tag_list %></span>
+            </div>
+        <% end %>
       </div>
       <div class="map-created-at">
         <span>Skapad av <%= link_to @map.user.name || @map.user.username, profile_path(@map.user.slug) %>
-        <%= time_ago(@map.created_at) %></span>
+          <%= time_ago(@map.created_at) %></span>
       </div>
     </div>
   </div>
@@ -64,15 +69,15 @@
   </div>
   <div class="six columns pull-six">
     <div class="row">
-        <div class="map-count three columns">
-          <%= render 'maps/shared/follow_count' %>  
-        </div>
-        <div class="map-count five columns middle">
-          <%= render 'maps/shared/status_count' %>  
-        </div>
-        <div class="map-count three columns">
-          <%= render 'maps/shared/comment_count' %>    
-        </div>
+      <div class="map-count three columns">
+        <%= render 'maps/shared/follow_count' %>
+      </div>
+      <div class="map-count five columns middle">
+        <%= render 'maps/shared/status_count' %>
+      </div>
+      <div class="map-count three columns">
+        <%= render 'maps/shared/comment_count' %>
+      </div>
     </div>
   </div>
 </div>
@@ -93,19 +98,19 @@
 <div class="row show-for-small">
   <div class="twelve columns">
     <% if @map.status_updates.any? %>
-    <div id="show-updates">
-      <a href="#" class="secondary button radius show-content">Visa statusuppdateringar</a>
-        <div class="content">
-         <h2 class="subheader">Statusuppdateringar</h2>
-         <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
+        <div id="show-updates">
+          <a href="#" class="secondary button radius show-content">Visa statusuppdateringar</a>
+          <div class="content">
+            <h2 class="subheader">Statusuppdateringar</h2>
+            <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
+          </div>
         </div>
-    </div>
     <% end %>
     <div id="show-comments">
       <a href="#" class="secondary radius button show-content">Visa kommentarer</a>
-        <div class="content">
-          <%= render "map_comments/shared/map_comments", :map => @map %>
-        </div>
+      <div class="content">
+        <%= render "map_comments/shared/map_comments", :map => @map %>
+      </div>
     </div>
   </div>
 </div>
