@@ -35,9 +35,6 @@ class MapsController < ApplicationController
     @status_update = StatusUpdate.new
     @status_comment = StatusComment.new
     @map_comment = MapComment.new
-    @mark = Mark.new do |m|
-      m.build_location
-    end
 
     # Kontrollerar om användaren har behörighet att titta på kartan.
     if @map.private? and @map.user != current_user

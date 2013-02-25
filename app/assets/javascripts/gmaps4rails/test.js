@@ -1,3 +1,4 @@
+/*
 var temporaryMarker = null;
 
 function click() {
@@ -23,7 +24,8 @@ function activateLocationAdd() {
       var latLng = event.latLng;
       var lat = latLng.lat();
       var lng = latLng.lng();
-      /*if($("#markingInfo").length == 0){
+      */
+/*if($("#markingInfo").length == 0){
       var marker = new google.maps.Marker({ map: map });
       temporaryMarker = marker;
       marker.setPosition(latLng);
@@ -32,7 +34,8 @@ function activateLocationAdd() {
       showMarkingCreationBox(lat,lng,mapContainer);
       //fryser kartan
       map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
-    }*/
+    }*//*
+
 
       setFormLocation(lat, lng);
     })
@@ -118,7 +121,6 @@ function searchFieldSelect(event, ui) {
   var latitude = ui.item.value.$a;
 
   Gmaps.map.map.setCenter(new google.maps.LatLng(latitude, longitude));
-  Gmaps.map.map.setZoom(30);
 
   $('#latitude').val(latitude);
   $('#longitude').val(longitude);
@@ -191,4 +193,4 @@ window.onready = function() {
       removeMarking(id);
     }
   });
-}
+}*/
