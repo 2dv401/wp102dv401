@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130204132558) do
+ActiveRecord::Schema.define(:version => 20130225124149) do
 
   create_table "follows", :force => true do |t|
     t.string   "follower_type"
@@ -85,6 +85,15 @@ ActiveRecord::Schema.define(:version => 20130204132558) do
   add_index "maps", ["slug"], :name => "index_maps_on_slug"
   add_index "maps", ["user_id"], :name => "index_maps_on_user_id"
 
+  create_table "maps_tags", :id => false, :force => true do |t|
+    t.integer  "map_id",     :null => false
+    t.integer  "tag_id",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "maps_tags", ["map_id", "tag_id"], :name => "index_maps_tags_on_map_id_and_tag_id", :unique => true
+
   create_table "marks", :force => true do |t|
     t.integer  "map_id",                                        :null => false
     t.integer  "location_id",                                   :null => false
@@ -118,8 +127,14 @@ ActiveRecord::Schema.define(:version => 20130204132558) do
     t.integer  "user_id"
   end
 
+  create_table "tags", :force => true do |t|
+    t.string   "word",       :limit => 20, :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
   create_table "users", :force => true do |t|
-    t.string   "email"
+    t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

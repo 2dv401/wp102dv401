@@ -8,6 +8,9 @@ class Map < ActiveRecord::Base
   belongs_to :user
   belongs_to :location
 
+  has_and_belongs_to_many :tags, uniq: true
+  before_destroy { tags.clear }
+
   has_many :marks, dependent: :destroy
   has_many :status_updates, order: "created_at DESC", dependent: :destroy
   has_many :map_comments, order: "created_at DESC", dependent: :destroy
