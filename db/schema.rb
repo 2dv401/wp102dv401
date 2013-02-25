@@ -86,10 +86,8 @@ ActiveRecord::Schema.define(:version => 20130225124149) do
   add_index "maps", ["user_id"], :name => "index_maps_on_user_id"
 
   create_table "maps_tags", :id => false, :force => true do |t|
-    t.integer  "map_id",     :null => false
-    t.integer  "tag_id",     :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "map_id", :null => false
+    t.integer "tag_id", :null => false
   end
 
   add_index "maps_tags", ["map_id", "tag_id"], :name => "index_maps_tags_on_map_id_and_tag_id", :unique => true

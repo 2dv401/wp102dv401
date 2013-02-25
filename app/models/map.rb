@@ -4,12 +4,14 @@ class Map < ActiveRecord::Base
 
   ## Skapa api nyckel
   before_create :generate_api_key
+  before_destroy { tags.clear }
+  # before_save :validate_tags
 
   belongs_to :user
   belongs_to :location
 
   has_and_belongs_to_many :tags, uniq: true
-  before_destroy { tags.clear }
+
 
   has_many :marks, dependent: :destroy
   has_many :status_updates, order: "created_at DESC", dependent: :destroy
@@ -21,15 +23,18 @@ class Map < ActiveRecord::Base
   accepts_nested_attributes_for :location
 
   MAP_TYPES = [ "HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"]
+  MAX_TAG_COUNT = 5
+  MAX_TAG_LENGTH = 20
 
   attr_accessor :longitude, :latitude
-  attr_accessible :name, :description, :private, :zoom, :map_type, :location_attributes
+  attr_accessible :name, :description, :private, :zoom, :map_type, :location_attributes, :tag_list
 
   validates	:name, presence: true, length: { maximum: 50 }
   validates	:description, length: { maximum: 15360 }
-  validates :private, inclusion: {in: [true, false]}
+  validates :private, inclusion: { in: [true, false] }
   validates :map_type, inclusion: MAP_TYPES
   validates :zoom, numericality: { only_integer: true }
+  validate :validate_tags
 
   def follow(user)
     @follower = Follower.new()
@@ -42,6 +47,17 @@ class Map < ActiveRecord::Base
 
   def latitude
     self.location.latitude
+  end
+
+  def tag_list
+    tags.map(&:word).join(', ')
+  end
+
+  def tag_list=(words)
+    self.tags = words.split(',').map do |word|
+                      # Tar bort alla mellanslag
+      Tag.where(word: word.gsub(/\s+/, "")).first_or_initialize
+    end
   end
 
   ## Genererar en API nyckel på alla nya kartor.  - alla nycklar blir unika.
@@ -63,4 +79,17 @@ class Map < ActiveRecord::Base
     self.status_updates.count
   end
 
+  private
+  def validate_tags
+    if self.tags.size > MAX_TAG_COUNT
+      errors.add(:tag_list, I18n.t("maps.max_tag_count_reached", max: MAX_TAG_COUNT))
+    end
+    if self.tags.present?
+      self.tags.each do |tag|
+        if tag.word.length > MAX_TAG_LENGTH
+          errors.add(:tag_list, I18n.t("maps.max_tag_length_reached", max: MAX_TAG_LENGTH))
+        end
+      end
+    end
+  end
 end
