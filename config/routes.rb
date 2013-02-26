@@ -8,6 +8,7 @@ Wp102dv401::Application.routes.draw do
   get "/sekretess" => "pages#privacy", as: :pages_privacy
   get "/hjalp" => "pages#help", as: :pages_help
 
+
   get "/api" => "pages#api", as: :pages_api
 
   ## API routes
@@ -35,37 +36,48 @@ Wp102dv401::Application.routes.draw do
     get "/users/auth/:provider" => "authentications#passthru"
   end
 
+  post "searches/search"
+  post "searches/cloud_search"
+
   scope(path_names: { new: "ny", edit: "redigera" }) do
 
-    resources :home, only: [:index], path: "hem"
+    resources :home, only: [ :index ], path: "hem"
 
-    resources :dashboard, only: [:index], path: "startsida"
+    resources :dashboard, only: [ :index ], path: "startsida"
 
+    # profiles-routes
     resources :profiles, only: [], path: '' do
-      resources :maps, path: "kartor"
-    end
-    resources :profiles, path: "profil"
+      get "show_maps", path: "kartlista"
 
-    resources :maps, path: "kartor" do
+      resources :maps, only: [ :show, :new, :edit ], path: "kartor" do
+        resources :marks, only: [ :create ], path: "skapa-markering"
+      end
+    end
+    resources :profiles, only: [ :index, :show ], path: "profiler"
+
+    resources :maps, only: [ :index, :update, :delete ], path: "kartor" do
       post "toggle"
+
+      # TODO: Man behöver egentligen bara kartan när markeringen skapas (och då behöver man även kartans ägare för att få fram rätt karta!) och inte vid andra tillfällen.
       resources :marks, path: "markeringar"
 
       # tillåter bara att man skapar dessa genom maps. Alla andra routes går direkt
-      resources :status_updates, only: [:create], path: "uppdateringar"
-      resources :map_comments, only: [:create], path: "kommentarer"
+      resources :status_updates, only: [ :create ], path: "skapa-uppdatering"
+      resources :map_comments, only: [ :create ], path: "skapa-kommentar"
     end
 
-    resources :map_comments, path: "kart-kommentarer" do
+    resources :map_comments, only: [ :update, :destroy ], path: "kart-kommentarer" do
       post "toggle_like"
     end
 
-    resources :status_updates, path: "status-uppdateringar" do
+    resources :status_updates, only: [ :update, :destroy ], path: "status-uppdateringar" do
       post "toggle_like"
+
       # Tillåter bara att skapa statuskommentarer genom statusuppdateringen.
-      resources :status_comments, only: [:create], path: "kommentarer"
+      resources :status_comments, only: [ :create ], path: "kommentarer"
     end
 
-    resources :status_comments, path: "status-kommentarer" do
+    resources :status_comments, only: [ :update, :destroy ], path: "status-kommentarer" do
       post "toggle_like"
     end
   end
