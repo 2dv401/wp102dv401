@@ -16,13 +16,18 @@
     <%= f.text_area :description, size: "30x8" %>
 <% end %>
 
+
 <% if @map.errors.messages[:tag_list].present? %>
     <%= f.label :tag_list, "Tagga din karta med sökord! (max 5st)", class: 'error'  %>
-    <%= f.text_field :tag_list, class: 'error'  %>
+    <ul id="myTags">
+</ul>
+    <%= f.hidden_field :tag_list, class: 'error'  %>
     <small class="error"><%= @map.errors.messages[:tag_list].first %></small>
 <% else %>
     <%= f.label :tag_list, "Tagga din karta med sökord! (max 5st)" %>
-    <%= f.text_field :tag_list%>
+    <ul id="myTags">
+</ul>
+    <%= f.hidden_field :tag_list%>
 <% end %>
 
 <div id="map-private">
@@ -30,7 +35,9 @@
   <%= f.radio_button :private, true, { checked: @map.private } %> Synlig enbart för mig och de jag bjuder in <br />
   <%= f.radio_button :private, false, { checked: !@map.private } %> Publik
 </div>
+
 <div class="field">
+
   <%= f.fields_for :location do |location_fields| %>
       <%= location_fields.hidden_field :latitude, value: @map.latitude, id: "latitude" %>
       <%= location_fields.hidden_field :longitude, value: @map.longitude, id: "longitude" %>

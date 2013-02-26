@@ -44,3 +44,15 @@ $(function() {
         });
     };
 });
+
+// Tagit Jquery plugin
+// https://github.com/aehlke/tag-it/blob/master/README.markdown
+$(function() {
+  $("#myTags").tagit({
+    singleField: true,
+    singleFieldNode: $('#map_tag_list'), // Sätter inputfältet
+    caseSensitive: true,
+    allowDuplicates: false,
+    tagLimit: 5 // 'validering'
+  });
+})
