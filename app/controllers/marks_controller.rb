@@ -120,14 +120,14 @@ class MarksController < ApplicationController
             flash[:error] = t :failed_to_update, scope: [:marks]
             display_map(@mark.map)
             render action: :edit }
-          format.json { render json: @mark.errors, status: :unprocessable_entity }
+            format.json { render json: @mark.errors, status: :unprocessable_entity }
+          end
         end
+      else
+        flash[:error] = t :access_denied
+        redirect_to profile_map_path(@map.user.slug, @map.slug)
       end
-    else
-      flash[:error] = t :access_denied
-      redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
-  end
 
   # DELETE /marks/1
   # DELETE /marks/1.json
@@ -156,18 +156,32 @@ class MarksController < ApplicationController
   end
 
   # Sets options for map
-  def display_map(map)
-    @display_map =  {
+    def display_map(map)
+
+      @display_map = {
         "map_options" => {
-            "auto_zoom" => true,
-            "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
-            "zoom" => map.zoom.present? ? map.zoom : 5,
-            "center_latitude" => map.location.latitude.present? ? map.location.latitude : 60,
-            "center_longitude" => map.location.longitude.present? ? map.location.longitude : 15
-        },
-        "markers" => {
-            "data" => map.marks.to_gmaps4rails
+          "auto_zoom" => true,
+          "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
+          "zoom" => map.zoom.present? ? map.zoom : 5
+          },
+          "markers" => {
+            "data" => map.marks.to_gmaps4rails  do |mark, marker|
+            #marker.infowindow render_to_string(:partial => "marks/foobar",  :locals => { :mark => mark}) # Rendera 
+            # en partial i infofönstret
+            
+            # ändra markeringens bild
+            marker.picture({
+              :picture => "http://png-3.findicons.com/files/icons/2360/spirit20/20/marker.png",
+              :width => 20,
+              :height => 20
+            })
+            # Titeln
+            marker.title(mark.name)
+            # Sidebar - inte implementerat
+            #marker.sidebar "i'm the sidebar"
+            # Om man vill lägga till fler fält till markeringen i jsonformat    
+          end
         }
-    }
+      }
+    end
   end
-end

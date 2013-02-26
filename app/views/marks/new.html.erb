@@ -1,19 +1,20 @@
 ﻿<% title "Skapa ny markering på " + @map.name %>
 <div class="row">
   <div class="eight columns">
-    <h1>New mark</h1>
+    <h1>Ny markering</h1>
     <%= render 'form' %>
   </div>
   <div class="four columns">
     <%= gmaps(@display_map) %>
     <%= text_field_tag "locationTextField", nil, placeholder: "Sök startposition" %>
     <%= submit_tag "Där jag är", type: "button", class: "button", id: "geolocate_button" %>
+    <%= submit_tag "Där kartan är nu", type: "button", class: "button", id: "map_center_button" %>
   </div>
 </div>
 <%= link_to 'Avbryt', profile_map_path(@map.user.slug, @map.slug)%>
 
 <% content_for :end_of_body do %>
 
-<%= javascript_include_tag "marks"%>
-
+<%= @map.longitude %>
+<%= @map.latitude %>
 <% end %>

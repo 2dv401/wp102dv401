@@ -170,7 +170,7 @@ class MapsController < ApplicationController
         },
         "markers" => {
           "data" => map.marks.to_gmaps4rails  do |mark, marker|
-            marker.infowindow render_to_string(:partial => "marks/foobar",  :locals => { :mark => mark}) # Rendera 
+            marker.infowindow(render_to_string(:partial => "marks/foobar",  :locals => { :mark => mark})) # Rendera 
             # en partial i infofönstret
             
             # ändra markeringens bild
@@ -180,7 +180,7 @@ class MapsController < ApplicationController
                             :height  => 32
                            })
             # Titeln
-            marker.title   mark.name
+            marker.title(mark.name)
             # Sidebar - inte implementerat
             #marker.sidebar "i'm the sidebar"
             # Om man vill lägga till fler fält till markeringen i jsonformat

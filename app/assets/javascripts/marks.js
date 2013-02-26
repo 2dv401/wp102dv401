@@ -2,18 +2,27 @@
 // // All this logic will automatically be available in application.js.
 // You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $(function() {
-
+  if ($('body').hasClass('marks') == false) {return;};
   // Körs när kartan är genererad
   Gmaps.map.callback = function() {
-    var newMark = new google.maps.Marker({
+    // Referens till kartan
+    window.theMap = this.map;
+
+    // En ny dragbar markering
+    window.newMark = new google.maps.Marker({
       position: new google.maps.LatLng(59, 18),
-      map: this.map,
+      map: theMap,
       options: {
         draggable: true
       }
     });
 
-    var updateLocationFields = function(latitude, longitude) {
+    // Kartan flyttar sig till markeringen
+    Gmaps.map.map.panTo(newMark.getPosition());
+
+    updateLocationFields(newMark.getPosition().lat(), newMark.getPosition().lng());
+
+    function updateLocationFields(latitude, longitude) {
       $('#mark_location_attributes_longitude').val(longitude);
       $('#mark_location_attributes_latitude').val(latitude);
     }
@@ -26,8 +35,7 @@ $(function() {
     google.maps.event.addListener(newMark, 'dragend', function() {
 
       //updateLocations('Dragging...');
-      console.log(this.position.lat());
-
+      theMap.setCenter(new google.maps.LatLng(this.position.lat(), this.position.lng()))
       updateLocationFields(this.position.lat(), this.position.lng());
     });
 
@@ -44,6 +52,10 @@ $(function() {
 
         newMark.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
       });
+    })
+
+    $('#map_center_button').click(function() {
+        newMark.setPosition(theMap.getCenter());
     })
 
 
@@ -88,8 +100,3 @@ $(function() {
     });
   }
 });
-
-
-$(function() {
-  
-})
