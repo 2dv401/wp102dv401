@@ -1,22 +1,27 @@
 <ul class="right">
   <li class="divider show-for-small-and-up"></li>
-  <li class="has-dropdown">
-    <a href="#">
+  <li>
+    <a href="<%= profile_path(current_user.slug) %>">
       <% if current_user.provider? %>
           <img src="<%= current_user.profile_image %>" alt="" class="profile-image-small" />
-          <%= current_user.name%>
       <% else %>
           <%= gravatar_image_tag(current_user.email,
                                  alt: current_user.email,
                                  class: "profile-image-small",
                                  gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
-          <%= current_user.username%>
+
       <% end %>
+      <%= current_user.username%>
     </a>
+  </li>
+  <li class="divider show-for-small-and-up"></li>
+  <li class="has-dropdown">
+    <a href="#"><i class="foundicon-settings"></i> Inställningar</a>
     <ul class="dropdown">
-      <li><%= link_to raw('<i class="foundicon-settings"></i> Inställningar'), edit_user_registration_path %></li>
-      <li><%= link_to raw('<i class="foundicon-location"></i> Mina kartor'), profile_maps_path(current_user.slug) %></li>
+      <li><%= link_to raw('<i class="foundicon-settings"></i> Redigera profil'), edit_user_registration_path %></li>
+      <li><%= link_to raw('<i class="foundicon-edit"></i> Mina kartor'), profile_show_maps_path(current_user.slug) %></li>
       <li><%= link_to raw('<i class="foundicon-lock"></i> Logga ut'), destroy_user_session_path, method: :delete %></li>
     </ul>
   </li>
+
 </ul>

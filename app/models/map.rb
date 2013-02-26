@@ -79,6 +79,10 @@ class Map < ActiveRecord::Base
     self.status_updates.count
   end
 
+  def self.search_for(query)
+    self.where("name like ?", "%#{query}%").all
+  end
+
   private
   def validate_tags
     if self.tags.size > MAX_TAG_COUNT

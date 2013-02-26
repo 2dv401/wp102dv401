@@ -22,9 +22,20 @@
 <body class='<%= controller.controller_name %>'>
 <div class="container">
   <% if user_signed_in?%>
-  <div id="nav-top-container">
-    <%= render "shared/top_nav_bar" %>
-  </div>
+      <div id="nav-top-container">
+        <%= render "shared/top_nav_bar" %>
+      </div>
+      <div class="row">
+        <div class="three columns"></div>
+        <div class="six columns">
+          <%= form_tag searches_search_path, method: :post do %>
+              <div>
+                <%= text_field_tag :query, params[:query], placeholder: "Sök efter personer eller kartor..." %>
+              </div>
+          <% end %>
+        </div>
+        <div class="three columns"></div>
+      </div>
   <% end %>
 
   <%= render "shared/flash_messages" %>

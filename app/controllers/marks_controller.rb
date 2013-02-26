@@ -1,4 +1,6 @@
 class MarksController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /marks
   # GET /marks.json
   def index

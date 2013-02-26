@@ -1,4 +1,5 @@
 class MapCommentsController < ApplicationController
+  before_filter :authenticate_user!
 
   # POST map/:id/map_comments/toggle_like
   def toggle_like
