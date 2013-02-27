@@ -106,10 +106,14 @@ class MapsController < ApplicationController
     end
   end
 
-  # PUT /maps/:slug/edit
+  # PUT /maps/:id/
   def update
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = User.find(params[:profile_id])
+
     # Hämtar rätt karta från användarens samling
-    @map = Map.find(params[:id])
+    @map = @user.maps.find(params[:id])
+
     # Sparar undan sluggen om namn-fältet är tomt
     @slug = @map.slug
 
@@ -140,7 +144,12 @@ class MapsController < ApplicationController
   end
 
   def destroy
-    @map = Map.find(params[:id])
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = User.find(params[:profile_id])
+
+    # Hämtar rätt karta från användarens samling
+    @map = @user.maps.find(params[:id])
+
     @map_name = @map.name
     if current_user == @map.user
       if @map.destroy
