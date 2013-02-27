@@ -13,7 +13,7 @@
       <div class="two columns">
         <p>
           <%= link_to "Ändra", edit_profile_map_path(map.user.slug, map.slug) %> |  
-          <%= link_to "Ta bort", map_path(map.id), :method => :delete, :confirm => "Vill du ta bort kartan?" %>
+          <%= link_to "Ta bort", profile_map_path(map.id), :method => :delete, :confirm => "Vill du ta bort kartan?" %>
         </p>
       </div>
       <div class="two column hide-for-small">

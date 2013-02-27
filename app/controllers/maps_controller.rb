@@ -168,30 +168,31 @@ class MapsController < ApplicationController
   def display_map(map)
 
     @display_map = {
-        "map_options" => {
-            "auto_zoom" => true,
-            "type" => map.map_type,
-            "zoom" => map.zoom,
-            "center_latitude" => map.latitude,
-            "center_longitude" => map.longitude
+        map_options: {
+            auto_zoom: true,
+            type: map.map_type,
+            zoom: map.zoom,
+            center_latitude: map.latitude,
+            center_longitude: map.longitude,
+            raw: "{ scrollwheel: false }"
         },
-        "markers" => {
-          "data" => map.marks.to_gmaps4rails  do |mark, marker|
-            marker.infowindow(render_to_string(:partial => "marks/foobar",  :locals => { :mark => mark})) # Rendera 
+        markers: {
+          data: map.marks.to_gmaps4rails  do |mark, marker|
+            marker.infowindow(render_to_string(partial: "marks/foobar",  locals: { mark: mark})) # Rendera
             # en partial i infofönstret
             
             # ändra markeringens bild
             marker.picture({
-                            :picture => "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Bubble-Chartreuse-icon.png",
-                            :width   => 32,
-                            :height  => 32
+                            picture: "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Bubble-Chartreuse-icon.png",
+                            width: 32,
+                            height: 32
                            })
             # Titeln
             marker.title(mark.name)
             # Sidebar - inte implementerat
             #marker.sidebar "i'm the sidebar"
             # Om man vill lägga till fler fält till markeringen i jsonformat
-            marker.json({ :id => mark.id, :foo => "bar" })
+            marker.json({ id: mark.id, foo: "bar" })
           end
         }
     }

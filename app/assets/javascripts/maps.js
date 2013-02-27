@@ -3,10 +3,11 @@
 // You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(function() {
+    if ($('body').hasClass('maps') == false) {return;};
 
     // Körs när kartan är genererad
     Gmaps.map.callback = function() {
-
+        // TODO: Ta bort alla console.log i filen
         console.log( 'Enter Gmaps.map.callback' );
         console.log(this.map.getMapTypeId());
 
@@ -14,48 +15,36 @@ $(function() {
 
         console.log( map );
 
-        var updateMapCenter = function( center ) {
-            $( '#center-lat' ).val( center.lat() );
-            $( '#center-lng' ).val( center.lng() );
+        var updateMap = function(options) {
+            console.log( 'Dragging to...lat: ' + options.lat+ ', lng: ' +  options.lng );
+            $( '#center-lat' ).val( options.lat );
+            $( '#center-lng' ).val( options.lng );
+            console.log( 'Zooming to...' + options.zoom );
+            $( '#map-zoom' ).val( options.zoom );
+
+
         };
 
-        var updateMapZoom = function( zoom ) {
-            $( '#map-zoom' ).val( zoom );
-        };
-
-        var updateMapType = function( type ) {
+        var updateMapType = function(type) {
+            console.log( 'Change map to...' + type + ' type');
             $( '#map-type' ).val( type.toUpperCase() );
         };
 
-        // Lyssna på att när kartan har flyttats färdigt och uppdaterar då kartformulärets koordinatfält
-        google.maps.event.addListener( map, 'dragend', function() {
+        // Lyssna på att när kartan har ändrats och uppdaterar då kartformulärets koordinatfält
+        google.maps.event.addListener( map, 'idle', function() {
 
             var center = this.getCenter();
 
-            // uppdaterar kartans koordinatfält
-            console.log( 'Dragging to...lat: ' + center.lat()+ ', lng: ' +  center.lng() );
-            updateMapCenter( center );
-
+            // Skapar ett objekt med informationen som ska uppdateras och skickar det till en funktion som uppdaterar informationen i formuläret
+            updateMap({
+                lat: center.lat(),
+                lng: center.lng(),
+                zoom: this.getZoom()
+            });
         });
-
-        // Lyssna på när kartans zoom ändras och uppdatera kartformulärets zoom-fält
-        google.maps.event.addListener( map, 'zoom_changed', function() {
-
-            var zoom = this.getZoom();
-
-            // uppdaterar kartans zoom-fält
-            console.log( 'Zooming to...' + zoom );
-            updateMapZoom( zoom );
-        });
-
-        // Lyssna på när kartans typ ändras och uppdatera kartformulärets karttyp-fält
+        // Lyssna på att när kartans typ ändras och uppdaterar då kartformuläret
         google.maps.event.addListener( map, 'maptypeid_changed', function() {
-
-            var type = this.getMapTypeId();
-
-            // uppdaterar kartans zoom-fält
-            console.log( 'Change map to...' +  type + ' type');
-            updateMapType( type );
+            updateMapType(this.getMapTypeId());
         });
     };
 });
@@ -63,11 +52,11 @@ $(function() {
 // Tagit Jquery plugin
 // https://github.com/aehlke/tag-it/blob/master/README.markdown
 $(function() {
-  $("#myTags").tagit({
-    singleField: true,
-    singleFieldNode: $('#map_tag_list'), // Sätter inputfältet
-    caseSensitive: true,
-    allowDuplicates: false,
-    tagLimit: 5 // 'validering'
-  });
+    $("#myTags").tagit({
+        singleField: true,
+        singleFieldNode: $('#map_tag_list'), // Sätter inputfältet
+        caseSensitive: true,
+        allowDuplicates: false,
+        tagLimit: 5 // 'validering'
+    });
 })

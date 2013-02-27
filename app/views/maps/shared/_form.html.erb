@@ -32,7 +32,7 @@
 
 <div id="map-private">
   <%= f.label :private, "Vem ska få se kartan?" %>
-  <%= f.radio_button :private, true, { checked: @map.private } %> Synlig enbart för mig och de jag bjuder in <br />
+  <%= f.radio_button :private, true, { checked: @map.private } %> Privat <br />
   <%= f.radio_button :private, false, { checked: !@map.private } %> Publik
 </div>
 
