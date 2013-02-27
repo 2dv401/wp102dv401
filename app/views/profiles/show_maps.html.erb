@@ -1,0 +1,8 @@
+<%= title "Mina kartor" %>
+
+<h3>Mina kartor</h3>
+<%= render "maps/shared/my_maps" %>
+
+<% if current_user === @user %>
+    <h4><%= link_to "Ny karta", new_profile_map_path(current_user.slug) %></h4>
+<% end %>
