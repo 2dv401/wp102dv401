@@ -34,7 +34,7 @@ Wp102dv401::Application.routes.draw do
     # Routes for provider authentication
     get "/users/auth/:provider" => "authentications#passthru"
   end
-
+  get "/search" => "maps#search", as: :maps_search
   scope(path_names: { new: "ny", edit: "redigera" }) do
 
     resources :home, only: [:index], path: "hem"
@@ -47,6 +47,8 @@ Wp102dv401::Application.routes.draw do
     resources :profiles, path: "profil"
 
     resources :maps, path: "kartor" do
+  get :autocomplete_map_name, :on => :collection
+
       post "toggle"
       resources :marks, path: "markeringar"
 

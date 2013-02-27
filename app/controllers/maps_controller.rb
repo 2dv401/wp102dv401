@@ -1,12 +1,19 @@
 require File.dirname('') + '/config/environment.rb'
 class MapsController < ApplicationController
+  autocomplete :map, :name, :extra_data => [:description, :user_id]
   before_filter :authenticate_user!
   ## Skippa validering på embeddade kartor.
   skip_before_filter :authenticate_user!, only: ['embed']
 
+  def search
+    @maps= Map.select("id, name AS label, description AS desc").where("name LIKE ?", "#{params[:term]}%")
+    
+    render json: @maps
+  end
   def index
     ## Hämtar alla kartor användaren äger
     @maps = Map.order("created_at ASC").find_all_by_user_id(current_user.id)
+    render json: Tag.all, :only => [:id, :word, :description, :slug, :user_id, :map_views]
   end
 
   def toggle

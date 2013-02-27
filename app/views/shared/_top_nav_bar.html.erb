@@ -6,12 +6,45 @@
     </li>
   </ul>
   <% if user_signed_in?%>
-      <section>
-        <%= render "shared/dropdowns/maps" %>
-        <%= render "shared/dropdowns/main_menu" %>
+  <section>
+    <%= render "shared/dropdowns/maps" %>
+    <%= render "shared/dropdowns/main_menu" %>
+    <ul class="left">
+      <div class="column">
+        <li class="username">
+          <form>
+          <input id="mapSearchInput" style="display:inline" type="text" placeholder="Sök karta" />
+          </form>
+        </li>
+      </div>
+
+        </ul>   
         <% if @map.present? and @map.id.present? and current_user == @map.user %>
-            <%= render "shared/dropdowns/map_settings", map: @map %>
+        <%= render "shared/dropdowns/map_settings", map: @map %>
         <% end %>
       </section>
-  <% end %>
-</nav>
+      <% end %>
+    </nav>
+
+  <script>
+  $(function() {
+    
+    // Autocomplete sök karta
+    $( "#mapSearchInput" ).autocomplete({
+      // Sökväg till maps#search. Söktermen kommer skickas som parameter 'term'
+      source: "<%= maps_search_path() %>",
+      // autocomplete kickar igång efter 2 tecken
+      minLength: 2, 
+      select: function( event, ui ) {
+        console.log(ui)
+        console.log( ui.item ?
+          "Selected: " + ui.item.value + " aka " + ui.item.id :
+          "Nothing selected, input was " + this.value );
+      }
+    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+      return $( "<li>" )
+      .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+      .appendTo( ul );
+    };;
+  });
+</script>
