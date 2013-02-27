@@ -5,10 +5,16 @@ class MapsController < ApplicationController
   ## Skippa validering på embeddade kartor.
   skip_before_filter :authenticate_user!, only: ['embed']
 
-  def search
-    @maps= Map.select("id, name AS label, description AS desc").where("name LIKE ?", "#{params[:term]}%")
-    
-    render json: @maps
+  def search  
+    @maps= Map.select("id, name, description").where("name LIKE ?", "#{params[:term]}%")
+
+    @hash = []
+    @maps.each do |map|
+      puts map
+      @hash << {"label" => map.name, "id" => map.id, "desc" => map.description, "link" => profile_map_path(map.user.slug, map.slug)}
+    end
+
+    render json: @hash
   end
   def index
     ## Hämtar alla kartor användaren äger
@@ -38,6 +44,7 @@ class MapsController < ApplicationController
       render template: 'maps/404', status: 404
       return
     end
+
     #Nya objekt som kan skapas på maps-sidan
     @status_update = StatusUpdate.new
     @status_comment = StatusComment.new
