@@ -36,8 +36,12 @@ Wp102dv401::Application.routes.draw do
     get "/users/auth/:provider" => "authentications#passthru"
   end
 
-  post "searches/search"
-  post "searches/cloud_search"
+  resources :searches, only: [], path: '' do
+    post "search"
+    post "cloud_search"
+    get :autocomplete_map_name, :on => :collection
+
+  end
 
   scope(path_names: { new: "ny", edit: "redigera" }) do
 
@@ -45,17 +49,20 @@ Wp102dv401::Application.routes.draw do
 
     resources :dashboard, only: [ :index ], path: "startsida"
 
-    # profiles-routes
+    # Denna profiles har inga egna routes utan pekar bara på profile_maps_paths
     resources :profiles, only: [], path: '' do
       get "show_maps", path: "kartlista"
 
-      resources :maps, only: [ :show, :new, :edit ], path: "kartor" do
+      resources :maps, except: [ :index ], path: "kartor" do
         resources :marks, only: [ :create ], path: "skapa-markering"
       end
     end
-    resources :profiles, only: [ :index, :show ], path: "profiler"
 
-    resources :maps, only: [ :index, :update, :delete ], path: "kartor" do
+    # profiles-routes
+    resources :profiles, only: [ :index ], path: "profiler"
+    resources :profiles, only: [ :show ], path: "profil"
+
+    resources :maps, only: [ :index ], path: "kartor" do
       post "toggle"
 
       # TODO: Man behöver egentligen bara kartan när markeringen skapas (och då behöver man även kartans ägare för att få fram rätt karta!) och inte vid andra tillfällen.
