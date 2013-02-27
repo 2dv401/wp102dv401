@@ -39,10 +39,11 @@
 <div class="field">
 
   <%= f.fields_for :location do |location_fields| %>
-      <%= location_fields.hidden_field :latitude, value: @map.latitude, id: "latitude" %>
-      <%= location_fields.hidden_field :longitude, value: @map.longitude, id: "longitude" %>
+      <%= location_fields.hidden_field :latitude, value: @map.latitude, id: "center-lat" %>
+      <%= location_fields.hidden_field :longitude, value: @map.longitude, id: "center-lng" %>
   <% end %>
-  <%= f.hidden_field :zoom%>
+  <%= f.hidden_field :zoom, id: "map-zoom" %>
+  <%= f.hidden_field :map_type, id: "map-type" %>
 </div>
 
 <%= submit_tag "Hitta min position", type: "button", class: "small button", id: "geolocate_button" %>

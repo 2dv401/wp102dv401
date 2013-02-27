@@ -59,6 +59,7 @@ class MapsController < ApplicationController
         l.latitude = 60
         l.longitude = 15
       end
+      map.map_type = "ROADMAP"
       map.zoom = 5
     end
     display_map(@map)
@@ -169,10 +170,10 @@ class MapsController < ApplicationController
     @display_map = {
         "map_options" => {
             "auto_zoom" => true,
-            "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
-            "zoom" => map.zoom.present? ? map.zoom : 5,
-            "center_latitude" => map.latitude.present? ? map.latitude : 60,
-            "center_longitude" => map.longitude.present? ? map.longitude : 15
+            "type" => map.map_type,
+            "zoom" => map.zoom,
+            "center_latitude" => map.latitude,
+            "center_longitude" => map.longitude
         },
         "markers" => {
           "data" => map.marks.to_gmaps4rails  do |mark, marker|

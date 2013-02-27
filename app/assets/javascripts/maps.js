@@ -8,18 +8,23 @@ $(function() {
     Gmaps.map.callback = function() {
 
         console.log( 'Enter Gmaps.map.callback' );
+        console.log(this.map.getMapTypeId());
 
         var map = Gmaps.map.map;
 
         console.log( map );
 
         var updateMapCenter = function( center ) {
-            $( '#latitude' ).val( center.lat() );
-            $( '#longitude' ).val( center.lng() );
+            $( '#center-lat' ).val( center.lat() );
+            $( '#center-lng' ).val( center.lng() );
         };
 
         var updateMapZoom = function( zoom ) {
-            $( '#map_zoom' ).val( zoom );
+            $( '#map-zoom' ).val( zoom );
+        };
+
+        var updateMapType = function( type ) {
+            $( '#map-type' ).val( type.toUpperCase() );
         };
 
         // Lyssna på att när kartan har flyttats färdigt och uppdaterar då kartformulärets koordinatfält
@@ -41,6 +46,16 @@ $(function() {
             // uppdaterar kartans zoom-fält
             console.log( 'Zooming to...' + zoom );
             updateMapZoom( zoom );
+        });
+
+        // Lyssna på när kartans typ ändras och uppdatera kartformulärets karttyp-fält
+        google.maps.event.addListener( map, 'maptypeid_changed', function() {
+
+            var type = this.getMapTypeId();
+
+            // uppdaterar kartans zoom-fält
+            console.log( 'Change map to...' +  type + ' type');
+            updateMapType( type );
         });
     };
 });
