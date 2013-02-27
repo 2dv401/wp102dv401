@@ -49,7 +49,7 @@ Wp102dv401::Application.routes.draw do
     resources :profiles, only: [], path: '' do
       get "show_maps", path: "kartlista"
 
-      resources :maps, only: [ :show, :new, :edit ], path: "kartor" do
+      resources :maps, only: [ :show, :new, :edit, :create ], path: "kartor" do
         resources :marks, only: [ :create ], path: "skapa-markering"
       end
     end
