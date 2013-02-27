@@ -168,7 +168,7 @@ class MapsController < ApplicationController
 
     @display_map = {
         "map_options" => {
-            "auto_zoom" => true,
+            "auto_zoom" => false,
             "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
             "zoom" => map.zoom.present? ? map.zoom : 5,
             "center_latitude" => map.latitude.present? ? map.latitude : 60,
