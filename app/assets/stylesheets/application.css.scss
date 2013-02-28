@@ -67,3 +67,15 @@ span.emoticon {
 .fieldCords {
 	display: none;
 }
+
+li.search {
+  form {
+    input[type='text'],
+    input[type='search'] {
+      margin: 0;
+      min-width: 350px;
+      height: 38px !important;
+      font-size: 15px !important;
+    }
+  }
+}
