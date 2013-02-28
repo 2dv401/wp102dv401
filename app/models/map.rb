@@ -49,8 +49,17 @@ class Map < ActiveRecord::Base
     self.location.latitude
   end
 
+  def tag_match_count(words)
+    # Loopa igenom words
+    @intersection = self.tags.map(&:word) & words
+    puts @intersection.size
+    return @intersection.size
+
+    # kontrollera hur många gånger word finns i sina taggar
+    # ++match
+  end
   def tag_list
-    tags.map(&:word).join(', ')
+    self.tags.map(&:word).join(', ')
   end
 
   def tag_list=(words)
@@ -82,6 +91,8 @@ class Map < ActiveRecord::Base
   def self.search_for(query)
     self.where("name like ?", "%#{query}%").all
   end
+
+  
 
   private
   def validate_tags

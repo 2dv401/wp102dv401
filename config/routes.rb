@@ -38,7 +38,7 @@ Wp102dv401::Application.routes.draw do
   get "/search" => "maps#search", as: :maps_search
 
   post "searches/search"
-  post "searches/cloud_search"
+  get "searches/autocomplete"
 
   scope(path_names: { new: "ny", edit: "redigera" }) do
 
@@ -54,9 +54,6 @@ Wp102dv401::Application.routes.draw do
         resources :marks, only: [ :create ], path: "skapa-markering"
       end
     end
-
-    resources :maps, path: "kartor" do
-      get :autocomplete_map_name, :on => :collection
 
     # profiles-routes
     resources :profiles, only: [ :index ], path: "profiler"

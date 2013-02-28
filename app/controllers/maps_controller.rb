@@ -5,20 +5,6 @@ class MapsController < ApplicationController
   ## Skippa validering på embeddade kartor.
   skip_before_filter :authenticate_user!, only: ['embed']
 
-  def search
-
-    @maps= Map.where("name LIKE ?", "#{params[:term]}%")
-    @hash = []
-    @maps.each do |map|
-      @hash << {
-        name: map.name, 
-        tag_list: map.tag_list, 
-        href: profile_map_url(map.user.slug, map.slug)
-      }
-    end
-
-    render json: @hash
-  end
   def index
     ## Hämtar alla kartor användaren äger
     ## TODO: Pil ändra

@@ -31,7 +31,7 @@ $(function() {
     // Autocomplete sök karta
     $( "#mapSearchInput" ).autocomplete({
       // Sökväg till maps#search. Söktermen kommer skickas som parameter 'term'
-      source: "<%= maps_search_path() %>",
+      source: "<%= searches_autocomplete_path() %>",
       // autocomplete kickar igång efter 2 tecken
       minLength: 2, 
       select: function( event, ui ) {
@@ -42,7 +42,7 @@ $(function() {
       }
     }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
       return $( "<li>" )
-      .append( "<a href='" + item.href + "'>" + item.name + "<br>" + item.tag_list + "</a>" )
+      .append( "<a href='" + item.href + "'>" + item.name + "<br>Taggar:" + item.tag_list + "</a>" )
       .appendTo( ul );
     };;
   });
