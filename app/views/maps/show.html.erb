@@ -32,12 +32,17 @@
               Denna karta saknar beskrivning...
           <% end %>
         </p>
-        <% if @map.tag_list.present? %>
-            <div class="map-tags">
-              <span>Kartans taggar: <%= @map.tag_list %></span>
-            </div>
-        <% end %>
       </div>
+      <% if @map.tag_list.present? %>
+          <div class="map-tags">
+            <dl class="sub-nav">
+              <dt>Kartans taggar:</dt>
+              <% @map.tags.each do |t| %>
+                  <dd><%= link_to t.word, search_result_path(t.word) %></dd>
+              <% end %>
+            </dl>
+          </div>
+      <% end %>
       <div class="map-created-at">
         <span>Skapad av <%= link_to @map.user.name || @map.user.username, profile_path(@map.user.slug) %>
           <%= time_ago(@map.created_at) %></span>
@@ -56,14 +61,14 @@
 <div class="row">
   <div class="six columns push-six">
     <% if @map.user == current_user %>
-    <div class="right map-handler">
-      <div class="status-update-form">
-        <%= render "status_updates/shared/form" %>
-      </div>
-      <%= link_to "Lägg till markering", new_map_mark_path(@map) %> |
-      <%= link_to "Redigera kartan", edit_profile_map_path(@map.user.slug, @map.slug) %>
-      <p>Sidvisningar: <%= @map.map_views %></p>
-    </div>
+        <div class="right map-handler">
+          <div class="status-update-form">
+            <%= render "status_updates/shared/form" %>
+          </div>
+          <%= link_to "Lägg till markering", new_map_mark_path(@map) %> |
+          <%= link_to "Redigera kartan", edit_profile_map_path(@map.user.slug, @map.slug) %>
+          <p>Sidvisningar: <%= @map.map_views %></p>
+        </div>
     <% end %>
   </div>
   <div class="six columns pull-six">

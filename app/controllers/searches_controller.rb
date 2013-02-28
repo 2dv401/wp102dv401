@@ -32,6 +32,8 @@ class SearchesController < ApplicationController
   end
 
   def result
+    @result_maps = Tag.find_by_word(params[:query]).maps
+    @result_count = @result_maps.size
 
   end
 end

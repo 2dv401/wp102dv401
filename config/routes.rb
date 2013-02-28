@@ -37,8 +37,9 @@ Wp102dv401::Application.routes.draw do
   end
   get "/search" => "maps#search", as: :maps_search
 
-  post "searches/search"
-  get "searches/autocomplete"
+  get "/searches/search"
+  get "/kartor/resultat/:query" => "searches#result", as: :search_result
+  get "/searches/autocomplete"
 
   scope(path_names: { new: "ny", edit: "redigera" }) do
 
