@@ -1,12 +1,15 @@
 require File.dirname('') + '/config/environment.rb'
 class MapsController < ApplicationController
+  autocomplete :map, :name, :extra_data => [:description, :user_id]
   before_filter :authenticate_user!
   ## Skippa validering på embeddade kartor.
   skip_before_filter :authenticate_user!, only: ['embed']
 
   def index
     ## Hämtar alla kartor användaren äger
+    ## TODO: Pil ändra
     @maps = Map.order("created_at ASC").find_all_by_user_id(current_user.id)
+    render json: Tag.all, :only => [:id, :word, :description, :slug, :user_id, :map_views]
   end
 
   def toggle
@@ -31,6 +34,7 @@ class MapsController < ApplicationController
       render template: 'maps/404', status: 404
       return
     end
+
     #Nya objekt som kan skapas på maps-sidan
     @status_update = StatusUpdate.new
     @status_comment = StatusComment.new

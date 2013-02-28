@@ -17,8 +17,8 @@ Wp102dv401::Application.routes.draw do
 
   # Tell Devise in which controller we will implement Omniauth callbacks
   devise_for :users, controllers: {
-      omniauth_callbacks: "authentications",
-      registrations: "registrations"
+    omniauth_callbacks: "authentications",
+    registrations: "registrations"
   }
 
   devise_scope :user do
@@ -35,9 +35,10 @@ Wp102dv401::Application.routes.draw do
     # Routes for provider authentication
     get "/users/auth/:provider" => "authentications#passthru"
   end
+  get "/search" => "maps#search", as: :maps_search
 
   post "searches/search"
-  post "searches/cloud_search"
+  get "searches/autocomplete"
 
   scope(path_names: { new: "ny", edit: "redigera" }) do
 

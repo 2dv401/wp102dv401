@@ -9,9 +9,9 @@
         <ul class="left">
           <li class="divider"></li>
           <li class="search">
-            <%= form_tag searches_search_path, method: :post do %>
+            <%= form_tag do %>
                 <div>
-                  <%= text_field_tag :query, params[:query], placeholder: "Sök efter personer eller kartor..." %>
+                  <%= text_field_tag "mapSearchInput", "", placeholder: "Sök efter kartor med taggar..." %>
                 </div>
             <% end %>
           </li>
@@ -39,3 +39,25 @@
       </section>
   <% end %>
 </nav>
+
+<script>
+$(function() {
+    // Autocomplete sök karta
+    $( "#mapSearchInput" ).autocomplete({
+      // Sökväg till maps#search. Söktermen kommer skickas som parameter 'term'
+      source: "<%= searches_autocomplete_path() %>",
+      // autocomplete kickar igång efter 2 tecken
+      minLength: 2, 
+      select: function( event, ui ) {
+        console.log(ui)
+        console.log( ui.item ?
+          "Selected: " + ui.item.value + " aka " + ui.item.id :
+          "Nothing selected, input was " + this.value );
+      }
+    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+      return $( "<li>" )
+      .append( "<a href='" + item.href + "'>" + item.name + "<br>Taggar:" + item.tag_list + "</a>" )
+      .appendTo( ul );
+    };;
+  });
+</script>
