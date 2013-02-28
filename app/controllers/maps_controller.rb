@@ -77,6 +77,7 @@ class MapsController < ApplicationController
         l.latitude = 60
         l.longitude = 15
       end
+      map.map_type = "ROADMAP"
       map.zoom = 5
     end
     display_map(@map)
@@ -124,10 +125,14 @@ class MapsController < ApplicationController
     end
   end
 
-  # PUT /maps/:slug/edit
+  # PUT /maps/:id/
   def update
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = User.find(params[:profile_id])
+
     # Hämtar rätt karta från användarens samling
-    @map = Map.find(params[:id])
+    @map = @user.maps.find(params[:id])
+
     # Sparar undan sluggen om namn-fältet är tomt
     @slug = @map.slug
 
@@ -158,7 +163,12 @@ class MapsController < ApplicationController
   end
 
   def destroy
-    @map = Map.find(params[:id])
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = User.find(params[:profile_id])
+
+    # Hämtar rätt karta från användarens samling
+    @map = @user.maps.find(params[:id])
+
     @map_name = @map.name
     if current_user == @map.user
       if @map.destroy
@@ -176,30 +186,31 @@ class MapsController < ApplicationController
   def display_map(map)
 
     @display_map = {
-        "map_options" => {
-            "auto_zoom" => true,
-            "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
-            "zoom" => map.zoom.present? ? map.zoom : 5,
-            "center_latitude" => map.latitude.present? ? map.latitude : 60,
-            "center_longitude" => map.longitude.present? ? map.longitude : 15
+        map_options: {
+            auto_zoom: true,
+            type: map.map_type,
+            zoom: map.zoom,
+            center_latitude: map.latitude,
+            center_longitude: map.longitude,
+            raw: "{ scrollwheel: false }"
         },
-        "markers" => {
-          "data" => map.marks.to_gmaps4rails  do |mark, marker|
-            marker.infowindow(render_to_string(:partial => "marks/foobar",  :locals => { :mark => mark})) # Rendera 
+        markers: {
+          data: map.marks.to_gmaps4rails  do |mark, marker|
+            marker.infowindow(render_to_string(partial: "marks/foobar",  locals: { mark: mark})) # Rendera
             # en partial i infofönstret
             
             # ändra markeringens bild
             marker.picture({
-                            :picture => "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Bubble-Chartreuse-icon.png",
-                            :width   => 32,
-                            :height  => 32
+                            picture: "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Bubble-Chartreuse-icon.png",
+                            width: 32,
+                            height: 32
                            })
             # Titeln
             marker.title(mark.name)
             # Sidebar - inte implementerat
             #marker.sidebar "i'm the sidebar"
             # Om man vill lägga till fler fält till markeringen i jsonformat
-            marker.json({ :id => mark.id, :foo => "bar" })
+            marker.json({ id: mark.id, foo: "bar" })
           end
         }
     }

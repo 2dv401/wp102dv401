@@ -104,6 +104,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.search_for(query)
+    self.where("username like ?", "%#{query}%").all
+  end
+
   def skip_confirmation!
     self.confirmed_at = Time.now
   end
