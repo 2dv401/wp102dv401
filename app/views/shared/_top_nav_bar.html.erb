@@ -9,26 +9,25 @@
   <section>
     <%= render "shared/dropdowns/maps" %>
     <%= render "shared/dropdowns/main_menu" %>
-    <ul class="left">
-      <div class="column">
-        <li class="username">
+    <ul class="">
+      <div class="column" style="">
+        <li class="search">
           <form>
-          <input id="mapSearchInput" style="display:inline" type="text" placeholder="Sök karta" />
+            <input id="mapSearchInput" style="display:inline" type="text" placeholder="Sök karta" />
           </form>
         </li>
       </div>
 
-        </ul>   
-        <% if @map.present? and @map.id.present? and current_user == @map.user %>
-        <%= render "shared/dropdowns/map_settings", map: @map %>
-        <% end %>
-      </section>
-      <% end %>
-    </nav>
+    </ul>   
+    <% if @map.present? and @map.id.present? and current_user == @map.user %>
+    <%= render "shared/dropdowns/map_settings", map: @map %>
+    <% end %>
+  </section>
+  <% end %>
+</nav>
 
-  <script>
-  $(function() {
-    
+<script>
+$(function() {
     // Autocomplete sök karta
     $( "#mapSearchInput" ).autocomplete({
       // Sökväg till maps#search. Söktermen kommer skickas som parameter 'term'
@@ -43,7 +42,7 @@
       }
     }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
       return $( "<li>" )
-      .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+      .append( "<a href='" + item.href + "'>" + item.name + "<br>" + item.tag_list + "</a>" )
       .appendTo( ul );
     };;
   });
