@@ -52,7 +52,19 @@ $(function() {
             updateMapType(this.getMapTypeId());
         });
 
+      $("#map").ajaxComplete(function(event, request, settings) {
+            var id = settings.url.split("/").pop();
+            removeMarking(id);
+          });
 
+          function removeMarking(id){
+            for(var marker in Gmaps.map.markers){
+              if(Gmaps.map.markers[marker].id == id){
+                Gmaps.map.markers[marker].serviceObject.setMap(null)
+              }
+            }
+          }
+          
         $('#geolocate_button').click(function() {
             // Hämtar position
           navigator.geolocation.getCurrentPosition(function(position){
