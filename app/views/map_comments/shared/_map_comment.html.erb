@@ -1,9 +1,12 @@
 <li id="map-comment-<%= comment.id %>" class="map-comment">
+  <p class="map-author">
+    <span class="author"><%= link_to comment.user.name || comment.user.username, profile_path(comment.user.slug) %>
+    <span class="created-at"><%= time_ago(comment.created_at) %></span>
+  </p>
   <p class="map-comment-body">
-    <span class="author"><%= comment.user.name || comment.user.username %>: </span><%= format_text(comment.content) %>
+    <%= format_text(comment.content) %>
   </p>
   <div class="map-comment-footer">
-    <span class="created-at"><%= time_ago(comment.created_at) %></span>
     <div id="map-comment-like-button-<%= comment.id %>">
       <%= render 'map_comments/shared/like_button', comment: comment %>
     </div>

@@ -9,112 +9,226 @@
     %>
 <% end %>
 
-<div class="row">
-  <div class="ten columns">
-    <h1 class="header-name" ><%= @map.name %> </h1>
-  </div>
-  <div class="two columns">
-    <% unless @map.user == current_user %>
-        <%= render 'maps/shared/follow_button'%>
-    <% end %>
-  </div>
-</div>
-
-
-<div class="row">
+<header class="row hide-for-large">
   <div class="twelve columns">
-    <div class="map-info-wrapper">
-      <div class="map-description">
-        <p>
-          <% if @map.description.present? %>
-              <%= simple_format(@map.description) %>
-          <% else %>
-              Denna karta saknar beskrivning...
-          <% end %>
-        </p>
-      </div>
-      <% if @map.tag_list.present? %>
-          <div class="map-tags">
-            <dl class="sub-nav">
-              <dt>Kartans taggar:</dt>
-              <% @map.tags.each do |t| %>
-                  <dd><%= link_to t.word, search_result_path(t.word) %></dd>
+    <p class="show-for-small">
+        <button class='sidebar-button button secondary radius' id="sidebarButton" href="#sidebar">Extra</button>
+     </p>
+  </div>
+</header>
+
+<div class="row" id="page-map">
+   <section role="main">
+   
+      <!-- Header -->
+      <div class="row header-map">
+          <div class="nine columns">
+            <h2 class="header-name"><%= @map.name %></h2>
+          </div>
+          <div class="three columns hide-for-small">
+              <% unless @map.user == current_user %>
+                  <%= render 'maps/shared/follow_button' %>
               <% end %>
-            </dl>
           </div>
-      <% end %>
-      <div class="map-created-at">
-        <span>Skapad av <%= link_to @map.user.name || @map.user.username, profile_path(@map.user.slug) %>
-          <%= time_ago(@map.created_at) %></span>
       </div>
-    </div>
-  </div>
-</div>
+      
+      <div class="row">
+          <div class="twelve columns">
+              <div class="map-info-wrapper">
+                  <div class="map-description">
+                  <p>
+                    <% if @map.description.present? %>
+                      <%= simple_format(@map.description) %>
+                    <% else %>
+                      Denna karta saknar beskrivning.
+                    <% end %>
+                  </p>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      <div class="row">
+        <div class="twelve columns" id="viewMapContainter">
+          <%= gmaps(@display_map) %>
+        </div>
+      </div>
 
-<div class="row">
-  <div class="twelve columns" id="viewMapContainter">
-    <%= gmaps(@display_map) %>
-  </div>
-</div>
-
-
-<div class="row">
-  <div class="six columns push-six">
     <% if @map.user == current_user %>
-        <div class="right map-handler">
-          <div class="status-update-form">
-            <%= render "status_updates/shared/form" %>
-          </div>
-          <%= link_to "Lägg till markering", new_map_mark_path(@map) %> |
-          <%= link_to "Redigera kartan", edit_profile_map_path(@map.user.slug, @map.slug) %>
-          <p>Sidvisningar: <%= @map.map_views %></p>
-        </div>
-    <% end %>
-  </div>
-  <div class="six columns pull-six">
     <div class="row">
-      <div class="map-count three columns">
-        <%= render 'maps/shared/follow_count' %>
-      </div>
-      <div class="map-count five columns middle">
-        <%= render 'maps/shared/status_count' %>
-      </div>
-      <div class="map-count three columns">
-        <%= render 'maps/shared/comment_count' %>
+        <div class="eleven columns">
+            <div class="status-update-form">
+                <%= render 'status_updates/shared/form' %>
+            </div>
+        </div>
+        <div class="one column tip-status hide-for-small">
+          <span class="has-tip tip-right radius" data-witdh="190" title="Skriv en statusuppdatering till din karta">?</span>
+        </div>
+    </div>
+    <% end %>
+    
+    <div class="row show-for-small">
+      <div class="twelve columns">
+        <h5>Kartans taggar</h5>
+        <%= render 'maps/shared/display_tags' %>
       </div>
     </div>
-  </div>
-</div>
-
-
-<div class="row hide-for-small">
-  <% if @map.status_updates.any? %>
-      <div class="six columns">
-        <h2 class="subheader" >Statusuppdateringar</h2>
-        <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
-      </div>
-  <% end %>
-  <div class="six columns">
-    <%= render "map_comments/shared/map_comments", :map => @map %>
-  </div>
-</div>
-
-<div class="row show-for-small">
-  <div class="twelve columns">
+    
+    <div class="row map-count show-for-small">
+        <div class="three columns">
+            <%= render 'maps/shared/follow_count' %>  
+        </div>
+        <div class="three columns mid">
+            <span class="counter"><%= @map.marks.count %></span>
+            <span class="counter-text">markeringar</span>
+        </div>
+        <div class="three columns">
+            <%= render 'maps/shared/status_count' %>  
+        </div>
+    </div> <!-- .map-count -->
+    
     <% if @map.status_updates.any? %>
-        <div id="show-updates">
-          <a href="#" class="secondary button radius show-content">Visa statusuppdateringar</a>
-          <div class="content">
-            <h2 class="subheader">Statusuppdateringar</h2>
-            <%= render "status_updates/shared/status_updates", :updates => @map.status_updates %>
+    <div class="row hide-for-small">
+        <div class="twelve columns">
+            <h3>Statusuppdateringar</h3>
+            <%= render 'status_updates/shared/status_updates', :updates => @map.status_updates %>
+        </div>
+    </div>
+    <% end %>
+    
+    <div class="row hide-for-small">
+        <div class="twelve columns" id="comments">
+            <%= render 'map_comments/shared/map_comments', :map => @map %>
+        </div>
+    </div>
+    
+    <!-- Show for small [comments, status updates] -->
+    <% if @map.status_updates.any? %>
+    <div class="row show-for-small">
+        <div class="twelve columns">
+            <div id="show-updates">
+              <a href="#" class="secondary button radius show-content">Visa statusuppdateringar</a>
+              <div class="content">
+                <h3>Statusuppdateringar</h3>
+                <%= render 'status_updates/shared/status_updates', :updates => @map.status_updates %>
+              </div>
+            </div>
+        </div>
+    </div>
+    <% end %>
+    
+    <div class="row show-for-small">
+        <div class="twelve columns">
+          <div id="show-comments">
+            <a href="#" class="secondary button radius show-content">Visa kommentarer</a>
+            <div class="content">
+              <%= render 'map_comments/shared/map_comments', :map => @map %>
+            </div>
           </div>
         </div>
-    <% end %>
-    <div id="show-comments">
-      <a href="#" class="secondary radius button show-content">Visa kommentarer</a>
-      <div class="content">
-        <%= render "map_comments/shared/map_comments", :map => @map %>
+    </div>  
+  </section> <!-- role[main] -->
+  
+  <!-- Sidebar -->
+  <section id="sidebar" role="complementary">
+  
+      <div class="row map-count hide-for-small">
+          <div class="four columns">
+              <%= render 'maps/shared/follow_count' %>  
+          </div>
+          <div class="four columns">
+              <span class="counter"><%= @map.marks.count %></span>
+              <span class="counter-text">markeringar</span>
+          </div>
+          <div class="four columns">
+              <%= render 'maps/shared/status_count' %>  
+          </div>
+      </div> <!-- .map-count -->
+      
+      <div class="row created-by">
+          <div class="four columns push-eight">
+              <% if @map.user.provider? %>
+              <img src="<%= @map.user.profile_image %>" alt="" class="profile-image-medium" />
+              <% else %>
+                <%= gravatar_image_tag(@map.user.email,
+                             alt: @map.user.email,
+                             class: "profile-image-medium",
+                             gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
+              
+              <% end %>
+              
+          </div>  
+          <div class="eight columns pull-four">
+              <p>Skapad av <%= link_to @map.user.name || @map.user.username, profile_path(@map.user.slug) %></p>  
+          </div> 
       </div>
-    </div>
-  </div>
+      
+      <hr class="divider" />
+      
+      <div class="row">
+        <div class="eight columns centered">
+          <div class="map-meta">
+            <ul class="no-bullet">
+            <li><strong><%= time_ago( @map.created_at ) %></strong></li>
+            <li><a href="#comments" class="aside-comments">Kommentarer (<%= @map.comment_count %>)</a></li>
+            <li>Sidvisningar (<%= @map.map_views %>)</li>
+            </ul>
+          </div>
+       </div>
+      </div>
+      
+      <% unless @map.user == current_user %>
+      <div class="row show-for-small">
+          <div class="eight columns centered">
+            <div class="map-meta">
+              <%= render 'maps/shared/follow_button' %>
+            </div>
+          </div>
+      </div>
+      <% end %>
+      
+      <div class="row hide-for-small">
+        <div class="twelve columns">
+          <h5>Kartans taggar</h5>
+          <%= render 'maps/shared/display_tags' %>
+        </div>
+      </div>
+      
+      <div class="row">
+          <div class="twelve columns">
+              <h5>Markeringar</h5>
+              <% if @map.user == current_user %>
+              <p class="marks"><i class="foundicon-plus"></i> <%= link_to "Lägg till markering", new_map_mark_path(@map) %></p>
+              <% end %>
+              <ul class="no-bullet">
+                 <%= render 'maps/shared/list_marks' %>
+              </ul>  
+          </div>  
+      </div>
+      
+      <div class="row">
+          <div class="twelve columns">
+              <h5>Följare</h5>
+              <% @map.followers(User).each do |f| %>
+                  <% if f.provider? %>
+                    <%= link_to image_tag(f.profile_image, :class => 'profile-image-small'), profile_path( f.slug ) %>
+                  <% else %>
+                    <%= link_to gravatar_image_tag(f.email,
+                               alt: f.email,
+                               class: "profile-image-small",
+                               gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' }), profile_path(f.slug) %>
+                  <% end %>  
+                <% end %>  
+          </div>  
+      </div>    
+  </section> <!-- role[complementary] -->
 </div>
+
+
+
+
+
+
+
+
+

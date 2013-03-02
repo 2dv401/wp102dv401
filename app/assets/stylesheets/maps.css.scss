@@ -6,6 +6,8 @@
 // inlänkade hjälpmedel
 @import "shared/_colors.css.scss";
 
+#page-map { margin-top: 20px; }
+
 .map-handler { padding: 20px 0; }
 
 .map-info-wrapper {
@@ -15,45 +17,106 @@
       word-wrap:break-word;
     }
     
-    margin-bottom: 20px;
-    border-top: 3px solid $blue;
+    margin-top: 5px;
     padding: 15px 0px 7px 0px;
 
   }
-  .map-created-at {
-    color: $light-gray;
+}
+
+.row.header-map {
+  margin: 0 auto;
+  width: 100%;
+  border-bottom: 4px solid $blue;
+  padding-bottom: 5px;
+}
+
+.header-name {
+  margin-left: -10px;
+}
+
+#follow-button {
+  margin: 20px 0px 5px 0px;
+}
+
+#follow-button a{ width: 96%; }
+
+.tip-status {
+   margin-top: 8px;
+ }
+
+#comments { margin-top: 25px; }
+
+.map-tags {
+  a { color: #fff;}
+  dd {
+    display: inline;
   }
 }
 
-// Styles for counters
-#follow-button {
-  margin-top: 20px;
+// Sidebar
+
+#sidebar {
+  i {
+    font-size: 8px;
+    color: #333;
+  }
+
+  .twelve.columns {
+    margin-bottom: 20px;
+  }
+
+  hr {
+    width: 90%;
+    margin: 10px auto;
+    border-style: dotted;
+  }
+
+  img.profile-image-medium {
+    float: right;
+  }
+
+}
+
+.map-meta {
+  margin-top: 10px;
+  ul {
+    li {
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.row.created-by {
+  margin-top: 25px;
+  margin-bottom: 16px;
+
+  p {
+    margin-top: 15px;
+  }
 }
 
 .map-count {
-  
-  margin: 10px 5px;
-  text-align: center;
-  padding: 10px 5px;
-  font-size: 12px;
-  
-  .map-followers {
+  padding: 5px 0px 17px 0px;
+  border-bottom: 4px solid $black;
 
-  }
   span {
-    padding: 5px;
+    text-align: center;
+    padding: 5px 0px;
     display: block;
   }
+
   .counter {
-    font-size: 19px;
+    font-size: 20px;
     font-weight: bold;
   }
+
+  .counter-text {
+    font-size: 11px;
+  } 
 }
 
-.map-count.middle {
-  border-left: 1px solid $light-gray;
-  border-right: 1px solid $light-gray;
-}
 
 // Page: Mina kartor
 #my-maps {
@@ -67,7 +130,7 @@
 // Page: show map
 .row {
   #viewMapContainter {
-    margin: 30px 0px 20px 0px;
+    margin: 10px 0px 20px 0px;
   }
 }
 
@@ -105,64 +168,61 @@
     }
   }
   
-  .map-count.middle {
-    padding: 15px 0px;
-    border: {
-      style: solid;
-      top: {
-        width: 1px;
-        color: $light-gray;
+  .row.map-count {
+  
+      margin-top: 20px;
+      margin-left: 8%;
+      border-bottom: 0;
+      
+      .three.columns {
+        float: left;
+        margin-right: 30px;
       }
-      bottom: {
-        width: 1px;
-        color: $light-gray;
+      
+      .mid {
+        padding: 0px 25px;
+        border-left: 1px dotted $light-gray;
+        border-right: 1px dotted $light-gray;
       }
-      left: {
-        width: 0px;
-      }
-      right: {
-        width: 0px;
-      }
+  
+    span {
+      text-align: center;
+      padding: 5px 0px;
+      display: block;
+    }
+  
+    .counter {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  
+    .counter-text {
+      font-size: 11px;
+    } 
+  }
+
+  // Sidebar on mobile
+  #sidebar {
+    .twelve.columns {
+      margin-left: 40px;
+    }
+    img.profile-image-medium {
+      float: none;
+      height: 120px;
+      width: 120px;
     }
   }
   
-  .map-info-wrapper {
-    .map-description {
-      border-top: 0px;
-    }
-  }
-  
-  #follow-button {
-    margin-bottom: 20px;
-  }
-  .map-count.middle {
-    padding: 15px 0px;
-    border: {
-      style: solid;
-      top: {
-        width: 1px;
-        color: $light-gray;
-      }
-      bottom: {
-        width: 1px;
-        color: $light-gray;
-      }
-      left: {
-        width: 0px;
-      }
-      right: {
-        width: 0px;
-      }
-    }
-  }
-  
-  .map-info-wrapper {
-    .map-description {
-      border-top: 0px;
-    }
+  .created-by {
+    text-align: center;
   }
   
   #follow-button {
+    margin-left: 15%;
     margin-bottom: 20px;
+    
+    a {
+      width: 85%;
+    }
   }
 }

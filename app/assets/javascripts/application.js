@@ -17,3 +17,4 @@
 //= require jquery-ui
 //= require autocomplete-rails
 //= require tag-it
+//= jquery.offcanvas

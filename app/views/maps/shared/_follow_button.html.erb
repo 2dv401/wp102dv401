@@ -1,7 +1,7 @@
 <div id="follow-button">
 <% if current_user.follows?(@map) %>
-    <%= link_to 'Sluta följ', map_toggle_path(@map.id), { :method => :post,:remote => true, :class => 'button radius'} %>
+    <%= link_to 'Sluta följ', map_toggle_path(@map.id), { :method => :post,:remote => true, :class => 'alert small button radius'} %>
   <% else %> 
-    <%= link_to 'Följ', map_toggle_path(@map.id), { :method => :post,:remote => true, :class => 'button radius'} %>
+    <%= link_to 'Följ', map_toggle_path(@map.id), { :method => :post,:remote => true, :class => 'small button radius'} %>
 <% end %>
 </div>

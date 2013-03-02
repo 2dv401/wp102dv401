@@ -16,6 +16,12 @@
     color: $gray;
     font-weight: bold;
     font-size: small;
+    float: right;
+  }
+  
+  .status-update-content {
+    clear: both;
+    margin: 20px 0px 10px 0px; 
   }
   .status-update-content,
   .status-comment-body {
@@ -39,6 +45,12 @@
       margin-top: .5em;
       padding-top: .5em;
     }
+    
+    .status-update-header {
+      padding: 10px 0px;
+      
+      h3 { float: left; }
+    }
   }
 
   .status-comment-wrapper {
@@ -46,7 +58,7 @@
 
     .status-comments {
       padding: 0.5em;
-      background-color: $light-pink;
+      background-color: $light-blue;
       border: 1px solid $light-light-gray;
       @include rounded(.3em);
       @include box-shadow(0, .1em, .3em, 0, $light-light-gray, inset);

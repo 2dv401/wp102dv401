@@ -21,7 +21,7 @@ marks .map_container {
 
 .gmaps4rails_map {
   width: inherit;
-  height: 400px;
+  height: 550px;
 }
 
 .bing_map {
@@ -31,4 +31,11 @@ marks .map_container {
    width: 400px;
    height: 400px;
    border:#555555 2px solid;
+}
+
+@media only screen and (max-width: 767px) {
+   .gmaps4rails_map {
+      width: inherit;
+      height: 370px;
+    } 
 }

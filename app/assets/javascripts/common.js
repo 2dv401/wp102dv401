@@ -5,4 +5,8 @@ $(function() {
 		$(".content", parent).toggle(400);
 		return false;
 	});
+	
+	$('#sidebarButton').click( function() {
+		$('body').toggleClass('active');
+	});
 });

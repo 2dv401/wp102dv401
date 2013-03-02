@@ -1,7 +1,7 @@
 <% if current_user.likes?(comment) %>
-    <%= link_to '| Sluta gilla ', map_comment_toggle_like_path(comment), method: :post, remote: true %>
+    <%= link_to 'Sluta gilla ', map_comment_toggle_like_path(comment), method: :post, remote: true %>
 <% else %>
-    <%= link_to '| Gilla ', map_comment_toggle_like_path(comment), method: :post, remote: true %>
+    <%= link_to 'Gilla ', map_comment_toggle_like_path(comment), method: :post, remote: true %>
 <% end %>
 <% if current_user == comment.user %>
     <%= link_to '| Ta bort ', map_comment_path(comment), confirm: 'Vill du ta bort Kommentaren?', method: :delete, remote: true %>
