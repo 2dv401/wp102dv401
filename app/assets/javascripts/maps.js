@@ -115,6 +115,23 @@ $(function() {
       }
     });
 
+    //Centrerar markeringen på kartan
+    $(".mark-link").click(function(event) {
+      var markId = $(this).attr("data-markid");
+      
+      for(var marker in Gmaps.map.markers){
+      if(Gmaps.map.markers[marker].id == markId){
+      
+         var latitude = Gmaps.map.markers[marker].serviceObject.position.$a;
+         var longitude = Gmaps.map.markers[marker].serviceObject.position.ab;
+         
+         Gmaps.map.map.setCenter(new google.maps.LatLng(latitude, longitude));
+        }
+      }
+      
+      
+    });
+    
     };
 });
 
