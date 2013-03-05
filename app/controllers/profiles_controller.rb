@@ -6,7 +6,12 @@ class ProfilesController < ApplicationController
 
   def show
     @user = User.find_by_slug(params[:id])
-    @maps = @user.maps
+    
+    if @user.nil?
+      redirect_to root_path
+    else
+      @maps = @user.maps
+    end
   end
 
   def show_maps
