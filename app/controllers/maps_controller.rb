@@ -26,7 +26,9 @@ class MapsController < ApplicationController
     begin
       # Hämtar användaren som äger kartan för att filtrera
       @user = User.find(params[:profile_id])
-
+  
+      @current_user = current_user
+      
       # Hämtar rätt karta från användarens samling
       @map = @user.maps.find(params[:id])
 
