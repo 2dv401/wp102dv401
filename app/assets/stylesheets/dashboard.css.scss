@@ -2,4 +2,50 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "shared/_colors.css.scss";
+@import "shared/_mixins.css.scss";
+
 .foo { color: blue;}
+
+.status-header {
+	border-bottom: 4px solid $dark-blue;
+	padding: 5px 0px 12px 0px;
+	margin-bottom: 25px;
+}
+
+.image-container {
+	margin-top: 20px;
+	img {
+		border: 6px solid #fff;
+		@include box-shadow(0, .1em, .1em, 0,  $light-gray);
+	}
+}
+
+#dashboard-aside {
+
+	i {
+		font-size: 9px;
+		color: $gray;
+	}
+
+	h4 {
+		font-size: 16px;
+		margin-top: 20px;
+	}
+
+	.edit-profile-link {
+		margin-top: 10px;
+
+		a, a:visited {
+			color: #222;
+			text-decoration: underline;
+		}	
+		a:hover { color: $dark-blue; }
+	}
+
+	hr {
+	  width: 98%;
+	  margin: 10px 0;
+	  border-style: dotted;
+	}
+}
