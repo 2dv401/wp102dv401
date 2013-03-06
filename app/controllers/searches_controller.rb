@@ -4,7 +4,7 @@ class SearchesController < ApplicationController
   def autocomplete
 
     # bygger ihop en array med taggarna man sökt på, splittat på kommatecken
-    @terms = params[:term.downcase].gsub(" ","").split(",")
+    @terms = params[:term].downcase.gsub(" ","").split(",")
 
     # Hämtar kartorna som matchar taggarna och tar bort dubletter
     @maps_from_tag_search = Tag.find_all_by_word(@terms, :include => [:maps]).collect(&:maps).flatten.uniq
