@@ -30,8 +30,8 @@ Wp102dv401::Application.routes.draw do
     get "/nytt-losenord" => "devise/passwords#new", as: :new_user_password
     # Registration routes
     get "/registrering" => "registrations#new", as: :new_user_registration
-    post "/registrering" => "registrations#create", as: :user_registration
     get "/redigera-profil" => "registrations#edit", as: :edit_user_registration
+
     # Routes for provider authentication
     get "/users/auth/:provider" => "authentications#passthru"
   end

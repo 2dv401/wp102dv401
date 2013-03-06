@@ -1,4 +1,12 @@
 <section id="my-maps">
+  <% if current_user === @user %>
+      <div class="row">
+        <div class="twelve columns">
+          <%= link_to "Ny karta", new_profile_map_path(current_user.slug), class: "button" %>
+        </div>
+      </div>
+  <% end %>
+
   <% @maps.each do |map| %>
     <div class="row">
       <div class="three columns">
