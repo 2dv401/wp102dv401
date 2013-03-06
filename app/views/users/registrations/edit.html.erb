@@ -1,38 +1,87 @@
-<h2>Redigera användare</h2>
 
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-    <%= devise_error_messages! %>
-    <div class="username">
-        <%= f.label :username, "Användarnamn" %>
-        <%= f.text_field :username, autocomplete: "off", disabled: true %>
+<div class="row">
+  <div class="twelve columns">
+    <fieldset class="profile-fieldset">
+      <legend>Redigera användare</legend>
+      <div class="row">
+        <div class="twelve columns">
+          <div class="profile-info">
+            <div class="image-container">
+              <% if @user.provider? %>
+                  <img src="<%= @user.profile_image %>" alt="" class="profile-image-large" />
+              <% else %>
+                  <%= gravatar_image_tag(@user.email,
+                                         alt: @user.email,
+                                         class: "profile-image-large",
+                                         gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
+
+              <% end %>
+              <dl>
+                <dt>Användarnamn:</dt>
+                <dd><%= @user.username %></dd>
+                <dt>Epost:</dt>
+                <dd><%= @user.email %></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns">
+          <%= form_for(resource, as: resource_name, url: user_registration_path, html: { method: :put }) do |f| %>
+              <%= devise_error_messages! %>
+              <fieldset>
+                <legend>Ändra användarnamn</legend>
+                <div class="row">
+                  <div class="four mobile-one columns">
+                    <%= f.label :username, "Nuvarande:", class: "right inline" %>
+                  </div>
+                  <div class="eight mobile-three columns">
+                    <%= f.text_field :username, class: "ten"  %>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="profile-fieldset">
+                <legend>Ändra lösenord</legend>
+                <div class="row">
+                  <div class="four mobile-one columns">
+                    <%= f.label :password, "Nytt:", class: "right inline" %>
+                  </div>
+                  <div class="eight mobile-three columns">
+                    <%= f.password_field :password, autocomplete: "off", class: "ten" %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="four mobile-one columns">
+                    <%= f.label :password_confirmation, "Bekräfta:", class: "right inline"  %>
+                  </div>
+                  <div class="eight mobile-three columns">
+                    <%= f.password_field :password_confirmation, class: "ten"  %>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="profile-fieldset">
+                <legend>Lösenord krävs för ändring:</legend>
+                <div class="row">
+                  <div class="four mobile-one columns">
+                    <%= f.label :current_password, "Nuvarande:", class: "right inline" %>
+                  </div>
+                  <div class="eight mobile-three columns">
+                    <%= f.password_field :current_password, class: "ten"  %>
+                  </div>
+                </div>
+              </fieldset>
+              <div><%= f.submit "Spara", class: "button"  %></div>
+          <% end %>
+        </div>
+      </div>
+    </fieldset>
+    <div class="row">
+      <div class="twelve columns">
+        <%= link_to "Avbryt", root_path %>
+        <%= link_to "Avsluta konto", user_registration_path, data: { confirm: "Är du säker? \n\nDet går inte att ångra när kontot väl är avslutat." }, method: :delete, class: "profile-delete" %>
+      </div>
     </div>
-
-    <div class="email">
-        <%= f.label :email, "Epost" %>
-        <%= f.email_field :email, autocomplete: "off", disabled: true %>
-    </div>
-
-    <div class="password">
-        <%= f.label :password, "Nytt lösenord" %>
-        <%= f.password_field :password, autocomplete: "off" %>
-    </div>
-
-    <div class="password">
-        <%= f.label :password_confirmation, "Bekräfta lösenord" %>
-      <%= f.password_field :password_confirmation %>
-    </div>
-
-    <div class="password">
-        <%= f.label :current_password, "Nuvarande lösenord" %>
-        <%= f.password_field :current_password %>
-    </div>
-
-    <div><%= f.submit "Uppdatera" %></div>
-<% end %>
-
-<h3>Radera konto</h3>
-
-<p><%= link_to "Ta bort konto", registration_path(resource_name), data: { confirm: "Är du säker?" }, method: :delete %>.</p>
-
-<%= link_to "Tillbaka", :back %>
+  </div>
+</div>

@@ -1,23 +1,21 @@
 <%= title (@user.name ? @user.name : @user.username) %>
 <div class="row">
   <div class="six columns">
-    <% if @user.provider? %>
-        <img src="<%= @user.profile_image %>" alt="" class="profile-image-large" />
-    <% else %>
-        <%= gravatar_image_tag(@user.email,
-                               alt: @user.email,
-                               class: "profile-image-large",
-                               gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
+    <div class="image-container">
+      <% if @user.provider? %>
+          <img src="<%= @user.profile_image %>" alt="" class="profile-image-large" />
+      <% else %>
+          <%= gravatar_image_tag(@user.email,
+                                 alt: @user.email,
+                                 class: "profile-image-large",
+                                 gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
 
-    <% end %>
-    <h2><%= @user.username %></h2>
-    <p><%= @user.name %></p>
-  </div>
-  <div class="six columns">
-
+      <% end %>
+    </div>
+    <h4><%= @user.name || @user.username %></h4>
   </div>
 </div>
 <% if current_user === @user %>
-    <h4><%= link_to "Ny karta", new_profile_map_path(current_user.slug) %></h4>
+    <p><%= link_to 'Redigera profil', edit_user_registration_path %></p>
 <% end %>
 <%= render "maps/shared/my_maps" %>

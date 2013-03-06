@@ -1,32 +1,44 @@
 <div class="row">
-  <div class="seven columns">
-    <h2>Registrering</h2>
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <div class="eight columns">
+    <%= form_for(resource, as: resource_name, url: user_registration_path) do |f| %>
         <%= devise_error_messages! %>
-
-        <div class="username">
-          <%# f.label :username, "Användarnamn" %>
-          <%= f.text_field :username, placeholder: "Användarnamn" %>
-        </div>
-
-        <div class="email">
-          <%# f.label :email, "Epost" %>
-          <%= f.text_field :email, placeholder: "Epost" %>
-        </div>
-
-        <div class="password">
-          <%# f.label :password, "Lösenord" %>
-          <%= f.password_field :password, placeholder: "Lösenord" %>
-        </div>
-
-        <div class="password">
-          <%# f.label :password_confirmation, "Bekräfta lösenord" %>
-          <%= f.password_field :password_confirmation, placeholder: "Bekräfta lösenord" %>
-        </div>
-
+        <fieldset class="profile-fieldset">
+          <legend>Registrear dig</legend>
+          <div class="row">
+            <div class="four mobile-two columns">
+              <%= f.label :username, "Användarnamn:", class: "right inline" %>
+            </div>
+            <div class="eight mobile-two columns">
+              <%= f.text_field :username, placeholder: "Användarnamn", class: "ten" %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="four mobile-two columns">
+              <%= f.label :email, "Epost:", class: "right inline" %>
+            </div>
+            <div class="eight mobile-two columns">
+              <%= f.text_field :email, placeholder: "Epost", class: "ten" %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="four mobile-two columns">
+              <%= f.label :password, "Lösenord:", class: "right inline" %>
+            </div>
+            <div class="eight mobile-two columns">
+              <%= f.password_field :password, placeholder: "Lösenord", class: "ten" %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="four mobile-two columns">
+              <%= f.label :password_confirmation, "Bekräfta lösenord:", class: "right inline" %>
+            </div>
+            <div class="eight mobile-two columns">
+              <%= f.password_field :password_confirmation, placeholder: "Bekräfta lösenord", class: "ten" %>
+            </div>
+          </div>
+        </fieldset>
         <div><%= f.submit facebook? ? "Koppla samman kontona" : "Registrera", class: "button" %></div>
     <% end %>
-
     <%= link_to "Tillbaka", root_path %>
   </div>
 </div>
