@@ -74,7 +74,7 @@ class Map < ActiveRecord::Base
     begin
       @api_key = SecureRandom.urlsafe_base64
     end while Map.where(api_key: @api_key).exists?
-    self.api_key = api_key
+    self.api_key = @api_key
   end
   def comment_count
     self.map_comments.count
