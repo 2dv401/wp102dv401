@@ -59,7 +59,7 @@ Wp102dv401::Application.routes.draw do
       resources :maps, except: [ :index ], path: "kartor" do
 
         # För url:ens skull går "new"- och "edit"- routes genom profile_maps
-        resources :marks, only: [ :new, :edit ], path: "markeringar"
+        resources :marks, only: [ :new, :edit, :create ], path: "markeringar"
       end
     end
 
