@@ -1,7 +1,7 @@
 <%= form_for([@map, @mark]) do |f| %>
     <% if @mark.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@mark.errors.count, "error") %> prohibited this mark from being saved:</h2>
+          <h2><%= @mark.errors.count %> uppstod:</h2>
 
           <ul>
             <% @mark.errors.full_messages.each do |msg| %>

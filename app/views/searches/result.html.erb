@@ -1,0 +1,11 @@
+<p>Sökningen gav <%= @result_count %> resultat</p>
+<h3 class="subheader">Kartor</h3>
+<% if @result_maps.present?%>
+    <ul>
+      <% @result_maps.each do |map| %>
+          <li><%= link_to map.name, profile_map_path(map.user.slug, map.slug) %></li>
+      <% end %>
+    </ul>
+<% else %>
+    <p>Inga kartor hittades med det namnet.</p>
+<% end %>

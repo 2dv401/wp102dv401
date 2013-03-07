@@ -2,84 +2,67 @@
 <% title "Välkommen!" %>
 
 <div class="row">
-  <div class="twelve columns">
-    <h2>Kartor - Översikt</h2>
-  </div>
-</div>
-<div class="row">
-  <div class="three columns">
-    <h3>Alla användare</h3>
-    <% (@User).each do |u| %>
-        <p>E-Post: <%= u.email %></p>
-        <p>Användarnamn: <%= link_to u.username, profile_path(u.slug)%></p>
-        <hr />
-    <% end %>
 
-    <h4>Nya kartor idag</h4>
-    <ul>
-      <% (@new_maps).each do |m| %>
-          <li>
-            <%= link_to m.name, profile_map_path(m.user.slug, m.slug)%>
-            <% if m.private %>
-                <span>(Privat)</span>
-            <% end %>
-          </li>
-      <% end %>
-    </ul>
-
-    <h4>Alla kartor</h4>
-    <ul>
-      <%
-         ## Spruta ut alla kartor, tillfälligt i DEV-läge
-         (@all_maps).each do |m|
-      %>
-          <li>
-            <%= link_to m.name, profile_map_path(m.user.slug, m.slug)%>
-            <% if m.private %>
-                <span>(Privat)</span>
-            <% end %>
-          </li>
-      <% end %>
-    </ul>
-  </div>
-
-  <div class="six columns">
-    <h2 class="subheader" >Statusuppdateringar</h2>
+  <section class="three columns" id="dashboard-aside">
+    <div class="row">
+      <div class="twelve columns">
+        <div class="image-container">
+          <% if current_user.provider? %>
+          <%= link_to image_tag( current_user.profile_image, :class => 'profile-image-large' ), profile_path( current_user.slug ) %>
+          <% else %>
+            <%= link_to gravatar_image_tag(current_user.email,
+                    alt: current_user.email,
+                    class: 'profile-image-large',
+                    gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png', size: 150 }), 
+            profile_path(current_user.slug) %>     
+          <% end %>
+          <h4><%= current_user.name || current_user.username %></h4>
+        </div>
+        <p class="edit-profile-link"><%= link_to 'Redigera profil', edit_user_registration_path %></p>
+      </div>
+    </div>
+    
+    <hr class="divider" />
+    
+    <div class="row">
+      <div class="twelve columns">
+        <h3>Kartor</h3>
+        <p><%= link_to raw('<i class="foundicon-plus"></i> Lägg till karta'), new_profile_map_path(current_user.slug) %></p>
+        
+        <h4>Mina kartor (<%= @my_maps.count %>)</h4>
+        <ul class="no-bullet">
+          <% @my_maps.each do |map| %>
+              <li><%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
+                <% if map.private %>
+                    <span>(Privat)</span>
+                <% end %>
+              </li>
+          <% end %>
+        </ul>
+        
+        <h4>Kartor jag följer (<%= followed_maps.count %>)</h4>
+        <ul class="no-bullet">
+          <% followed_maps.each do |map| %>
+              <li>
+                <%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
+                <% if map.private %>
+                    <span>(Privat)</span>
+                <% end %>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </section>
+  
+  <section class="eight columns offset-by-one">
+    <h3 class="status-header" >Statusuppdateringar</h3>
     <% followed_maps.each do |map| %>
         <%= render "status_updates/shared/status_updates", updates: map.status_updates %>
     <% end %>
-  </div>
+  </section>
 
-  <div class="three columns">
-    <h4>Mina kartor</h4>
-    <ul>
-      <% @my_maps.each do |map| %>
-          <li><%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
-            <% if map.private %>
-                <span>(Privat)</span>
-            <% end %>
-          </li>
-      <% end %>
-    </ul>
-
-    <h4>Kartor jag följer</h4>
-    <ul>
-      <% followed_maps.each do |map| %>
-          <li>
-            <%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
-            <% if map.private %>
-                <span>(Privat)</span>
-            <% end %>
-          </li>
-      <% end %>
-    </ul>
-  </div>
-</div>
 </div>
 
-<div class="row">
-  <div class="four columns">
-    <h4>Populära kartor</h4>
-  </div>
-</div>
+
 

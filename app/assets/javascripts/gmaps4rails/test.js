@@ -1,3 +1,4 @@
+/*
 var temporaryMarker = null;
 
 function click() {
@@ -23,7 +24,8 @@ function activateLocationAdd() {
       var latLng = event.latLng;
       var lat = latLng.lat();
       var lng = latLng.lng();
-      /*if($("#markingInfo").length == 0){
+      */
+/*if($("#markingInfo").length == 0){
       var marker = new google.maps.Marker({ map: map });
       temporaryMarker = marker;
       marker.setPosition(latLng);
@@ -32,7 +34,8 @@ function activateLocationAdd() {
       showMarkingCreationBox(lat,lng,mapContainer);
       //fryser kartan
       map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
-    }*/
+    }*//*
+
 
       setFormLocation(lat, lng);
     })
@@ -55,6 +58,7 @@ function showMarkingCreationBox(latitude, longitude, container) {
   if($.isNumeric(b[2])) {
     id = b[2].toString();
   }
+  
   Gmaps.map.map.setCenter(new google.maps.LatLng(latitude, longitude));
   var markingBox = $('<div id="markingInfo"><form name="marking_form" method="post" action="/locations" id="marking_form"><input name="authenticity_token" type="hidden" value="' + AUTH_TOKEN + '"/><span style="background-color:white; color: black">Platsnamn:</span><input type="text" name="titel" id="titel" /><span style="background-color:white; color: black">Beskrivning:</span><textarea name="description" id="desc"></textarea><input type="submit" id="submitMarking" value="Skapa"/><input name="cancelButton" id="cancelButton" type="button" value="Avbryt" /><input id="longitude" name="longitude" type="hidden" value="' + longitude + '" /><input id="latitude" name="latitude" type="hidden" value="' + latitude + '" /><input id="id" name="id" type="hidden" value="' + id + '" /></form></div>');
   markingBox.css({
@@ -118,7 +122,6 @@ function searchFieldSelect(event, ui) {
   var latitude = ui.item.value.$a;
 
   Gmaps.map.map.setCenter(new google.maps.LatLng(latitude, longitude));
-  Gmaps.map.map.setZoom(30);
 
   $('#latitude').val(latitude);
   $('#longitude').val(longitude);
@@ -191,4 +194,4 @@ window.onready = function() {
       removeMarking(id);
     }
   });
-}
+}*/

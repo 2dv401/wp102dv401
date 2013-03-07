@@ -1,3 +1,26 @@
 // Place all the styles related to the registration controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "shared/_colors.css.scss";
+
+.profile-info {
+  img, dl {
+    float: left;
+  }
+  dl {
+    margin-left: 10px;
+    dt {
+      color: $light-gray;
+      font-size: medium;
+      font-weight: bold;
+    }
+    dd {
+      margin-bottom: 10px;
+      color: $light-gray;
+    }
+  }
+}
+a.profile-delete {
+  float: right;
+}

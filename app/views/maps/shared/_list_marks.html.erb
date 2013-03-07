@@ -1,0 +1,7 @@
+<% if ( @map.marks.present? ) %>
+	<% ( @map.marks ).each do |mark| %>
+	  <li><a data-markid="<%= mark.id %>" class="mark-link" href="#"><%= mark.name %></a></li>
+	<% end %>
+<% else %>
+	<li>Inga markeringar än.</li>
+<% end %>

@@ -1,17 +1,63 @@
-<nav class="top-bar fixed">
+<nav class="top-bar ">
   <ul>
     <li class="name"><h1><%= link_to "Kartr.se", root_url %></h1></li>
-    <li class="toggle-topbar">
-      <a href="#"></a>
-    </li>
+    <li class="toggle-topbar"><a href="#"></a></li>
   </ul>
   <% if user_signed_in?%>
       <section>
         <%= render "shared/dropdowns/maps" %>
+        <ul class="left">
+          <li class="divider"></li>
+          <li class="search">
+            <%= form_tag do %>
+                <div>
+                  <%= text_field_tag "mapSearchInput", "", placeholder: "Sök efter kartor med taggar..." %>
+                </div>
+            <% end %>
+          </li>
+        </ul>
         <%= render "shared/dropdowns/main_menu" %>
+        <ul class="right">
+          <li class="divider"></li>
+          <li>
+            <a href="<%= profile_path(current_user.slug) %>">
+              <% if current_user.provider? %>
+                  <img src="<%= current_user.profile_image %>" alt="" class="profile-image-small" />
+              <% else %>
+                  <%= gravatar_image_tag(current_user.email,
+                                         alt: current_user.email,
+                                         class: "profile-image-small",
+                                         gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' }) %>
+              <% end %>
+              <%= current_user.username %>
+            </a>
+          </li>
+        </ul>
         <% if @map.present? and @map.id.present? and current_user == @map.user %>
             <%= render "shared/dropdowns/map_settings", map: @map %>
         <% end %>
       </section>
   <% end %>
 </nav>
+
+<script>
+$(function() {
+    // Autocomplete sök karta
+    $( "#mapSearchInput" ).autocomplete({
+      // Sökväg till maps#search. Söktermen kommer skickas som parameter 'term'
+      source: "<%= searches_autocomplete_path() %>",
+      // autocomplete kickar igång efter 2 tecken
+      minLength: 2, 
+      select: function( event, ui ) {
+        console.log(ui)
+        console.log( ui.item ?
+          "Selected: " + ui.item.value + " aka " + ui.item.id :
+          "Nothing selected, input was " + this.value );
+      }
+    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+      return $( "<li>" )
+      .append( "<a href='" + item.href + "'>" + item.name + "<br>Taggar:" + item.tag_list + "</a>" )
+      .appendTo( ul );
+    };;
+  });
+</script>

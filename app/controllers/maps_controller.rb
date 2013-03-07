@@ -1,12 +1,15 @@
 require File.dirname('') + '/config/environment.rb'
 class MapsController < ApplicationController
+  autocomplete :map, :name, :extra_data => [:description, :user_id]
   before_filter :authenticate_user!
   ## Skippa validering på embeddade kartor.
   skip_before_filter :authenticate_user!, only: ['embed']
 
   def index
     ## Hämtar alla kartor användaren äger
+    ## TODO: Pil ändra
     @maps = Map.order("created_at ASC").find_all_by_user_id(current_user.id)
+    render json: Tag.all, :only => [:id, :word, :description, :slug, :user_id, :map_views]
   end
 
   def toggle
@@ -23,7 +26,9 @@ class MapsController < ApplicationController
     begin
       # Hämtar användaren som äger kartan för att filtrera
       @user = User.find(params[:profile_id])
-
+  
+      @current_user = current_user
+      
       # Hämtar rätt karta från användarens samling
       @map = @user.maps.find(params[:id])
 
@@ -31,13 +36,11 @@ class MapsController < ApplicationController
       render template: 'maps/404', status: 404
       return
     end
+
     #Nya objekt som kan skapas på maps-sidan
     @status_update = StatusUpdate.new
     @status_comment = StatusComment.new
     @map_comment = MapComment.new
-    @mark = Mark.new do |m|
-      m.build_location
-    end
 
     # Kontrollerar om användaren har behörighet att titta på kartan.
     if @map.private? and @map.user != current_user
@@ -62,6 +65,7 @@ class MapsController < ApplicationController
         l.latitude = 60
         l.longitude = 15
       end
+      map.map_type = "ROADMAP"
       map.zoom = 5
     end
     display_map(@map)
@@ -109,10 +113,14 @@ class MapsController < ApplicationController
     end
   end
 
-  # PUT /maps/:slug/edit
+  # PUT /maps/:id/
   def update
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = User.find(params[:profile_id])
+
     # Hämtar rätt karta från användarens samling
-    @map = Map.find(params[:id])
+    @map = @user.maps.find(params[:id])
+
     # Sparar undan sluggen om namn-fältet är tomt
     @slug = @map.slug
 
@@ -143,7 +151,12 @@ class MapsController < ApplicationController
   end
 
   def destroy
-    @map = Map.find(params[:id])
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = User.find(params[:profile_id])
+
+    # Hämtar rätt karta från användarens samling
+    @map = @user.maps.find(params[:id])
+
     @map_name = @map.name
     if current_user == @map.user
       if @map.destroy
@@ -161,30 +174,31 @@ class MapsController < ApplicationController
   def display_map(map)
 
     @display_map = {
-        "map_options" => {
-            "auto_zoom" => true,
-            "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
-            "zoom" => map.zoom.present? ? map.zoom : 5,
-            "center_latitude" => map.latitude.present? ? map.latitude : 60,
-            "center_longitude" => map.longitude.present? ? map.longitude : 15
+        map_options: {
+            auto_zoom: true,
+            type: map.map_type,
+            zoom: map.zoom,
+            center_latitude: map.latitude,
+            center_longitude: map.longitude,
+            raw: "{ scrollwheel: false }"
         },
-        "markers" => {
-          "data" => map.marks.to_gmaps4rails  do |mark, marker|
-            marker.infowindow render_to_string(:partial => "marks/foobar",  :locals => { :mark => mark}) # Rendera 
+        markers: {
+          data: map.marks.to_gmaps4rails  do |mark, marker|
+            marker.infowindow(render_to_string(partial: "marks/foobar",  locals: { mark: mark})) # Rendera
             # en partial i infofönstret
             
             # ändra markeringens bild
             marker.picture({
-                            :picture => "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Bubble-Chartreuse-icon.png",
-                            :width   => 32,
-                            :height  => 32
+                            picture: "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Bubble-Chartreuse-icon.png",
+                            width: 32,
+                            height: 32
                            })
             # Titeln
-            marker.title   mark.name
+            marker.title(mark.name)
             # Sidebar - inte implementerat
             #marker.sidebar "i'm the sidebar"
             # Om man vill lägga till fler fält till markeringen i jsonformat
-            marker.json({ :id => mark.id, :foo => "bar" })
+            marker.json({ id: mark.id, foo: "bar" })
           end
         }
     }

@@ -15,9 +15,12 @@
     color: $gray;
     font-weight: bold;
     font-size: small;
+    float: right;
   }
-  .author {
-
+  .map-author {
+    border-bottom: 1px dotted $light-light-gray;
+    padding: 5px 0px;
+    margin-bottom: 10px;
   }
   .map-comments {
     padding: 0.5em;
@@ -30,11 +33,13 @@
 
       .map-comment-body {
         word-wrap:break-word;
+        margin-bottom: 10px;
 
         .author {
           color: $gray;
           display: block;
           font-weight: bold;
+          float: left;
         }
       }
     }

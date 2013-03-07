@@ -57,6 +57,8 @@ sv:
     failed_to_update: 'Fel uppstod och ändringarna kunde inte sparas.'
     removed: 'Kartan "%{map}" är nu borttagen.'
     failed_to_remove: 'Fel uppstod och kartan togs inte bort.'
+    max_tag_count_reached: 'För många taggar, max antal taggar är "%{max}".'
+    max_tag_length_reached: 'En eller flera av taggarnar för långa, max längd är %{max} tecken".'
   marks:
     created: 'Markeringen "%{mark}" har skapas.'
     failed_to_create: 'Fel uppstod och markeringen kunde inte skapas.'

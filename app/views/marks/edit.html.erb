@@ -8,4 +8,4 @@
     <%= gmaps(@display_map) %>
   </div>
 </div>
-<%= link_to 'Avbryt', map_path(@map) %>
+<%= link_to 'Avbryt', profile_map_path(@map.user.slug, @map.slug)%>

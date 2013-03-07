@@ -3,12 +3,14 @@
   <%= mark.name %>
 </p>
 
-<p>
-  <b>Description:</b>
-  <%= mark.description %>
-</p>
+<% if (!mark.description.empty?) %>
+  <p>
+    <b>Description:</b>
+    <%= mark.description %>
+  </p>
+<% end %>
 
-<% if mark.map.user.id == @user.id%>
+<% if (mark.map.user.id == @current_user.id) %>
 
 <p>
   <%= link_to "Ändra markering", edit_map_mark_path(mark.map,mark) %>

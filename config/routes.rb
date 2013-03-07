@@ -12,6 +12,7 @@ Wp102dv401::Application.routes.draw do
   get "/sekretess" => "pages#privacy", as: :pages_privacy
   get "/hjalp" => "pages#help", as: :pages_help
 
+
   get "/api" => "pages#api", as: :pages_api
 
   ## API routes
@@ -20,8 +21,8 @@ Wp102dv401::Application.routes.draw do
 
   # Tell Devise in which controller we will implement Omniauth callbacks
   devise_for :users, controllers: {
-      omniauth_callbacks: "authentications",
-      registrations: "registrations"
+    omniauth_callbacks: "authentications",
+    registrations: "registrations"
   }
 
   devise_scope :user do
@@ -33,43 +34,59 @@ Wp102dv401::Application.routes.draw do
     get "/nytt-losenord" => "devise/passwords#new", as: :new_user_password
     # Registration routes
     get "/registrering" => "registrations#new", as: :new_user_registration
-    post "/registrering" => "registrations#create", as: :user_registration
     get "/redigera-profil" => "registrations#edit", as: :edit_user_registration
+
     # Routes for provider authentication
     get "/users/auth/:provider" => "authentications#passthru"
   end
+  get "/search" => "maps#search", as: :maps_search
+
+  get "/searches/search"
+  get "/kartor/resultat/:query" => "searches#result", as: :search_result
+  get "/searches/autocomplete"
 
   scope(path_names: { new: "ny", edit: "redigera" }) do
 
-    resources :home, only: [:index], path: "hem"
+    resources :home, only: [ :index ], path: "hem"
 
-    resources :dashboard, only: [:index], path: "startsida"
+    resources :dashboard, only: [ :index ], path: "startsida"
 
+    # Denna profiles har inga egna routes utan pekar bara på profile_maps_paths
     resources :profiles, only: [], path: '' do
-      resources :maps, path: "kartor"
-    end
-    resources :profiles, path: "profil"
+      get "show_maps", path: "kartlista"
 
-    resources :maps, path: "kartor" do
+      resources :maps, except: [ :index ], path: "kartor" do
+        resources :marks, only: [ :create ], path: "skapa-markering"
+      end
+    end
+
+    # profiles-routes
+    resources :profiles, only: [ :index ], path: "profiler"
+    resources :profiles, only: [ :show ], path: "profil"
+
+    resources :maps, only: [ :index ], path: "kartor" do
       post "toggle"
+
+      # TODO: Man behöver egentligen bara kartan när markeringen skapas (och då behöver man även kartans ägare för att få fram rätt karta!) och inte vid andra tillfällen.
       resources :marks, path: "markeringar"
 
       # tillåter bara att man skapar dessa genom maps. Alla andra routes går direkt
-      resources :status_updates, only: [:create], path: "uppdateringar"
-      resources :map_comments, only: [:create], path: "kommentarer"
+      resources :status_updates, only: [ :create ], path: "skapa-uppdatering"
+      resources :map_comments, only: [ :create ], path: "skapa-kommentar"
     end
 
-    resources :map_comments, path: "kart-kommentarer" do
+    resources :map_comments, only: [ :update, :destroy ], path: "kart-kommentarer" do
       post "toggle_like"
     end
 
-    resources :status_updates, path: "status-uppdateringar" do
+    resources :status_updates, only: [ :update, :destroy ], path: "status-uppdateringar" do
       post "toggle_like"
+
       # Tillåter bara att skapa statuskommentarer genom statusuppdateringen.
-      resources :status_comments, only: [:create], path: "kommentarer"
+      resources :status_comments, only: [ :create ], path: "kommentarer"
     end
 
-    resources :status_comments, path: "status-kommentarer" do
+    resources :status_comments, only: [ :update, :destroy ], path: "status-kommentarer" do
       post "toggle_like"
     end
   end

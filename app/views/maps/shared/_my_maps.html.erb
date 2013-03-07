@@ -1,5 +1,12 @@
 <section id="my-maps">
-  <h3>Mina kartor</h3>
+  <% if current_user === @user %>
+      <div class="row">
+        <div class="twelve columns">
+          <%= link_to "Ny karta", new_profile_map_path(current_user.slug), class: "button" %>
+        </div>
+      </div>
+  <% end %>
+
   <% @maps.each do |map| %>
     <div class="row">
       <div class="three columns">
@@ -11,12 +18,16 @@
       <div class="two columns">
         <p><%= map.follow_count %> följare</p>
       </div>
-      <div class="two columns">
-        <p>
-          <%= link_to "Ändra", edit_profile_map_path(map.user.slug, map.slug) %> |  
-          <%= link_to "Ta bort", map_path(map.id), :method => :delete, :confirm => "Vill du ta bort kartan?" %>
-        </p>
-      </div>
+      
+      <% if (current_user === @user) %>
+        <div class="two columns">
+          <p>
+            <%= link_to "Ändra", edit_profile_map_path(map.user.slug, map.slug) %> |  
+            <%= link_to "Ta bort", profile_map_path(map.user.slug, map.slug), :method => :delete, :confirm => "Vill du ta bort kartan?" %>
+          </p>
+        </div>
+      <% end %>
+      
       <div class="two column hide-for-small">
       <% if map.private %>
           <span class="has-tip tip-top noradius" data-width="90" title="Privat karta">

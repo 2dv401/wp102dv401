@@ -10,16 +10,23 @@
  *
  *= require_self
  *= require jquery-ui/smoothness
+ *= require jquery.tagit
+ *= require tagit.ui-zendesk
+ *= require offcanvas
  */
 
 // Application imports
 @import "foundation";
 @import "foundation_icons_general/sass/general_foundicons";
 @import "home.css.scss";
+@import "dashboard.css.scss";
 @import "maps.css.scss";
 @import "gmaps4rails.css.scss";
 @import "status_updates.css.scss";
 @import "map_comments.css.scss";
+@import "registration.css.scss";
+
+h1, h2, h3, h4, h5 { color: $gray; }
 
 .header-name { display: inline-block; }
 h1.header-name { margin-right: 10px; }
@@ -30,9 +37,22 @@ h1.header-name { margin-right: 10px; }
   margin-bottom: -6px;
   margin-right: 4px;
 }
+.profile-image-medium {
+  width: 48px;
+  height: 48px;
+}
+.profile-image-large {
+  width: 150px;
+  height: 150px;
+}
 
 #footer {
   margin-top: 30px;
+}
+
+.row#content {
+    margin-top: 20px;
+    min-height: 620px;
 }
 
 span.emoticon {
@@ -56,4 +76,16 @@ span.emoticon {
 } 
 .fieldCords {
 	display: none;
+}
+
+li.search {
+  form {
+    input[type='text'],
+    input[type='search'] {
+      margin: 0;
+      min-width: 350px;
+      height: 38px !important;
+      font-size: 15px !important;
+    }
+  }
 }

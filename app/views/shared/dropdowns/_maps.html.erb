@@ -1,7 +1,7 @@
 <ul class="left">
   <li class="divider"></li>
   <li class="has-dropdown">
-    <a href="#">Kartor</a>
+    <a href="#"><i class="foundicon-globe"></i> Kartor</a>
     <ul class="dropdown">
       <li><%= link_to "Ny karta...", new_profile_map_path(current_user.slug) %></li>
       <% if current_user.maps.any? %>
@@ -20,5 +20,4 @@
       <% end %>
     </ul>
   </li>
-  <li class="divider hide-for-small"></li>
 </ul>
