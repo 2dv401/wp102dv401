@@ -45,13 +45,4 @@
   <%= f.hidden_field :zoom, id: "map-zoom" %>
   <%= f.hidden_field :map_type, id: "map-type" %>
 </div>
-
-<%= submit_tag "Hitta min position", type: "button", class: "small button", id: "geolocate_button" %>
-
-<%= text_field_tag "locationTextField", nil, placeholder: "Sök startposition" %>
-<div id="map-options"></div>
-<%= gmaps(@display_map) %>
-
-
-
-<%= f.submit "Spara karta", class: "button", id: "saveMapButton" %>
+<div class="submit-button"><%= f.submit "Spara karta", class: "button", id: "saveMapButton" %></div>
