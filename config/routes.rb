@@ -51,8 +51,11 @@ Wp102dv401::Application.routes.draw do
     resources :profiles, only: [], path: '' do
       get "show_maps", path: "kartlista"
 
+      # Alla kartans routes uton "index" går genom profile.
       resources :maps, except: [ :index ], path: "kartor" do
-        resources :marks, only: [ :create ], path: "skapa-markering"
+
+        # För url:ens skull går "new"- och "edit"- routes genom profile_maps
+        resources :marks, only: [ :new, :edit ], path: "markeringar"
       end
     end
 
@@ -71,10 +74,12 @@ Wp102dv401::Application.routes.draw do
       resources :map_comments, only: [ :create ], path: "skapa-kommentar"
     end
 
+    # PUT/DELETE /kart-kommentarer/:id
     resources :map_comments, only: [ :update, :destroy ], path: "kart-kommentarer" do
       post "toggle_like"
     end
 
+    # PUT/DELETE /status-uppdateringar/:id
     resources :status_updates, only: [ :update, :destroy ], path: "status-uppdateringar" do
       post "toggle_like"
 
@@ -82,9 +87,11 @@ Wp102dv401::Application.routes.draw do
       resources :status_comments, only: [ :create ], path: "kommentarer"
     end
 
+    # PUT/DELETE /status-kommentarer/:id
     resources :status_comments, only: [ :update, :destroy ], path: "status-kommentarer" do
       post "toggle_like"
     end
+
   end
 
   root to: "home#index"
