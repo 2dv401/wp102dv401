@@ -1,7 +1,52 @@
 <% title 'Ändra i ' + @map.name %>
-<h2>Redigera karta</h2>
-<div id="mapCreation">
-  <%= form_for(@map, url: profile_map_path(@map.user.slug, @map.slug), method: :put, html: { id: "map_form" }) do |f| %>
-      <%= render 'maps/shared/form', f: f %>
-  <% end %>
+
+<div class="row">
+  <div class="nine columns">
+    <!-- Header -->
+    <div class="row header-map">
+      <div class="twelve columns">
+        <h2 class="header-name">Redigera karta</h2>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="row">
+      <div class="twelve columns">
+        <div class="right" id="map-options"></div>
+        <div class="map-wrapper">
+          <%= gmaps(@display_map) %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <%= text_field_tag "locationTextField", nil, placeholder: "Sök startposition" %>
+      </div>
+      <div class="six columns">
+        <%= submit_tag "Hitta min position", type: "button", class: "right small button", id: "geolocate_button" %>
+      </div>
+    </div>
+  </div>
+  <div class="right three columns">
+
+    <!-- side-header -->
+    <div class="row">
+      <div class="twelve columns side-header-map">
+        <h3 class="header-name">Information:</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve columns">
+        <% if first_map? %>
+            <%= render 'maps/shared/map_tutorial' %>
+        <% end %>
+        <div id="mapCreation">
+          <%= form_for(@map, url: profile_map_path(@map.user.slug, @map.slug), method: :put, html: { id: "map_form" }) do |f| %>
+              <%= render 'maps/shared/form', f: f %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
