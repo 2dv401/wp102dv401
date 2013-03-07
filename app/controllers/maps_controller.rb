@@ -26,9 +26,9 @@ class MapsController < ApplicationController
     begin
       # Hämtar användaren som äger kartan för att filtrera
       @user = User.find(params[:profile_id])
-  
+
       @current_user = current_user
-      
+
       # Hämtar rätt karta från användarens samling
       @map = @user.maps.find(params[:id])
 
@@ -86,7 +86,7 @@ class MapsController < ApplicationController
       m.user = current_user
       m.location = Location.find_by_latitude_and_longitude(m.latitude, m.longitude) || m.location
     end
-    
+
     if @map.save
       flash[:success] = t :created, map: @map.name, scope: [:maps]
       redirect_to profile_map_path(@map.user.slug, @map.slug)
@@ -128,24 +128,24 @@ class MapsController < ApplicationController
     if current_user == @map.user
       if @map.update_attributes(params[:map])
         @map.location = Location.find_or_create_by_latitude_and_longitude(@map.latitude, @map.longitude)
-        
+
         if not request.xhr?
           flash[:success] = t :updated, map: @map.name, scope: [:maps]
         end
-        
+
         redirect_to profile_map_path(@map.user.slug, @map.slug)
       else
         if not request.xhr?
           flash[:error] = t :failed_to_update, scope: [:maps]
         end
-        
+
         render action: :edit
       end
     else
       if not request.xhr?
         flash[:error] = t :access_denied
       end
-      
+
       redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
   end
@@ -175,7 +175,7 @@ class MapsController < ApplicationController
 
     @display_map = {
         map_options: {
-            auto_zoom: true,
+            auto_zoom: false,
             type: map.map_type,
             zoom: map.zoom,
             center_latitude: map.latitude,
@@ -184,9 +184,9 @@ class MapsController < ApplicationController
         },
         markers: {
           data: map.marks.to_gmaps4rails  do |mark, marker|
-            marker.infowindow(render_to_string(partial: "marks/foobar",  locals: { mark: mark})) # Rendera
-            # en partial i infofönstret
-            
+            # Rendera en partial i infofönstret
+            marker.infowindow(render_to_string(partial: "marks/foobar",  locals: { mark: mark}))
+
             # ändra markeringens bild
             marker.picture({
                             picture: "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Bubble-Chartreuse-icon.png",

@@ -21,7 +21,7 @@ class Mark < ActiveRecord::Base
 
   def exists_in_map?
     self.map.marks.find_each do |mark|
-      if self.location == mark.location
+      if self.location == mark.location and mark != self
         return true
       end
     end

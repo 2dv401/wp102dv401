@@ -159,7 +159,7 @@
               
           </div>  
           <div class="eight columns pull-four">
-              <p>Skapad av <%= link_to @map.user.name || @map.user.username, profile_path(@map.user.slug) %></p>  
+              <p>Skapad av: <br> <%= link_to @map.user.name || @map.user.username, profile_path(@map.user.slug) %></p>
           </div> 
       </div>
       
@@ -198,7 +198,7 @@
           <div class="twelve columns">
               <h5>Markeringar</h5>
               <% if @map.user == current_user %>
-              <p class="marks"><i class="foundicon-plus"></i> <%= link_to "Lägg till markering", new_map_mark_path(@map) %></p>
+              <p class="marks"><i class="foundicon-plus"></i> <%= link_to "Lägg till markering", new_profile_map_mark_path(@map.user.slug, @map.slug) %></p>
               <% end %>
               <ul class="no-bullet">
                  <%= render 'maps/shared/list_marks' %>

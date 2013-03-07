@@ -1,40 +1,39 @@
-<%= form_for([@map, @mark]) do |f| %>
-    <% if @mark.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= @mark.errors.count %> uppstod:</h2>
 
-          <ul>
-            <% @mark.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+<% if @mark.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @mark.errors.count %> uppstod:</h2>
 
-    <div class="field">
-      <%= f.label "Namn" %><br />
-      <%= f.text_field :name, placeholder: "Namn ex( min karta )", autofocus: true %>
-    </div>
-    <div class="field">
-      <%= f.label "Beskrivning" %><br />
-      <%= f.text_area :description, size: "10x6" , placeholder: "Beskrivning ex( min Beskrivning )"  %>
-    </div>
-	<div class="field">
-		<a href="#" class="showCords" />Koordinater</a>
-	</div>
-    <div class="fieldCords">
-		<div class="field">
-      <%= f.fields_for :location do |location_fields| %>
-          <%= location_fields.label :latitude %>
-          <%= location_fields.text_field :latitude, placeholder: "Latitud ex( 59.25 )" %>
-
-          <%= location_fields.label :longitude %>
-          <%= location_fields.text_field :longitude, placeholder: "Longitud ex( 15.25 )" %>
-      <% end %>
-		</div>
-    </div>
- 
-    <div class="actions">
-      <%= f.submit "Spara", class: "button" %>
+      <ul>
+        <% @mark.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
     </div>
 <% end %>
+
+<div class="field">
+  <%= f.label "Namn:" %>
+  <%= f.text_field :name, placeholder: "Skriv namn...", autofocus: true %>
+</div>
+<div class="field">
+  <%= f.label "Beskrivning:" %>
+  <%= f.text_area :description, size: "10x5" , placeholder: "Skriv beskrivning..."  %>
+</div>
+<div class="field">
+  <a href="#" class="showCords" />Koordinater</a>
+</div>
+<div class="fieldCords">
+  <div class="field">
+    <%= f.fields_for :location do |location_fields| %>
+        <%= location_fields.label :latitude %>
+        <%= location_fields.text_field :latitude, placeholder: "Latitud ex( 59.25 )" %>
+
+        <%= location_fields.label :longitude %>
+        <%= location_fields.text_field :longitude, placeholder: "Longitud ex( 15.25 )" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="actions">
+  <%= f.submit "Spara", class: "submit-button button" %>
+</div>

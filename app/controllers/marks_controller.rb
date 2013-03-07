@@ -22,10 +22,14 @@ class MarksController < ApplicationController
     end
   end
 
-  # GET /marks/new
+  # GET /:profile_id/kartor/:map_id/markeringar/ny
   # GET /marks/new.json
   def new
-    @map = Map.find_by_slug(params[:map_id])
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = User.find(params[:profile_id])
+
+    # Hämtar rätt karta från användarens samling
+    @map = @user.maps.find(params[:map_id])
 
     # Kontrollerar att användaren är kartans ägare
     if @map.user == current_user
@@ -33,7 +37,7 @@ class MarksController < ApplicationController
         m.map = @map
         m.build_location
       end
-      display_map(@mark.map)
+      display_map(@map)
       respond_to do |format|
         format.html # new.html.erb
         format.json { render json: @mark }
@@ -44,14 +48,14 @@ class MarksController < ApplicationController
     end
   end
 
-  # GET /marks/1/edit
+  # GET /:profile_id/kartor/:map_id/markeringar/:id/redigera
   def edit
     @mark = Mark.find(params[:id])
     @map = @mark.map
 
     # Kollar så att användaren är ägare till markeringen eller kartan
     if @mark.user == current_user or @map.user == current_user
-      display_map(@mark.map)
+      display_map(@map)
       respond_to do |format|
         format.html # new.html.erb
         format.json { render json: @mark }
@@ -62,10 +66,19 @@ class MarksController < ApplicationController
     end
   end
 
-  # POST /marks
+  # POST /:profile_id/kartor/:map_id/markeringar
   # POST /marks.json
   def create
-    @map = Map.find_by_slug(params[:map_id])
+    # Tar bort IDt från en tidigare sparad location (om valideringen failats)
+    # Tar man bort denna rad kastas undantag för det inte går att assiciera en
+    # redan befintlig location med ett objekt som inte än är skapad (kartan)
+    params[:mark][:location_attributes][:id] = nil
+
+    # Hämtar användaren som äger kartan för att filtrera
+    @user = User.find(params[:profile_id])
+
+    # Hämtar rätt karta från användarens samling
+    @map = @user.maps.find(params[:map_id])
 
     # kontrollerar att användaren är ägare till kartan
     if @map.user == current_user
@@ -75,13 +88,14 @@ class MarksController < ApplicationController
         m.location = Location.find_by_latitude_and_longitude(m.latitude, m.longitude) || m.location
       end
 
+      display_map(@map)
+      # Kontrollerar så det inte redan finns en markering med samma position på kartan
       unless @mark.exists_in_map?
-        display_map(@mark.map)
         respond_to do |format|
           if @mark.save
             format.html {
               flash[:success] = t :created, mark: @mark.name, scope: [:marks]
-              redirect_to profile_map_path(@mark.map.user.slug, @mark.map.slug)
+              redirect_to profile_map_path(@map.user.slug, @map.slug)
             }
             format.json { render json: @mark, status: :created, location: @mark.map }
           else
@@ -102,37 +116,44 @@ class MarksController < ApplicationController
     end
   end
 
-  # PUT /marks/1
-  # PUT /marks/1.json
+  # PUT /markeringar/:id
+  # PUT /marks/id.json
   def update
     @mark = Mark.find(params[:id])
     @map = @mark.map
 
     # Kollar så att användaren är ägare till markeringen eller kartan
     if @mark.user == current_user or @map.user == current_user
-      respond_to do |format|
-        if @mark.update_attributes(params[:mark])
-          format.html {
-            flash[:success] = t :updated, mark: @mark.name, scope: [:marks]
-            redirect_to profile_map_path(@mark.map.user.slug, @mark.map.slug)
-          }
-          format.json { head :no_content }
-        else
-          format.html {
-            flash[:error] = t :failed_to_update, scope: [:marks]
-            display_map(@mark.map)
-            render action: :edit }
+
+      # Kontrollerar så det inte redan finns en markering med samma position på kartan
+      unless @mark.exists_in_map?
+        respond_to do |format|
+          if @mark.update_attributes(params[:mark])
+            format.html {
+              flash[:success] = t :updated, mark: @mark.name, scope: [:marks]
+              redirect_to profile_map_path(@map.user.slug, @map.slug)
+            }
+            format.json { head :no_content }
+          else
+            format.html {
+              flash[:error] = t :failed_to_update, scope: [:marks]
+              display_map(@mark.map)
+              render action: :edit }
             format.json { render json: @mark.errors, status: :unprocessable_entity }
           end
         end
       else
-        flash[:error] = t :access_denied
-        redirect_to profile_map_path(@map.user.slug, @map.slug)
+        flash[:error] = t :mark_exists_in_map, scope: [:marks]
+        render action: :edit
       end
+    else
+      flash[:error] = t :access_denied
+      redirect_to profile_map_path(@map.user.slug, @map.slug)
     end
+  end
 
-  # DELETE /marks/1
-  # DELETE /marks/1.json
+  # DELETE /markeringar/:id
+  # DELETE /marks/:id.json
   def destroy
     @mark = Mark.find(params[:id])
     @map = @mark.map
@@ -158,32 +179,37 @@ class MarksController < ApplicationController
   end
 
   # Sets options for map
-    def display_map(map)
+  def display_map(map)
 
-      @display_map = {
-        "map_options" => {
-          "auto_zoom" => true,
-          "MapTypeId" => map.map_type.present? ? map.map_type : "HYBRID",
-          "zoom" => map.zoom.present? ? map.zoom : 5
-          },
-          "markers" => {
-            "data" => map.marks.to_gmaps4rails  do |mark, marker|
-            #marker.infowindow render_to_string(:partial => "marks/foobar",  :locals => { :mark => mark}) # Rendera 
-            # en partial i infofönstret
-            
-            # ändra markeringens bild
-            marker.picture({
-              :picture => "http://png-3.findicons.com/files/icons/2360/spirit20/20/marker.png",
-              :width => 20,
-              :height => 20
-            })
-            # Titeln
-            marker.title(mark.name)
-            # Sidebar - inte implementerat
-            #marker.sidebar "i'm the sidebar"
-            # Om man vill lägga till fler fält till markeringen i jsonformat    
-          end
+    @display_map = {
+        map_options: {
+            auto_zoom: false,
+            type: map.map_type,
+            zoom: map.zoom,
+            center_latitude: map.latitude,
+            center_longitude: map.longitude,
+            raw: "{ scrollwheel: false }"
+        },
+        markers: {
+            data: map.marks.to_gmaps4rails  do |mark, marker|
+
+              # Rendera en partial vy i infofönstret
+              marker.infowindow(render_to_string(partial: "marks/foobar", locals: { mark: mark}))
+
+              # ändra markeringens bild
+              marker.picture({
+                                 picture: "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Bubble-Chartreuse-icon.png",
+                                 width: 32,
+                                 height: 32
+                             })
+              # Titeln
+              marker.title(mark.name)
+              # Sidebar - inte implementerat
+              ##marker.sidebar "i'm the sidebar"
+              ## Om man vill lägga till fler fält till markeringen i jsonformat
+              marker.json({ id: mark.id, foo: "bar" })
+            end
         }
-      }
-    end
+    }
   end
+end

@@ -3,7 +3,7 @@
     <a href="#"><i class="foundicon-edit"></i> "<%= map.name %>"</a>
     <ul class="dropdown">
       <li><%= link_to "Redigera karta...", edit_profile_map_path(map.user.slug, map.slug) %></li>
-      <li><%= link_to "Ny markering...", new_map_mark_path(map.slug) %></li>
+      <li><%= link_to "Ny markering...", new_profile_map_mark_path(map.user.slug, map.slug) %></li>
       <li><%= link_to "Ta bort kartan", profile_map_path(map.user.slug, map.slug), method: :delete, confirm: "Vill du ta bort kartan?" %></li>
     </ul>
   </li>
