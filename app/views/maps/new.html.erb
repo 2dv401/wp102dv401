@@ -1,13 +1,51 @@
 <% title "Skapa ny karta" %>
+<div class="row">
+  <div class="nine columns">
+    <!-- Header -->
+    <div class="row header-map">
+      <div class="twelve columns">
+        <h2 class="header-name">Ny karta</h2>
+      </div>
+    </div>
 
-<h2>Skapa ny karta</h2>
+    <!-- Map -->
+    <div class="row">
+      <div class="twelve columns">
+        <div class="right" id="map-options"></div>
+         <div class="map-wrapper">
+           <%= gmaps(@display_map) %>
+         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <%= text_field_tag "locationTextField", nil, placeholder: "Sök startposition" %>
+      </div>
+      <div class="six columns">
+        <%= submit_tag "Hitta min position", type: "button", class: "right small button", id: "geolocate_button" %>
+      </div>
+    </div>
+  </div>
+  <div class="right three columns">
 
-<% if first_map? %>
-    <%= render 'maps/shared/map_tutorial' %>
-<% end %>
+    <!-- side-header -->
+    <div class="row">
+      <div class="twelve columns side-header-map">
+        <h3 class="header-name">Information:</h3>
+      </div>
+    </div>
 
-<div id="mapCreation">
-  <%= form_for([current_user, @map], url: profile_maps_path, html: { id: "map-form" }) do |f| %>
-      <%= render 'maps/shared/form', f: f %>
-  <% end %>
+    <div class="row">
+      <div class="twelve columns">
+        <% if first_map? %>
+            <%= render 'maps/shared/map_tutorial' %>
+        <% end %>
+        <div id="mapCreation">
+          <%= form_for([current_user, @map], url: profile_maps_path, html: { id: "map-form" }) do |f| %>
+              <%= render 'maps/shared/form', f: f %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -21,6 +21,16 @@
     </p>
   </li>
 
+  <!-- Taggar -->
+  <li data-id="myTags" data-button="nästa">
+    <h5 class="tip-header">Lägg till taggar på kartan</h5>
+    <p class="tip-body">Taggarna är först och främst till för sökningen av kator och fungerar då som sökord. En karta kan max ha 5 taggar och de bör beskriva din karta och dess innehåll för att underlätta för dina besökare.
+      Precis som med namn och beskrivning kan du byta ut taggar efterhand som innehållet kommer att uppdateras.
+      <span class="tip-footer">
+        <span class="tip-tips">Tips:</span> Skriv taggar som relaterar till kartans innehåll. Håll dina taggar uppdaterad med innehållet på kartan</span>
+    </p>
+  </li>
+
   <!-- Privat -->
   <li data-id="map-private" data-button="nästa">
     <h5 class="tip-header">Gör din karta privat</h5>
@@ -32,7 +42,7 @@
   </li>
 
   <!-- Kartan -->
-  <li data-id="map-options" data-button="klar!">
+  <li data-id="map-options" data-options="tipLocation:right;" data-button="klar!">
     <h5 class="tip-header">Så över till själva kartan</h5>
     <p class="tip-body">Kartan är centrerad runt Sverige till en början men det är nu upp till dig att ställa in ett eget område.
       Du behöver först sätta ett området din karta ska täcka. Ställ sedan in zoomen på kartan till önskat läge.
@@ -53,7 +63,7 @@
     <script>
         $(window).load(function() {
             $("#map-tutorial").joyride({
-                tipLocation: 'bottom',
+                tipLocation: 'left',
                 Animation:'pop',
                 postStepCallback: function(index) {
                     var targetTip = index + 1;
@@ -66,10 +76,13 @@
                     else if(targetTip === 2) {
                         targetInput =  '#map_description';
                     }
-                    else if(targetTip === 4) {
+                    else if(targetTip === 3) {
+                        targetInput =  '#myTags li input[type=text]';
+                    }
+                    else if(targetTip === 5) {
                         targetInput =  '#locationTextField';
                     }
-                    else if (targetTip === 5) {
+                    else if (targetTip === 6) {
                         targetInput =  '#saveMapButton';
                     }
                     map_private_false
