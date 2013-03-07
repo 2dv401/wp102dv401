@@ -12,7 +12,6 @@ gem 'rails3-jquery-autocomplete'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'mysql2'  # Ta bort denna i dev-läge
 
 gem 'devise'
 # Gems used only for assets and not required
@@ -26,7 +25,7 @@ group :assets do
 
   # Foundation and compass
   gem 'compass-rails'
-  gem 'zurb-foundation'
+  gem 'zurb-foundation', '< 4'
   gem 'uglifier', '>= 1.0.3'
 end
 

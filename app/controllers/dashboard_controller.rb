@@ -2,8 +2,7 @@ class DashboardController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-
-    ## Alla kartor
+## Alla kartor
     @User = User.all
 
     ## Mina kartor
@@ -19,7 +18,7 @@ class DashboardController < ApplicationController
     @status_comment = StatusComment.new
 
     ##@new_maps = Map.find(:all, :conditions => [" created_at between ? AND ? AND private = ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day, false],
-    ##		:limit => 10, :order => 'created_at DESC')
+    ##    :limit => 10, :order => 'created_at DESC')
 
     @new_maps = Map.where(:created_at => Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
 
@@ -31,6 +30,5 @@ class DashboardController < ApplicationController
       # Ask user if she/he wants to merge her/his accounts
       # (or just go ahead and merge them)
     end
-
   end
 end

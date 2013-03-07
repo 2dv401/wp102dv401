@@ -88,7 +88,6 @@ class Map < ActiveRecord::Base
     self.status_updates.count
   end
 
-end
   def self.search_for(query)
     self.where("name like ?", "%#{query}%").all
   end
@@ -109,4 +108,3 @@ end
     end
   end
 end
->>>>>>> development
