@@ -69,6 +69,11 @@ class MarksController < ApplicationController
   # POST /:profile_id/kartor/:map_id/markeringar
   # POST /marks.json
   def create
+    # Tar bort IDt från en tidigare sparad location (om valideringen failats)
+    # Tar man bort denna rad kastas undantag för det inte går att assiciera en
+    # redan befintlig location med ett objekt som inte än är skapad (kartan)
+    params[:mark][:location_attributes][:id] = nil
+
     # Hämtar användaren som äger kartan för att filtrera
     @user = User.find(params[:profile_id])
 
@@ -84,6 +89,7 @@ class MarksController < ApplicationController
       end
 
       display_map(@map)
+      # Kontrollerar så det inte redan finns en markering med samma position på kartan
       unless @mark.exists_in_map?
         respond_to do |format|
           if @mark.save
@@ -118,20 +124,27 @@ class MarksController < ApplicationController
 
     # Kollar så att användaren är ägare till markeringen eller kartan
     if @mark.user == current_user or @map.user == current_user
-      respond_to do |format|
-        if @mark.update_attributes(params[:mark])
-          format.html {
-            flash[:success] = t :updated, mark: @mark.name, scope: [:marks]
-            redirect_to profile_map_path(@map.user.slug, @map.slug)
-          }
-          format.json { head :no_content }
-        else
-          format.html {
-            flash[:error] = t :failed_to_update, scope: [:marks]
-            display_map(@mark.map)
-            render action: :edit }
-          format.json { render json: @mark.errors, status: :unprocessable_entity }
+
+      # Kontrollerar så det inte redan finns en markering med samma position på kartan
+      unless @mark.exists_in_map?
+        respond_to do |format|
+          if @mark.update_attributes(params[:mark])
+            format.html {
+              flash[:success] = t :updated, mark: @mark.name, scope: [:marks]
+              redirect_to profile_map_path(@map.user.slug, @map.slug)
+            }
+            format.json { head :no_content }
+          else
+            format.html {
+              flash[:error] = t :failed_to_update, scope: [:marks]
+              display_map(@mark.map)
+              render action: :edit }
+            format.json { render json: @mark.errors, status: :unprocessable_entity }
+          end
         end
+      else
+        flash[:error] = t :mark_exists_in_map, scope: [:marks]
+        render action: :edit
       end
     else
       flash[:error] = t :access_denied
