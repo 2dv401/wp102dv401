@@ -117,15 +117,14 @@ $(function() {
 
     //Centrerar markeringen på kartan
     $(".mark-link").click(function(event) {
+      event.preventDefault();
+    
       var markId = $(this).attr("data-markid");
       
       for(var marker in Gmaps.map.markers){
       if(Gmaps.map.markers[marker].id == markId){
-      
-         var latitude = Gmaps.map.markers[marker].serviceObject.position.$a;
-         var longitude = Gmaps.map.markers[marker].serviceObject.position.ab;
+         google.maps.event.trigger(Gmaps.map.markers[marker].serviceObject, "click", null);
          
-         Gmaps.map.map.setCenter(new google.maps.LatLng(latitude, longitude));
         }
       }
       
