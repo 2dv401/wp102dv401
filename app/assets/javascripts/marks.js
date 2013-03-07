@@ -8,9 +8,12 @@ $(function() {
     // Referens till kartan
     window.theMap = this.map;
 
+    // Skapa ett koordinat-objekt med merkeringens position
+    var defultPosition = new google.maps.LatLng($('#mark_location_attributes_latitude').val(), $('#mark_location_attributes_longitude').val())
+
     // En ny dragbar markering
     window.newMark = new google.maps.Marker({
-      position: new google.maps.LatLng(59, 18),
+      position: defultPosition,
       map: theMap,
       options: {
         draggable: true

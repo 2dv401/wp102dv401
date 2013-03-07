@@ -35,7 +35,7 @@ class MarksController < ApplicationController
     if @map.user == current_user
       @mark = Mark.new do |m|
         m.map = @map
-        m.build_location
+        m.location = @map.location
       end
       display_map(@map)
       respond_to do |format|
