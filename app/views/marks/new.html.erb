@@ -2,7 +2,9 @@
 <div class="row">
   <div class="eight columns">
     <h1>Ny markering</h1>
-    <%= render 'form' %>
+    <%= form_for([current_user, @map, @mark], url: profile_map_marks_path, html: { id: "map-form" }) do |f| %>
+    <%= render 'form', f: f %>
+    <% end %>
   </div>
   <div class="four columns">
     <%= gmaps(@display_map) %>
@@ -12,9 +14,3 @@
   </div>
 </div>
 <%= link_to 'Avbryt', profile_map_path(@map.user.slug, @map.slug)%>
-
-<% content_for :end_of_body do %>
-
-<%= @map.longitude %>
-<%= @map.latitude %>
-<% end %>

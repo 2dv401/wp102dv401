@@ -1,5 +1,5 @@
 ﻿<p>
-  <b>Name:</b>
+  <b>Namn:</b>
   <%= mark.name %>
 </p>
 
@@ -10,14 +10,11 @@
   </p>
 <% end %>
 
-<% if (mark.map.user.id == @current_user.id) %>
+<% if (mark.map.user == current_user) %>
 
 <p>
-  <%= link_to "Ändra markering", edit_map_mark_path(mark.map,mark) %>
-</p>
-
-<p>
-   <%= link_to 'Ta bort', map_mark_path(mark.map,mark), confirm: 'Vill du ta bort markeringen?', id: "delete-marker-link", method: :delete, remote: true %>
+  <%= link_to "Ändra markering |", edit_profile_map_mark_path(mark.map.user.slug, mark.map.slug, mark) %>
+  <%= link_to ' Ta bort', mark_path(mark), confirm: "Vill du ta bort markeringen: #{ mark.name }?", id: "delete-marker-link", method: :delete, remote: true %>
 </p>
 
 <% end %>

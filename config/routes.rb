@@ -92,6 +92,9 @@ Wp102dv401::Application.routes.draw do
       post "toggle_like"
     end
 
+    # PUT/DELETE /markeringar/:id
+    resources :marks, only: [ :update, :destroy ], path: "markeringar"
+
   end
 
   root to: "home#index"
