@@ -12,6 +12,7 @@ gem 'rails3-jquery-autocomplete'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+gem 'mysql2'  # Ta bort denna i dev-läge
 
 gem 'devise'
 # Gems used only for assets and not required
@@ -38,7 +39,6 @@ gem 'friendly_id'
 
 gem 'jquery-ui-themes'
 
-gem 'instagram'
 
 
 
