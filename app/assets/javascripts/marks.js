@@ -101,5 +101,11 @@ $(function() {
         newMark.setPosition(location);
       }
     });
+    
+    $('.showCords').click(function(e) {
+      e.preventDefault();
+      $('.fieldCords').slideToggle();
+    });
+  
   }
 });
