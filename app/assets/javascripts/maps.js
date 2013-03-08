@@ -41,85 +41,85 @@ $(function() {
             updateMapType(this.getMapTypeId());
         });
 
-      $("#map").ajaxComplete(function(event, request, settings) {
+        $("#map").ajaxComplete(function(event, request, settings) {
             var id = settings.url.split("/").pop();
             removeMarking(id);
-          });
+        });
 
-          function removeMarking(id){
+        function removeMarking(id){
             for(var marker in Gmaps.map.markers){
-              if(Gmaps.map.markers[marker].id == id){
-                Gmaps.map.markers[marker].serviceObject.setMap(null)
-              }
+                if(Gmaps.map.markers[marker].id == id){
+                    Gmaps.map.markers[marker].serviceObject.setMap(null)
+                }
             }
-          }
-          
+        }
+
         $('#geolocate_button').click(function() {
             // Hämtar position
-          navigator.geolocation.getCurrentPosition(function(position){
-            // Spara undan locationen
-            var latLngLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            
-            map.panTo(latLngLocation);
-            map.setZoom(geoLocationZoom);
-            updateMapZoom(geoLocationZoom);
-            updateMapCenter(latLngLocation);
+            navigator.geolocation.getCurrentPosition(function(position){
+                // Spara undan locationen
+                var latLngLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                map.panTo(latLngLocation);
+                map.setZoom(geoLocationZoom);
+                updateMapZoom(geoLocationZoom);
+                updateMapCenter(latLngLocation);
+            });
         });
-      });
         var geocoder = new google.maps.Geocoder();
         // jQuery UI Autocomplete funktion
-    $("#locationTextField").autocomplete({
+        $("#locationTextField").autocomplete({
 
-      // Autocomplete uppdateras när man skrivit x antal tecken
-      minLength: 3,
+            // Autocomplete uppdateras när man skrivit x antal tecken
+            minLength: 3,
 
-      source: function(request, response) {
-        // Hämtar det man skrivit i fältet
-        var address = request.term;
+            source: function(request, response) {
+                // Hämtar det man skrivit i fältet
+                var address = request.term;
 
-        // Utför sökningen mot google
-        geocoder.geocode({
-          address: address
-        }, function(results, status) {
-          response($.map(results, function(item) {
-            return {
-              label: item.formatted_address,
-              value: item.formatted_address,
-              geocode: item
+                // Utför sökningen mot google
+                geocoder.geocode({
+                    address: address
+                }, function(results, status) {
+                    response($.map(results, function(item) {
+                        return {
+                            label: item.formatted_address,
+                            value: item.formatted_address,
+                            geocode: item
+                        }
+                    }));
+                })
+            },
+
+            select: function(event, ui) {
+                // Hämtar location-objektet från argumentet
+                var location = ui.item.geocode.geometry.location;
+
+                var latLngLocation = new google.maps.LatLng(location.lat(), location.lng());
+                map.panTo(latLngLocation);
+                map.setZoom(geoLocationZoom);
+                updateMapZoom(geoLocationZoom);
+                updateMapCenter(latLngLocation);
+
             }
-          }));
-        })
-      },
+        });
 
-      select: function(event, ui) {
-        // Hämtar location-objektet från argumentet
-        var location = ui.item.geocode.geometry.location;
+        //Centrerar markeringen på kartan
+        $(".mark-link").click(function(event) {
+            event.preventDefault();
 
-        var latLngLocation = new google.maps.LatLng(location.lat(), location.lng());
-        map.panTo(latLngLocation);
-        map.setZoom(geoLocationZoom);
-        updateMapZoom(geoLocationZoom);
-        updateMapCenter(latLngLocation);
+            var markId = $(this).attr("data-markid");
 
-      }
-    });
+            for(var marker in Gmaps.map.markers){
+                if(Gmaps.map.markers[marker].id == markId){
+                    google.maps.event.trigger(Gmaps.map.markers[marker].serviceObject, "click", null);
 
-    //Centrerar markeringen på kartan
-    $(".mark-link").click(function(event) {
-      event.preventDefault();
-    
-      var markId = $(this).attr("data-markid");
-      
-      for(var marker in Gmaps.map.markers){
-      if(Gmaps.map.markers[marker].id == markId){
-         google.maps.event.trigger(Gmaps.map.markers[marker].serviceObject, "click", null);
-         
-        }
-      }
-      
-      
-    });
-    
+                }
+            }
+
+
+        });
+
     };
 });
 
