@@ -8,36 +8,25 @@ $(function() {
 
     // Körs när kartan är genererad
     Gmaps.map.callback = function() {
-
-        var geoLocationZoom = 8;
-
-        // TODO: Ta bort alla console.log i filen
-        console.log( 'Enter Gmaps.map.callback' );
-        console.log(this.map.getMapTypeId());
-
+        // Sparar undan kartan i en variabel
         var map = Gmaps.map.map;
 
-        console.log( map );
-
-        var updateMap = function(options) {
-            console.log( 'Dragging to...lat: ' + options.lat+ ', lng: ' +  options.lng );
+        // Sparar undan kartans zoom och centerposition i de gömda fälten i formuläret
+        var updateMap = function( options ) {
             $( '#center-lat' ).val( options.lat );
             $( '#center-lng' ).val( options.lng );
-            console.log( 'Zooming to...' + options.zoom );
             $( '#map-zoom' ).val( options.zoom );
-
-
         };
 
+        // Sparar undan kartas typ i det gömda fältet i formuläret
         var updateMapType = function(type) {
-            console.log( 'Change map to...' + type + ' type');
             $( '#map-type' ).val( type.toUpperCase() );
         };
-
 
         // Lyssna på att när kartan har ändrats och uppdaterar då kartformulärets koordinatfält
         google.maps.event.addListener( map, 'idle', function() {
 
+            // Hämtar kartans centerposition
             var center = this.getCenter();
 
             // Skapar ett objekt med informationen som ska uppdateras och skickar det till en funktion som uppdaterar informationen i formuläret

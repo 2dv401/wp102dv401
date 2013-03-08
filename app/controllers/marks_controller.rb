@@ -183,7 +183,7 @@ class MarksController < ApplicationController
 
     @display_map = {
         map_options: {
-            auto_zoom: false,
+            auto_adjust: false,
             type: map.map_type,
             zoom: map.zoom,
             center_latitude: map.latitude,

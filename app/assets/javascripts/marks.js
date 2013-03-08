@@ -3,6 +3,7 @@
 // You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $(function() {
   if ($('body').hasClass('marks') == false) {return;};
+
   // Körs när kartan är genererad
   Gmaps.map.callback = function() {
     // Referens till kartan

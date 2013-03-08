@@ -1,15 +1,14 @@
 require File.dirname('') + '/config/environment.rb'
 class MapsController < ApplicationController
-  autocomplete :map, :name, :extra_data => [:description, :user_id]
+  autocomplete :map, :name, extra_data: [:description, :user_id]
   before_filter :authenticate_user!
   ## Skippa validering på embeddade kartor.
   skip_before_filter :authenticate_user!, only: ['embed']
 
   def index
     ## Hämtar alla kartor användaren äger
-    ## TODO: Pil ändra
     @maps = Map.order("created_at ASC").find_all_by_user_id(current_user.id)
-    render json: Tag.all, :only => [:id, :word, :description, :slug, :user_id, :map_views]
+    render json: Tag.all, only: [:id, :word, :description, :slug, :user_id, :map_views]
   end
 
   def toggle
@@ -59,15 +58,9 @@ class MapsController < ApplicationController
   end
 
   def new
-    # skapar ett map-objekt och ett sätter map-location till default
-    @map = Map.new do |map|
-      map.location = Location.new do |l|
-        l.latitude = 60
-        l.longitude = 15
-      end
-      map.map_type = "ROADMAP"
-      map.zoom = 5
-    end
+    # skapar ett map-objekt med default-data och ett sätter map-location till default
+    @map = Map.build_default_map
+
     display_map(@map)
 
     respond_to do |format|
@@ -175,7 +168,7 @@ class MapsController < ApplicationController
 
     @display_map = {
         map_options: {
-            auto_zoom: false,
+            auto_adjust: false,
             type: map.map_type,
             zoom: map.zoom,
             center_latitude: map.latitude,
