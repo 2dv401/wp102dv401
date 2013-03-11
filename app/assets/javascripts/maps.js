@@ -133,6 +133,7 @@ $(function() {
                 // Tar bort listelementet när markeringen tas bort.
                 deleteLink.click(function(event) {
                     $(this).parent().fadeOut(100);
+                    $(this).parent().remove();
                 });
             },
             function() {
