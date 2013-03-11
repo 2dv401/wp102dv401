@@ -33,9 +33,6 @@
             </a>
           </li>
         </ul>
-        <% if @map.present? and @map.id.present? and current_user == @map.user %>
-            <%= render "shared/dropdowns/map_settings", map: @map %>
-        <% end %>
       </section>
   <% end %>
 </nav>
