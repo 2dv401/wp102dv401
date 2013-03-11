@@ -20,6 +20,16 @@
 
   }
 }
+
+.fieldCords {
+  input.error {
+    :focus {
+      border-color: $red;
+    }
+  }
+
+}
+
 .submit-button {
   margin: 20px auto;
 }
