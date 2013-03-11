@@ -47,13 +47,18 @@ $(function() {
         });
 
         function removeMarking(id){
-            for(var marker in Gmaps.map.markers){
-                if(Gmaps.map.markers[marker].id == id){
-                    Gmaps.map.markers[marker].serviceObject.setMap(null)
-                }
-            }
+            var marker = getMarker(id);
+            var link = getMarkerLink(id);
+            marker.serviceObject.setMap(null);
+            $(link).fadeOut('slow');
         }
 
+        /**
+         *
+         * Geolocation scripts
+         *
+         *
+         */
         $('#geolocate_button').click(function() {
             // Hämtar position
             navigator.geolocation.getCurrentPosition(function(position){
@@ -104,22 +109,87 @@ $(function() {
             }
         });
 
+        /**
+         *
+         * Marklink scripts
+         *           $(".mark-link")
+         */
+        var markLinks = $(".mark-link");
+
+        // Dölj "ta bort-länkarna"
+        markLinks.parent().find("a.delete-mark").hide();
+
+        // Döljer beskrivningarna
+        markLinks.parent().find("p.mark-description").hide();
+
+        // Visar "ta bort-länken" när man hovrar över listelementet
+        markLinks.parent().hover(
+            function() {
+                var deleteLink = $(this).find("a.delete-mark");
+                deleteLink.fadeIn(10);
+
+                $(this).find("p.mark-description").slideDown(10);
+
+                // Tar bort listelementet när markeringen tas bort.
+                deleteLink.click(function(event) {
+                    $(this).parent().fadeOut(100);
+                });
+            },
+            function() {
+                $(this).find("a.delete-mark").fadeOut(100);
+                $(this).find("p.mark-description").slideUp(100);
+            }
+        );
+
         //Centrerar markeringen på kartan
-        $(".mark-link").click(function(event) {
+        markLinks.click(function(event) {
             event.preventDefault();
 
-            var markId = $(this).attr("data-markid");
-
-            for(var marker in Gmaps.map.markers){
-                if(Gmaps.map.markers[marker].id == markId){
-                    google.maps.event.trigger(Gmaps.map.markers[marker].serviceObject, "click", null);
-
-                }
-            }
-
+            var marker = getMarker( $(this).attr("data-markid") );
+            google.maps.event.trigger(marker.serviceObject, "click", null);
 
         });
+        //Animering på merkeringslänkarna
+        markLinks.hover(
+            function() {
 
+                // Hämtar den tillhörande markeringen och startar en bounceanimation.
+                var marker = getMarker( $(this).attr("data-markid") );
+                marker.serviceObject.setAnimation(google.maps.Animation.BOUNCE);
+
+
+            },
+            function() {
+
+                // Hämtar den tillhörande markeringen och avbryter bounceanimationen
+                var marker = getMarker( $(this).attr("data-markid") );
+                marker.serviceObject.setAnimation(null);
+
+                $(this).find("p.mark-description").slideUp('slow');
+            }
+        );
+
+        var getMarker = function(id) {
+
+            // Loopar igenom kartans markeringar och returnerar den rätta.
+            for( var index in Gmaps.map.markers ) {
+                if( Gmaps.map.markers[index].id == id ) {
+                    return Gmaps.map.markers[index];
+                }
+            }
+            return null;
+        };
+
+        var getMarkerLink = function(id) {
+            var link = null;
+            // Loopar igenom kartans markeringslänkar och returnerar den rätta.
+            markLinks.each(function() {
+                if( $(this).attr("data-markid") == id ) {
+                    link = this;
+                }
+            });
+            return link;
+        };
     };
 });
 
