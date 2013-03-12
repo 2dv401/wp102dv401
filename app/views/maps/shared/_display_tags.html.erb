@@ -1,5 +1,6 @@
 <% if @map.tag_list.present? %>
 	<dl class="map-tags">
+      <dd class="subheader">Taggar: </dd>
 	  <% @map.tags.each do |t| %>
 	  	<dd><span class="round label"><%= link_to t.word, search_result_path(t.word) %></span></dd>
 	  <% end %>

@@ -1,9 +1,16 @@
 <% if ( @map.marks.present? ) %>
     <% ( @map.marks ).each do |mark| %>
-        <li>
-          <a data-markid="<%= mark.id %>" class="mark-link" href="#"><%= mark.name %></a>
-          <%= link_to raw('<i class="foundicon-trash"></i>'), mark_path(mark), method: :delete, class: "right delete-mark", remote: true %>
-          <p class="mark-description"><%= mark.description %></p>
+        <li class="mark-links">
+          <a data-markid="<%= mark.id %>" class="mark-link" href="#">
+              <span class="has-tip" title="<%= mark.description %>">
+                <%= mark.name %>
+              </span>
+          </a>
+          <% if mark.map.user === current_user or mark.user === current_user %>
+              <%= link_to raw('<i class="foundicon-trash general"></i>'), mark_path(mark), title: "ta bort markering", method: :delete, class: "right delete-mark", remote: true %>
+              <%= link_to raw('<i class="foundicon-edit large"></i>'), edit_profile_map_mark_path(mark.map.user.slug, mark.map.slug, mark), title: "Redigera markering", class: "right edit-mark" %>
+          <% end %>
+          <hr>
         </li>
     <% end %>
 <% else %>

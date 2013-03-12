@@ -27,9 +27,9 @@
         </div>
       </div>
   </header>
-  
-   <section role="main">   
-      
+
+   <section role="main">
+
       <div class="row">
           <div class="twelve columns">
               <div class="map-info-wrapper">
@@ -43,9 +43,14 @@
                   </p>
                   </div>
               </div>
+            <div class="row">
+              <div class="twelve columns">
+                <%= render 'maps/shared/display_tags' %>
+              </div>
+            </div>
           </div>
       </div>
-      
+
       <div class="row">
         <div class="twelve columns" id="viewMapContainter">
           <%= gmaps(@display_map) %>
@@ -64,14 +69,7 @@
         </div>
     </div>
     <% end %>
-    
-    <div class="row show-for-small">
-      <div class="twelve columns">
-        <h5 class="subheader">Kartans taggar</h5>
-        <%= render 'maps/shared/display_tags' %>
-      </div>
-    </div>
-    
+
     <% #if @map.status_updates.any?#%>
     <div class="row" id="tabs-comments">
       <div class="eleven columns">
@@ -81,7 +79,7 @@
         </dl>
         <ul class="tabs-content">
           <li class="active" id="statusTab">
-            <%= render 'status_updates/shared/status_updates', :updates => @map.status_updates %>  
+            <%= render 'status_updates/shared/status_updates', :updates => @map.status_updates %>
           </li>
           <li id="commentTab">
             <%= render 'map_comments/shared/map_comments', :map => @map %>
@@ -91,7 +89,7 @@
     </div>
 
   </section> <!-- role[main] -->
-  
+
   <!-- Sidebar -->
   <section id="sidebar" role="complementary">
 
@@ -105,36 +103,45 @@
                         alt: @map.user.email,
                         class: "",
                         gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png', size: 35 }) %>
-          <% end %>         
-    
+          <% end %>
+
           <div class="profile-name">av <%= link_to @map.user.name || @map.user.username, profile_path(@map.user.slug) %></div>
           <span class="created-time"><%= time_ago( @map.created_at ) %></span>
-          
+
           <% if @map.user == current_user %>
           <ul class="map-settings">
             <li>
-                <%= link_to "Redigera karta", edit_profile_map_path(@map.user.slug, @map.slug), :title => 'Redigera kartan' %>      
-            </li> | 
-            <li><%= link_to "Ta bort karta", profile_map_path(@map.user.slug, @map.slug), 
-                    method: :delete, confirm: "Vill du ta bort kartan?", :title => 'Ta bort kartan' %>        
-            </li>  
+                <%= link_to "Redigera karta", edit_profile_map_path(@map.user.slug, @map.slug), :title => 'Redigera kartan' %>
+            </li> |
+            <li><%= link_to "Ta bort karta", profile_map_path(@map.user.slug, @map.slug),
+                    method: :delete, confirm: "Vill du ta bort kartan?", :title => 'Ta bort kartan' %>
+            </li>
           </ul>
           <% end %>
+          <div class="row">
+            <div class="twelve columns">
+              <ul class="no-bullet" id="counter-map">
+                <li><i class="foundicon-page"></i> <%= @map.map_views %> sidvisningar</li>
+                <li><i class="foundicon-location"></i> <%= @map.marks.count %> markeringar</li>
+                <li><i class="foundicon-people"></i> <%= render 'maps/shared/follow_count' %></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    
     <div class="row">
       <div class="twelve columns">
-        <ul class="no-bullet" id="counter-map">
-          <li><i class="foundicon-page"></i> <%= @map.map_views %> sidvisningar</li>
-          <li><i class="foundicon-people"></i> <%= render 'maps/shared/follow_count' %></li>
-          <li><i class="foundicon-location"></i> <%= @map.marks.count %> markeringar</li>
+        <h5 class="subheader">Markeringar</h5>
+        <% if @map.user == current_user %>
+            <p class="marks"><i class="foundicon-plus"></i> <%= link_to "Lägg till markering", new_profile_map_mark_path(@map.user.slug, @map.slug) %></p>
+        <% end %>
+        <ul class="no-bullet">
+          <%= render 'maps/shared/list_marks' %>
         </ul>
       </div>
     </div>
-      
-      
+
       <% unless @map.user == current_user %>
       <div class="row show-for-small">
           <div class="eight columns centered">
@@ -144,26 +151,7 @@
           </div>
       </div>
       <% end %>
-      
-      <div class="row hide-for-small">
-        <div class="twelve columns">
-          <h5 class="subheader">Kartans taggar</h5>
-          <%= render 'maps/shared/display_tags' %>
-        </div>
-      </div>
-      
-      <div class="row">
-          <div class="twelve columns">
-              <h5 class="subheader">Markeringar</h5>
-              <% if @map.user == current_user %>
-              <p class="marks"><i class="foundicon-plus"></i> <%= link_to "Lägg till markering", new_profile_map_mark_path(@map.user.slug, @map.slug) %></p>
-              <% end %>
-              <ul class="no-bullet">
-                 <%= render 'maps/shared/list_marks' %>
-              </ul>  
-          </div>  
-      </div>
-      
+
       <div class="row">
           <div class="twelve columns">
               <h5 class="subheader">Följare</h5>
@@ -175,18 +163,18 @@
                                alt: f.email,
                                class: "profile-image-small",
                                gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' }), profile_path(f.slug) %>
-                  <% end %>  
-                <% end %>  
-          </div>  
+                  <% end %>
+                <% end %>
+          </div>
       </div>
-      
-      <div class="row">   
+
+      <div class="row">
           <div class="twelve columns">
             <h5 class="subheader">Kommentarer</h5>
             <%= render 'map_comments/shared/map_comments', :map => @map %>
           </div>
       </div>
-          
+
   </section> <!-- role[complementary] -->
 </div>
 
