@@ -37,6 +37,5 @@ class SearchesController < ApplicationController
       @result_maps = tags.maps
       @result_count = @result_maps.size
     end
-
   end
 end
