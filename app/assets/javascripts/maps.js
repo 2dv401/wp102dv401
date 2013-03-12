@@ -131,9 +131,15 @@ $(function() {
                 $(this).find("p.mark-description").slideDown(10);
 
                 // Tar bort listelementet när markeringen tas bort.
+                deleteLink.unbind('click');
                 deleteLink.click(function(event) {
-                    $(this).parent().fadeOut(100);
-                    $(this).parent().remove();
+                    if(confirm("Vill du ta bort markeringen?!")){
+                      $(this).parent().fadeOut(100);
+                      $(this).parent().remove();
+                    }
+                    else{
+                      return false;
+                    }
                 });
             },
             function() {
