@@ -1,11 +1,53 @@
 <% title @mark.map.name %>
+
 <div class="row">
-  <div class="eight columns">
-    <h1>Editing mark</h1>
-    <%= render 'form' %>
+  <div class="nine columns">
+    <!-- Header -->
+    <div class="row header-map">
+      <div class="twelve columns">
+        <h2 class="header-name">Redigera markering</h2>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="row">
+      <div class="twelve columns">
+        <div class="map-wrapper">
+          <%= gmaps(@display_map) %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <%= text_field_tag "locationTextField", nil, placeholder: "Sök startposition" %>
+      </div>
+      <div class="six columns">
+        <ul class="right button-group">
+          <li><%= submit_tag "Där kartan är nu", type: "button", class: "small button", id: "map_center_button" %></li>
+          <li><%= submit_tag "Hitta min position", type: "button", class: "small button", id: "geolocate_button" %></li>
+        </ul>
+      </div>
+    </div>
+    <%= link_to 'Avbryt', profile_map_path(@map.user.slug, @map.slug)%>
   </div>
-  <div class="four columns">
-    <%= gmaps(@display_map) %>
+
+  <div class="right three columns">
+
+    <!-- side-header -->
+    <div class="row">
+      <div class="twelve columns side-header-map">
+        <h3 class="header-name">Information:</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve columns">
+        <div id="markCreation">
+          <%= form_for(@mark, method: :put, html: { id: "mark-form" }) do |f| %>
+              <%= render 'form', f: f %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<%= link_to 'Avbryt', profile_map_path(@map.user.slug, @map.slug)%>

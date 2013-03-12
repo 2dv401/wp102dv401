@@ -33,9 +33,6 @@
             </a>
           </li>
         </ul>
-        <% if @map.present? and @map.id.present? and current_user == @map.user %>
-            <%= render "shared/dropdowns/map_settings", map: @map %>
-        <% end %>
       </section>
   <% end %>
 </nav>
@@ -59,5 +56,12 @@ $(function() {
       .append( "<a href='" + item.href + "'>" + item.name + "<br>Taggar:" + item.tag_list + "</a>" )
       .appendTo( ul );
     };;
+    
+    $('#mapSearchInput').keypress( function(event) {
+      if (event.keyCode == 13){
+        return false;
+      }
+    });
+    
   });
 </script>

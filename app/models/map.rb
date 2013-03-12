@@ -92,6 +92,16 @@ class Map < ActiveRecord::Base
     self.where("name like ?", "%#{query}%").all
   end
 
+  def self.build_default_map
+    return Map.new do |map|
+      map.location = Location.new do |l|
+        l.latitude = 60.0
+        l.longitude = 15.0
+      end
+      map.map_type = "ROADMAP"
+      map.zoom = 5
+    end
+  end
   
 
   private

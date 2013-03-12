@@ -1,7 +1,11 @@
 <% if ( @map.marks.present? ) %>
-	<% ( @map.marks ).each do |mark| %>
-	  <li><a data-markid="<%= mark.id %>" class="mark-link" href="#"><%= mark.name %></a></li>
-	<% end %>
+    <% ( @map.marks ).each do |mark| %>
+        <li>
+          <a data-markid="<%= mark.id %>" class="mark-link" href="#"><%= mark.name %></a>
+          <%= link_to raw('<i class="foundicon-trash"></i>'), mark_path(mark), method: :delete, class: "right delete-mark", remote: true %>
+          <p class="mark-description"><%= mark.description %></p>
+        </li>
+    <% end %>
 <% else %>
-	<li>Inga markeringar än.</li>
+    <li>Inga markeringar än.</li>
 <% end %>
