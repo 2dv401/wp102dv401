@@ -27,7 +27,11 @@
       border-color: $red;
     }
   }
-
+}
+.mark-links {
+  a {
+    display: inline-block;
+  }
 }
 
 .submit-button {

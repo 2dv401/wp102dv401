@@ -18,3 +18,9 @@
 //= require autocomplete-rails
 //= require tag-it
 //= jquery.offcanvas
+
+
+$(function() {
+    $("#flash").delay(2000).slideUp('slow').fadeOut('slow');
+});
+

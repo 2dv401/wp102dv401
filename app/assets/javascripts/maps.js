@@ -3,7 +3,6 @@
 // You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(function() {
-
     if ($('body').hasClass('maps') == false) {return;};
 
     // Körs när kartan är genererad
@@ -50,7 +49,7 @@ $(function() {
             var marker = getMarker(id);
             var link = getMarkerLink(id);
             marker.serviceObject.setMap(null);
-            $(link).fadeOut('slow');
+            $(link).parent().fadeOut('slow').remove();
         }
 
         /**
@@ -112,38 +111,45 @@ $(function() {
         /**
          *
          * Marklink scripts
-         *           $(".mark-link")
+         *
          */
         var markLinks = $(".mark-link");
+        var markLinkParent = markLinks.parent();
 
-        // Dölj "ta bort-länkarna"
-        markLinks.parent().find("a.delete-mark").hide();
+        // Dölj "ta bort" och "edit" -länkarna
+        markLinkParent.find("a.delete-mark").hide();
+        markLinkParent.find("a.edit-mark").hide();
 
         // Döljer beskrivningarna
-        markLinks.parent().find("p.mark-description").hide();
+        markLinkParent.find("p.mark-description").hide();
 
-        // Visar "ta bort-länken" när man hovrar över listelementet
-        markLinks.parent().hover(
+
+        markLinkParent.hover(
+            // mouseIn
             function() {
-                var deleteLink = $(this).find("a.delete-mark");
-                deleteLink.fadeIn(10);
 
+                // Visar "ta bort-länken" när man hovrar över listelementet
+                $(this).find("a.edit-mark").fadeIn(10);
                 $(this).find("p.mark-description").slideDown(10);
 
                 // Tar bort listelementet när markeringen tas bort.
-                deleteLink.unbind('click');
-                deleteLink.click(function(event) {
+                $(this).find("a.delete-mark").unbind('click');
+                $(this).find("a.delete-mark").fadeIn(10).click(function() {
                     if(confirm("Vill du ta bort markeringen?!")){
-                      $(this).parent().fadeOut(100);
-                      $(this).parent().remove();
+                        $(this).parent().fadeOut(100).remove();
                     }
                     else{
-                      return false;
+                        return false;
                     }
+
                 });
             },
+            // mouseOut
             function() {
+
+                // Göm länkarna igen på mouseOut
                 $(this).find("a.delete-mark").fadeOut(100);
+                $(this).find("a.edit-mark").fadeOut(100);
                 $(this).find("p.mark-description").slideUp(100);
             }
         );
@@ -156,6 +162,7 @@ $(function() {
             google.maps.event.trigger(marker.serviceObject, "click", null);
 
         });
+
         //Animering på merkeringslänkarna
         markLinks.hover(
             function() {
@@ -163,8 +170,6 @@ $(function() {
                 // Hämtar den tillhörande markeringen och startar en bounceanimation.
                 var marker = getMarker( $(this).attr("data-markid") );
                 marker.serviceObject.setAnimation(google.maps.Animation.BOUNCE);
-
-
             },
             function() {
 
@@ -176,6 +181,7 @@ $(function() {
             }
         );
 
+        // Tar emot ett markerings id och hämtar ut rätt markering från kartan.
         var getMarker = function(id) {
 
             // Loopar igenom kartans markeringar och returnerar den rätta.
@@ -187,8 +193,10 @@ $(function() {
             return null;
         };
 
+        // Tar emot ett markerings id och hämtar ut rätt markeringslänk från listan bredvid.
         var getMarkerLink = function(id) {
             var link = null;
+
             // Loopar igenom kartans markeringslänkar och returnerar den rätta.
             markLinks.each(function() {
                 if( $(this).attr("data-markid") == id ) {
@@ -211,4 +219,4 @@ $(function() {
         allowDuplicates: false,
         tagLimit: 5 // 'validering'
     });
-})
+});
