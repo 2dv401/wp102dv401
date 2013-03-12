@@ -70,7 +70,6 @@ Wp102dv401::Application.routes.draw do
     resources :maps, only: [ :index ], path: "kartor" do
       post "toggle"
 
-      # TODO: Man behöver egentligen bara kartan när markeringen skapas (och då behöver man även kartans ägare för att få fram rätt karta!) och inte vid andra tillfällen.
       resources :marks, path: "markeringar"
 
       # tillåter bara att man skapar dessa genom maps. Alla andra routes går direkt
@@ -95,6 +94,9 @@ Wp102dv401::Application.routes.draw do
     resources :status_comments, only: [ :update, :destroy ], path: "status-kommentarer" do
       post "toggle_like"
     end
+
+    # PUT/DELETE /markeringar/:id
+    resources :marks, only: [ :update, :destroy ], path: "markeringar"
 
   end
 
