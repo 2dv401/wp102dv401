@@ -26,11 +26,10 @@
         <%= render "shared/top_nav_bar" %>
       </div>
   <% end %>
-
-  <%= render "shared/flash_messages" %>
-
   <section class="row" id="content">
     <div class="twelve columns">
+      <%= render "shared/flash_messages" %>
+
       <%= yield %>
     </div>
   </section>
