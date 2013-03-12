@@ -21,7 +21,6 @@ class SearchesController < ApplicationController
 
     # Tar bort dubletter
     @maps_from_search.uniq!
-    
     #Bygger ihop en hash som sedan renderas ut till json
     @hash = []
     @maps_from_search.each do |map|
@@ -47,5 +46,6 @@ class SearchesController < ApplicationController
       @result_maps = tags.maps
       @result_count = @result_maps.size
     end
+
   end
 end
