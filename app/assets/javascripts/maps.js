@@ -3,7 +3,6 @@
 // You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(function() {
-
     if ($('body').hasClass('maps') == false) {return;};
 
     // Körs när kartan är genererad

@@ -18,3 +18,4 @@
 //= require autocomplete-rails
 //= require tag-it
 //= jquery.offcanvas
+

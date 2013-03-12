@@ -52,7 +52,6 @@ class Map < ActiveRecord::Base
   def tag_match_count(words)
     # Loopa igenom words
     @intersection = self.tags.map(&:word) & words
-    puts @intersection.size
     return @intersection.size
 
     # kontrollera hur många gånger word finns i sina taggar

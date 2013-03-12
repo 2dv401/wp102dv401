@@ -46,10 +46,7 @@ $(function() {
       // autocomplete kickar igång efter 2 tecken
       minLength: 2, 
       select: function( event, ui ) {
-        console.log(ui)
-        console.log( ui.item ?
-          "Selected: " + ui.item.value + " aka " + ui.item.id :
-          "Nothing selected, input was " + this.value );
+        window.location.href = ui.item.href;
       }
     }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
       return $( "<li>" )
