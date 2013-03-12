@@ -56,5 +56,12 @@ $(function() {
       .append( "<a href='" + item.href + "'>" + item.name + "<br>Taggar:" + item.tag_list + "</a>" )
       .appendTo( ul );
     };;
+    
+    $('#mapSearchInput').keypress( function(event) {
+      if (event.keyCode == 13){
+        return false;
+      }
+    });
+    
   });
 </script>
