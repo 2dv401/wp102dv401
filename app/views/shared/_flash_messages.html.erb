@@ -1,16 +1,18 @@
 <div class="row" id="flash">
   <div class="twelve columns">
-    <% flash.each do |name, msg| %>
-        <% if name == :error %>
-            <div class="alert-box alert">
-        <% elsif name == :success %>
-            <div class="alert-box success">
-        <% else %>
-            <div class="alert-box">
-        <% end %>
-        <%= content_tag :div, msg, :id => "flash_#{name}" %>
-        <a href="" class="close">&times;</a>
-        </div>
-    <% end %>
+    <div id="inner-flash">
+      <% flash.each do |name, msg| %>
+          <% if name == :error %>
+              <div class="alert-box alert">
+          <% elsif name == :success %>
+              <div class="alert-box success">
+          <% else %>
+              <div class="alert-box">
+          <% end %>
+          <%= content_tag :div, msg, :id => "flash_#{name}" %>
+          <a href="" class="close">&times;</a>
+          </div>
+      <% end %>
+      </div>
     </div>
   </div>

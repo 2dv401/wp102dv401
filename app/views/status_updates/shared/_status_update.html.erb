@@ -3,7 +3,6 @@
     <div class="status-update-body">
       <div class="status-update-header">
         <h3><%= link_to update.map.name, profile_map_path(update.map.user, update.map) %></h3>
-        <span class="created-at"><%= time_ago(update.created_at) %></span>
       </div>
       <div class="status-update-content">
         <p><%= format_text(update.content) %></p>
