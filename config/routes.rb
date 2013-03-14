@@ -1,6 +1,6 @@
 Wp102dv401::Application.routes.draw do
 
-  mount RailsAdmin::Engine => '/admin-lp', :as => 'rails_admin'
+  mount RailsAdmin::Engine => '/kartr-admin', :as => 'rails_admin'
 
   get "instagram/index"
 

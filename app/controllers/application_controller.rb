@@ -2,6 +2,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :user_has_email
+
+   rescue_from CanCan::AccessDenied do |exception|
+    render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
+    ## to avoid deprecation warnings with Rails 3.2.x (and incidentally using Ruby 1.9.3 hash syntax)
+    ## this render call should be:
+    # render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
+  end
   
   ## Om användaren inte har någon mejl, skicka till en sida och tvinga besökaren att ange mejl.
   def user_has_email
