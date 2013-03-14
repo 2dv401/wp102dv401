@@ -1,8 +1,6 @@
 <!-- Starsida - inloggad läge -->
 <% title "Välkommen!" %>
-
 <div class="row">
-
   <section class="three columns" id="dashboard-aside">
     <div class="row">
       <div class="twelve columns">
@@ -13,7 +11,7 @@
             <%= link_to gravatar_image_tag(current_user.email,
                     alt: current_user.email,
                     class: 'profile-image-large',
-                    gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png', size: 150 }), 
+                    gravatar: { size: 150 }), 
             profile_path(current_user.slug) %>     
           <% end %>
           <h4><%= current_user.name || current_user.username %></h4>

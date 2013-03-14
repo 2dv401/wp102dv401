@@ -11,7 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130312154933) do
+ActiveRecord::Schema.define(:version => 20130314133903) do
+
+  create_table "followers", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "follows", :force => true do |t|
     t.string   "follower_type"
@@ -115,6 +120,19 @@ ActiveRecord::Schema.define(:version => 20130312154933) do
   add_index "marks", ["map_id"], :name => "index_marks_on_map_id"
   add_index "marks", ["user_id"], :name => "index_marks_on_user_id"
 
+  create_table "rails_admin_histories", :force => true do |t|
+    t.text     "message"
+    t.string   "username"
+    t.integer  "item"
+    t.string   "table"
+    t.integer  "month",      :limit => 2
+    t.integer  "year",       :limit => 5
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
+
   create_table "status_comments", :force => true do |t|
     t.integer  "user_id",                                          :null => false
     t.integer  "status_update_id",                                 :null => false
@@ -141,7 +159,7 @@ ActiveRecord::Schema.define(:version => 20130312154933) do
 
   create_table "users", :force => true do |t|
     t.string   "email"
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -150,8 +168,8 @@ ActiveRecord::Schema.define(:version => 20130312154933) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.string   "provider"
     t.string   "uid"
     t.string   "username"
@@ -161,6 +179,7 @@ ActiveRecord::Schema.define(:version => 20130312154933) do
     t.datetime "confirmation_sent_at"
     t.string   "profile_image"
     t.string   "slug"
+    t.boolean  "admin",                  :default => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

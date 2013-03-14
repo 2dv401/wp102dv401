@@ -1,0 +1,137 @@
+sv:
+
+  datetime:
+    distance_in_words:
+      x_days: "%{count} dag"
+      x_minutes: "%{count} minuter"
+      less_than_x_minutes: "Mindre än en minut sedan"
+  admin:
+    home:
+      name: "Hem"
+    pagination:
+      previous: "&laquo; Föregående"
+      next: "Nästa &raquo;"
+      truncate: "…"
+    misc:
+      filter_date_format: "yymmdd" # a combination of 'dd', 'mm' and 'yy' with any delimiter. No other interpolation will be done!
+      search: "Sök"
+      filter: "Filtrera"
+      refresh: "Uppdatera"
+      show_all: "Visa alla"
+      add_filter: "Lägg till filter"
+      bulk_menu_title: "Valda"
+      remove: "Ta bort"
+      add_new: "Skapa ny"
+      chosen: "Vald %{name}"
+      chose_all: "Välj alla"
+      clear_all: "Rensa alla"
+      up: "Upp"
+      down: "Ner"
+      navigation: "Navigation"
+      navigation_static_label: "Länkar"
+      log_out: "Logga ut"
+      ago: "sedan"
+    flash:
+      successful: "%{name} kunde %{action}"
+      error: "%{name} kunde inte %{action}"
+      noaction: "Inget kommando utfördes"
+      model_not_found: "Modellen '%{model}' kunde inte hittas"
+      object_not_found: "%{model} med id '%{id}' kunde inte hittas"
+    table_headers:
+      model_name: "Modellnamn"
+      last_used: "Senast använd"
+      records: "Poster"
+      username: "Användare"
+      changes: "Ändringar"
+      created_at: "Datum/tid"
+      item: "Post"
+      message: "Meddelande"
+    actions:
+      dashboard:
+        title: "Administration"
+        menu: "Dashboard"
+        breadcrumb: "Dashboard"
+      index:
+        title: "Lista över %{model_label_plural}"
+        menu: "Lista"
+        breadcrumb: "%{model_label_plural}"
+      show:
+        title: "Detaljer för %{model_label} '%{object_label}'"
+        menu: "Visa"
+        breadcrumb: "%{object_label}"
+      show_in_app:
+        menu: "Visa i app"
+      new:
+        title: "Ny %{model_label}"
+        menu: "Skapa ny"
+        breadcrumb: "Ny"
+        link: "Skapa ny %{model_label}"
+        done: "skapad"
+      edit:
+        title: "Redigera %{model_label} '%{object_label}'"
+        menu: "Redigera"
+        breadcrumb: "Redigera"
+        link: "Redigera %{model_label}"
+        done: "uppdaterad"
+      delete:
+        title: "Radera %{model_label} '%{object_label}'"
+        menu: "Radera"
+        breadcrumb: "Radera"
+        link: "Radera '%{object_label}'"
+        done: "raderad"
+      bulk_delete:
+        title: "Radera flera %{model_label_plural}"
+        menu: "Radera flera"
+        breadcrumb: "Radera flera"
+        bulk_link: "Radera valda %{model_label_plural}"
+      export:
+        title: "Exportera %{model_label_plural}"
+        menu: "Exportera"
+        breadcrumb: "Exportera"
+        link: "Exportera %{model_label_plural}"
+        bulk_link: "Exportera valda %{model_label_plural}"
+        done: "exporterad"
+      history_index:
+        title: "Historik för %{model_label_plural}"
+        menu: "Historik"
+        breadcrumb: "Historik"
+      history_show:
+        title: "History for %{model_label} '%{object_label}'"
+        menu: "History"
+        breadcrumb: "History"
+    form:
+      cancel: "Avbryt"
+      basic_info: "Grundinformation"
+      required: "Krävs"
+      optional: "Valfri"
+      one_char: "tecken"
+      char_length_up_to: "maxlängd"
+      char_length_of: "längd"
+      save: "Spara"
+      save_and_add_another: "Spara och lägg till ny"
+      save_and_edit: "Spara och redigera"
+      all_of_the_following_related_items_will_be_deleted: "? Följande relaterade poster kan raderas eller hamna utan relation:"
+      are_you_sure_you_want_to_delete_the_object: "Är du säker på att du vill radera %{model_name}"
+      confirmation: "Ja"
+      bulk_delete: "Följande poster kommer raderas. Det kan resultera i brutna relationer och radering av relaterade objekt:"
+      new_model: "%{name} (ny)"
+    export:
+      confirmation: "Exportera till %{name}"
+      select: "Välj fält att exportera"
+      fields_from: "Fält från %{name}"
+      fields_from_associated: "Fält från relaterad %{name}"
+      display: "Visa %{name}: %{type}"
+      options_for: "Alternativ för %{name}"
+      empty_value_for_associated_objects: "<tom>"
+      click_to_reverse_selection: 'Klicka för att byta ordning'
+      csv:
+        header_for_root_methods: "%{name}" # 'model' is available
+        header_for_association_methods: "%{name} [%{association}]"
+        encoding_to: "Koda om till"
+        encoding_to_help: "Välj encoding. Lämna tom för att bevara nuvarande ecoding: (%{name})"
+        skip_header: "Inga kolumnrubriker"
+        skip_header_help: "Skapa inga kolumnrubriker (fältbeskrivningar)"
+        default_col_sep: ","
+        col_sep: "Kolumnavskiljare"
+        col_sep_help: "Lämna tom för default ('%{value}')" # value is default_col_sep
+

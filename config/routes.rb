@@ -1,5 +1,7 @@
 Wp102dv401::Application.routes.draw do
 
+  mount RailsAdmin::Engine => '/admin-lp', :as => 'rails_admin'
+
   get "instagram/index"
 
   get "instagram/new"

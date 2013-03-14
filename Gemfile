@@ -39,6 +39,10 @@ gem 'friendly_id'
 gem 'jquery-ui-themes'
 
 
+## TEST
+gem 'rails_admin'
+gem "cancan"
+
 
 
 #gem "jammit", :git => "git://github.com/documentcloud/jammit.git"

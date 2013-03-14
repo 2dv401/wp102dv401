@@ -21,6 +21,6 @@
 
 
 $(function() {
-    $("#flash").delay(2000).slideUp('slow').fadeOut('slow');
+  $("#flash").delay(2000).slideUp('slow').fadeOut('slow');
 });
 
