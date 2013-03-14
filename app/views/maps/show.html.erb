@@ -152,29 +152,6 @@
       </div>
       <% end %>
 
-      <div class="row">
-          <div class="twelve columns">
-              <h5 class="subheader">Följare</h5>
-              <% @map.followers(User).each do |f| %>
-                  <% if f.provider? %>
-                    <%= link_to image_tag(f.profile_image, :class => 'profile-image-small'), profile_path( f.slug ) %>
-                  <% else %>
-                    <%= link_to gravatar_image_tag(f.email,
-                               alt: f.email,
-                               class: "profile-image-small",
-                               gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' }), profile_path(f.slug) %>
-                  <% end %>
-                <% end %>
-          </div>
-      </div>
-
-      <div class="row">
-          <div class="twelve columns">
-            <h5 class="subheader">Kommentarer</h5>
-            <%= render 'map_comments/shared/map_comments', :map => @map %>
-          </div>
-      </div>
-
   </section> <!-- role[complementary] -->
 </div>
 

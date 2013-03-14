@@ -1,11 +1,20 @@
+<ul>
 <% if current_user.likes?(update) %>
-    <%= link_to 'Sluta gilla ', status_update_toggle_like_path(update), method: :post, remote: true %>
+    <li>
+      <%= link_to 'Sluta gilla ', status_update_toggle_like_path(update), method: :post, remote: true %>
+    </li>|
 <% else %>
+  <li>  
     <%= link_to 'Gilla ', status_update_toggle_like_path(update), method: :post, remote: true %>
+  </li>|
 <% end %>
 <% if current_user == update.user %>
-    <%= link_to '| Ta bort ', status_update_path(update), confirm: 'Vill du ta bort statusuppdateringen?', method: :delete, remote: true %>
+  <li>
+    <%= link_to 'Ta bort ', status_update_path(update), confirm: 'Vill du ta bort statusuppdateringen?', method: :delete, remote: true %>
+  </li>|
 <% end %>
+  <li class="created-at"><%= time_ago(update.created_at) %></li>
+</ul>
 <div class="status-update-statistics">
   <span class="status-update-likes"><%= like_count_string(update) %></span>
 </div>

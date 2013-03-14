@@ -1,9 +1,21 @@
 <li id="status-comment-<%= comment.id %>" class="status-comment">
+  <span class="status-comment-image">
+    <% if comment.user.provider? %>
+      <img src="<%= comment.user.profile_image %>" alt="" class="profile-image-medium" />
+    <% else %>
+      <%= gravatar_image_tag( comment.user.email, 
+                    alt: comment.user.email,
+                    class: 'profile-image-small',
+                    gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' } ) %>
+    <% end %>
+  </span>
   <p class="status-comment-body">
-    <span class="author"><%= comment.user.name || comment.user.username %></span><%= format_text(comment.content) %>
+    <span class="author">
+      <%= link_to comment.user.name || comment.user.username, profile_path( comment.user.slug ) %>
+    </span>
+    <%= format_text(comment.content) %>
   </p>
   <div class="status-comment-footer">
-    <span class="created-at"><%= time_ago(comment.created_at) %></span>
     <div id="status-comment-like-button-<%= comment.id %>">
       <%= render 'status_comments/shared/like_button', comment: comment %>
     </div>
