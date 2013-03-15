@@ -24,33 +24,52 @@
     
     <div class="row">
       <div class="twelve columns">
-        <h3>Kartor</h3>
+      
+        <h3 class="subheader">Kartor</h3>
         <p><%= link_to raw('<i class="foundicon-plus"></i> Lägg till karta'), new_profile_map_path(current_user.slug) %></p>
         
-        <h4>Mina kartor (<%= @my_maps.count %>)</h4>
-        <ul class="no-bullet">
-          <% @my_maps.each do |map| %>
-              <li><%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
-                <% if map.private %>
-                    <span>(Privat)</span>
+        <ul class="accordion">
+          <li class="active">
+            <div class="title">
+              <h5>Mina kartor (<%= @my_maps.count %>)</h5>
+            </div>
+            <div class="content">
+              <ul class="no-bullet">
+                <% @my_maps.each do |map| %>
+                    <li><%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
+                      <% if map.private %>
+                          <span>(Privat)</span>
+                      <% end %>
+                    </li>
                 <% end %>
-              </li>
-          <% end %>
-        </ul>
-        
-        <h4>Kartor jag följer (<%= followed_maps.count %>)</h4>
-        <ul class="no-bullet">
-          <% followed_maps.each do |map| %>
-              <li>
-                <%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
-                <% if map.private %>
-                    <span>(Privat)</span>
+              </ul>
+            </div>
+          </li> 
+          
+          <% if followed_maps.any? %>   
+          <li>
+            <div class="title">
+              <h5>Kartor jag följer (<%= followed_maps.count %>)</h5>
+            </div>
+            <div class="content">
+              <ul class="no-bullet">
+                <% followed_maps.each do |map| %>
+                    <li>
+                      <%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
+                      <% if map.private %>
+                          <span>(Privat)</span>
+                      <% end %>
+                    </li>
                 <% end %>
-              </li>
+              </ul>
+            </div>
+          </li>
           <% end %>
+          
         </ul>
       </div>
     </div>
+
   </section>
   
   <section class="eight columns offset-by-one">

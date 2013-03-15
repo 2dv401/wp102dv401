@@ -8,7 +8,7 @@
 .foo { color: blue;}
 
 .status-header {
-	border-bottom: 4px solid $dark-blue;
+	border-bottom: 4px solid $blue;
 	padding: 5px 0px 12px 0px;
 	margin-bottom: 25px;
 }
@@ -48,4 +48,23 @@
 	  margin: 10px 0;
 	  border-style: dotted;
 	}
+	
+	ul { margin-left: 0; }
+	
+	ul.accordion {
+		border: 0;
+		
+		.content, .active, .title, li { border: 0; }
+		
+		.title, .content { padding: 15px 2px; background: #fff; }
+		
+		.title h5:hover {  }
+		
+		.active {
+			.title {
+				border-bottom: 2px solid $dark-blue;
+			}		
+		}
+	}
+
 }
