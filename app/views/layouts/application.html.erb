@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title><%= title %></title>
@@ -35,9 +35,19 @@
   </section>
 
   <footer class="row" id="footer">
-    <p class="three columns copyright"><strong>kartr.se &copy; 2013</strong></p>
-    <div class="nine columns footer_links">
+    <div class="three columns copyright">&copy; 2013 kartr.se</div>
+    <div class="three columns">
       <%= render "shared/footer_links" %>
+    </div>
+    <div class="five columns offset-by-one">
+      <dl>
+      <dd><strong>Om Kartr</strong></dd>
+      <dd>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt 
+        ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci.
+        <span class=""><%= link_to "Läs mer", pages_about_path %></span>
+      </dd>
+      </dl>
     </div>
   </footer>
 </div>

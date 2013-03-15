@@ -47,7 +47,13 @@ h1.header-name { margin-right: 10px; }
 }
 
 #footer {
-  margin-top: 30px;
+  margin-top: 45px;
+  padding: 35px 0px;
+  border-top: 1px solid $light-light-gray;
+  
+  .copyright {
+      color: $light-gray;
+  }
 }
 
 .row#content {
@@ -93,3 +99,13 @@ li.search {
 #flash {
   margin-top: 20px;
 }
+
+// Media queries
+@media only screen and (max-width: 767px) {
+    #footer {
+        ul {
+            margin-top: 20px;
+        }
+    }
+}
+
