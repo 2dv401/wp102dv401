@@ -70,20 +70,29 @@
     </div>
     <% end %>
 
-    <% #if @map.status_updates.any?#%>
     <div class="row" id="tabs-comments">
       <div class="eleven columns">
         <dl class="tabs">
+        <% if @map.status_updates.any? %>
           <dd class="active"><a href="#status">Statusuppdateringar</a></dd>
           <dd><a href="#comment">Kommentarer</a></dd>
+        <% else %>
+          <dd class="active"><a href="#comment">Kommentarer</a></dd>
+        <% end %>
         </dl>
         <ul class="tabs-content">
+        <% if @map.status_updates.any? %>
           <li class="active" id="statusTab">
             <%= render 'status_updates/shared/status_updates', :updates => @map.status_updates %>
           </li>
           <li id="commentTab">
             <%= render 'map_comments/shared/map_comments', :map => @map %>
           </li>
+        <% else %>
+          <li id="commentTab" class="active">
+            <%= render 'map_comments/shared/map_comments', :map => @map %>
+          </li>
+        <% end %>
         </ul>
       </div>
     </div>
