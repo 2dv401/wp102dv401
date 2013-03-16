@@ -55,10 +55,14 @@
   }
 }
 
-.side-header-map {
-  margin-bottom: 20px;
-  border-bottom: 4px solid $black;
-  padding-top: 21px;
+.row.map-main, .side-map {
+  margin-top: 20px;
+}
+
+.side-map {
+  input[type="text"], textarea {
+    margin-bottom: 20px;
+  }
 }
 
 
@@ -242,6 +246,10 @@
     .row {
       padding-bottom: 15px;
     }
+  }
+  
+  #saveMapButton {
+    margin-top: 55px;
   }
   
   .row.map-count {
