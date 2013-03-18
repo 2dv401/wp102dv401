@@ -8,7 +8,7 @@ Devise.setup do |config|
 
 
 
-  config.omniauth :facebook, "537438802934858", "0c3798c71ce437ff0bef52c70d8a24b6", :strategy_class => OmniAuth::Strategies::Facebook
+  config.omniauth :facebook, "537438802934858", "0c3798c71ce437ff0bef52c70d8a24b6", :strategy_class => OmniAuth::Strategies::Facebook, :image_size => 'large'
   config.omniauth :twitter, "PtqZomQuqMsTIJsbjHzT0Q", "lYOn9lhfpmCzEZIkqbLzRlDukkYJWha61VLhI4", :strategy_class => OmniAuth::Strategies::Twitter
 
   # ==> Mailer Configuration
