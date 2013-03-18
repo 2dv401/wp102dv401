@@ -1,9 +1,18 @@
 <li id="map-comment-<%= comment.id %>" class="map-comment">
-  <p class="map-author">
-    <span class="author"><%= link_to comment.user.name || comment.user.username, profile_path(comment.user.slug) %>
-    <span class="created-at"><%= time_ago(comment.created_at) %></span>
-  </p>
+  <span class="map-comment-image">
+    <% if comment.user.provider? %>
+      <img src="<%= comment.user.profile_image %>" alt="" class="profile-image-medium" />
+    <% else %>
+      <%= gravatar_image_tag( comment.user.email, 
+                    alt: comment.user.email,
+                    class: 'profile-image-small',
+                    gravatar: { default: 'https://assets.github.com/images/gravatars/gravatar-140.png' } ) %>
+    <% end %>
+  </span>
   <p class="map-comment-body">
+    <span class="author">
+      <%= link_to comment.user.name || comment.user.username, profile_path( comment.user.slug ) %>
+    </span>
     <%= format_text(comment.content) %>
   </p>
   <div class="map-comment-footer">
