@@ -5,6 +5,7 @@ sv:
       x_days: "%{count} dag"
       x_minutes: "%{count} minuter"
       less_than_x_minutes: "Mindre än en minut sedan"
+      about_x_hours: "För ca %{count} timmar"
   admin:
     home:
       name: "Hem"

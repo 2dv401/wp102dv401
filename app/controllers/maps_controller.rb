@@ -3,7 +3,7 @@ class MapsController < ApplicationController
   autocomplete :map, :name, extra_data: [:description, :user_id]
   before_filter :authenticate_user!
   ## Skippa validering på embeddade kartor.
-  skip_before_filter :authenticate_user!, only: ['embed']
+  skip_before_filter :authenticate_user!, only: ['embed', 'show']
 
   def index
     ## Hämtar alla kartor användaren äger
