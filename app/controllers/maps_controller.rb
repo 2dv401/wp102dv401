@@ -182,7 +182,7 @@ class MapsController < ApplicationController
 
             # ändra markeringens bild
             marker.picture({
-                            picture: "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Bubble-Chartreuse-icon.png",
+                            picture: "/assets/icons/marker-001.png",
                             width: 32,
                             height: 32
                            })
