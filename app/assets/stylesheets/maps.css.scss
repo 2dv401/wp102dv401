@@ -65,6 +65,17 @@
   }
 }
 
+.link-icons {
+  font-size: 12px;
+  color: $gray;
+  
+  i {
+    padding-right: 4px;
+  }
+  
+  a, a:visited { color: $gray; }
+  a:hover { color: $blue; }
+}
 
 .tip-status {
    margin-top: 8px;
@@ -205,6 +216,19 @@
     padding: 5px 0px;
     margin-bottom: 13px;
   }
+  
+  .counter {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: $gray;
+  }
+  
+  .table-masp {
+    thead {
+      background: $light-blue;
+    }
+  }
 }
 
 // Page: show map
@@ -309,4 +333,58 @@
       width: 85%;
     }
   }
+  
+  
+  // Table for maps
+  .table-maps table, .table-maps thead, .table-maps th, .table-maps tr, .table-maps td { display: block; }
+  
+  .table-maps {
+    border: 0;
+    
+    thead {
+      tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+    }
+    
+    tr {
+      border: 1px solid $light-light-gray;
+    }
+    td {
+      border: none;
+      padding-left: 50%;
+      padding-top: 3%;
+      border-bottom: 1px solid $light-light-gray;
+      position: relative;
+      min-height: 50px;
+    }
+  }
+  
+  .table-maps .counter {
+    font-size: 12px;
+    font-weight: normal;
+    color: $gray;
+    text-align: left;
+  }
+    
+  .table-maps td:before {
+    position: absolute;
+    top: 6px; 
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    padding-top: 3%;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+  
+  /* Get header-content */
+  .table-maps td:nth-of-type(1):before { content: "Namn"; }
+  .table-maps td:nth-of-type(2):before { content: "Taggar"; }
+  .table-maps td:nth-of-type(3):before { content: "F\00F6ljare"; }
+  .table-maps td:nth-of-type(4):before { content: "Markeringar"; }
+  .table-maps td:nth-of-type(5):before { content: "Statusuppdateringar"; }
+  .table-maps td:nth-of-type(6):before { content: ""; }
 }

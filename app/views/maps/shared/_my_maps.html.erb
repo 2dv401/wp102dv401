@@ -1,4 +1,5 @@
 <section id="my-maps">
+
   <% if current_user === @user %>
       <div class="row">
         <div class="twelve columns">
@@ -7,34 +8,64 @@
       </div>
   <% end %>
 
-  <% @maps.each do |map| %>
-    <div class="row">
-      <div class="three columns">
-        <p><strong><%= link_to map.name, profile_map_path(map.user.slug, map.slug) %></strong></p>
-      </div>
-      <div class="three columns">
-      <p><%= map.description %></p>
-      </div>
-      <div class="two columns">
-        <p><%= map.follow_count %> följare</p>
-      </div>
-      
-      <% if (current_user === @user) %>
-        <div class="two columns">
-          <p>
-            <%= link_to "Ändra", edit_profile_map_path(map.user.slug, map.slug) %> |  
-            <%= link_to "Ta bort", profile_map_path(map.user.slug, map.slug), :method => :delete, :confirm => "Vill du ta bort kartan?" %>
-          </p>
-        </div>
+ <table class="twelve table-maps">
+    <thead>
+      <tr>
+        <th>Namn</th>
+        <th>Taggar</th>
+        <th>Följare</th>
+        <th>Markeringar</th>
+        <th>Statusuppdateringar</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @maps.each do |map| %>
+      <% unless current_user === @user %>
+        <% unless map.private? %>
+        <tr>
+          <td>
+            <span class="has-tip tip-bottom radius" data-width="100" title="<%= map.description %>">
+              <%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
+            </span>  
+          </td>
+          <td>
+            <% map.tags.each do |t| %>
+              <span class=""><%= link_to t.word, search_result_path(t.word) %></span>  
+            <% end %>
+          </td>
+          <td><span class="counter"><%= map.follow_count %></span></td>
+          <td><span class="counter"><%= map.marks.count %></span></td>
+          <td><span class="counter"><%= map.status_count %></span></td>
+          <td></td>
+        </tr>
+        <% end %>
+      <% else %> 
+      <tr>
+        <td>
+          <span class="has-tip tip-bottom radius" data-width="100" title="<%= map.description %>">
+            <%= link_to map.name, profile_map_path(map.user.slug, map.slug) %>
+          </span>  
+        </td>
+        <td>
+          <% map.tags.each do |t| %>
+            <span class=""><%= link_to t.word, search_result_path(t.word) %></span>  
+          <% end %>
+        </td>
+        <td><span class="counter"><%= map.follow_count %></span></td>
+        <td><span class="counter"><%= map.marks.count %></span></td>
+        <td><span class="counter"><%= map.status_count %></span></td>
+        <td class="link-icons">
+          <%= link_to raw("<i class='foundicon-edit'></i>"), edit_profile_map_path(map.user.slug, map.slug) %>
+          <%= link_to raw("<i class='foundicon-trash'></i>"), profile_map_path(map.user.slug, map.slug), 
+              :method => :delete, :confirm => "Vill du ta bort kartan?" %>
+          <% if map.private %>
+          <span class="has-tip tip-bottom radius" data-width="80" title="Privat karta"><i class="foundicon-lock"></i></span>
+          <% end %>
+        </td>
+      </tr>
       <% end %>
-      
-      <div class="two column hide-for-small">
-      <% if map.private %>
-          <span class="has-tip tip-top noradius" data-width="90" title="Privat karta">
-            <p class="foundicon-lock"></p>  
-          </span>
-      <% end %> 
-      </div>
-    </div> <!-- .row -->
-  <% end %>
+    <% end %>
+    </tbody>
+  </table>
 </section>
