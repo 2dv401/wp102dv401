@@ -4,7 +4,6 @@
     <a href="#"><i class="foundicon-settings"></i> Inställningar</a>
     <ul class="dropdown">
       <li><%= link_to raw('<i class="foundicon-settings"></i> Redigera profil'), edit_user_registration_path %></li>
-      <li><%= link_to raw('<i class="foundicon-edit"></i> Mina kartor'), profile_show_maps_path(current_user.slug) %></li>
       <li><%= link_to raw('<i class="foundicon-lock"></i> Logga ut'), destroy_user_session_path, method: :delete %></li>
     </ul>
   </li>
