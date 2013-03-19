@@ -1,3 +1,30 @@
 // Place all the styles related to the profile controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.profiles {
+
+	.image-container, .profile-info { float: left; }
+
+	.profile-info {
+		margin: 10px 0 0 20px;
+
+		.created-at {
+			color: $light-gray;
+			font-size: 13px;
+		}
+	}
+	.image-container {
+		margin-bottom: 10px;
+	}
+}
+
+@media only screen and (max-width: 767px) { 
+
+	.profiles {
+		.profile-info {
+			margin: 0;
+		}
+	}
+
+}

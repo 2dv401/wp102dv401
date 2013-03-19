@@ -90,6 +90,7 @@
   }
 }
 
+
 // Sidebar
 
 #sidebar {
@@ -211,10 +212,16 @@
 
 // Page: Mina kartor
 #my-maps {
+  margin-top: 20px;
+  
   .row {
-    border-bottom: 1px solid $light-light-gray;
     padding: 5px 0px;
     margin-bottom: 13px;
+  }
+  
+  h4 {
+    border-bottom: 3px solid $blue;
+    padding: .4em 0;
   }
   
   .counter {
@@ -225,6 +232,8 @@
   }
   
   .table-maps {
+    margin: 2em 0;
+    
     thead {
       background: $light-blue;
     }
