@@ -116,7 +116,7 @@
   }
   
   .map-settings {
-    margin-top: 20px;
+  
     
     li {
       display: inline;
@@ -179,6 +179,7 @@
     margin-top: 8px;
     font-style: italic;
     font-size: 13px;
+    margin-bottom: 20px;
   }
   
   img {
@@ -320,9 +321,7 @@
 
   // Sidebar on mobile
   #sidebar {
-    .twelve.columns {
-      margin-left: 40px;
-    }
+
     img.profile-image-medium {
       float: none;
       height: 120px;

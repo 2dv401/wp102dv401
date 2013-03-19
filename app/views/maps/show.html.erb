@@ -139,6 +139,17 @@
         </div>
       </div>
     </div>
+    
+    <% unless @map.user == current_user %>
+    <div class="row show-for-small">
+        <div class="eight columns centered">
+          <div class="map-meta">
+            <%= render 'maps/shared/follow_button' %>
+          </div>
+        </div>
+    </div>
+    <% end %>
+    
     <div class="row">
       <div class="twelve columns">
         <h5 class="subheader">Markeringar</h5>
@@ -150,16 +161,6 @@
         </ul>
       </div>
     </div>
-
-      <% unless @map.user == current_user %>
-      <div class="row show-for-small">
-          <div class="eight columns centered">
-            <div class="map-meta">
-              <%= render 'maps/shared/follow_button' %>
-            </div>
-          </div>
-      </div>
-      <% end %>
 
   </section> <!-- role[complementary] -->
 </div>
