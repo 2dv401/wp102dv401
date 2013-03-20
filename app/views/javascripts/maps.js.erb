@@ -1,8 +1,5 @@
 var $kartr_se = jQuery.noConflict();
 $kartr_se(document).ready(function() {
-
-  console.log(kartr_map_width);
-
   var map_info = <%= raw(@map) %>,
       center = <%= raw(@location) %>,
       markers = <%= raw(@marks_coordinates) %>,
