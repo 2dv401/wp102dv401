@@ -36,4 +36,5 @@
 
 <div class="actions">
   <%= f.submit "Spara", class: "submit-button button" %>
+  <%= link_to 'Avbryt', profile_map_path(@map.user.slug, @map.slug), :class => "cancel-btn" %>
 </div>

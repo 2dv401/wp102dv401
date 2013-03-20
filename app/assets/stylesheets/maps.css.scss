@@ -9,6 +9,8 @@
 
 .map-handler { padding: 20px 0; }
 
+.cancel-btn { padding-left: 10px; }
+
 .map-info-wrapper {
 
   .map-description {
@@ -395,4 +397,6 @@
   .table-maps td:nth-of-type(4):before { content: "Markeringar"; }
   .table-maps td:nth-of-type(5):before { content: "Statusuppdateringar"; }
   .table-maps td:nth-of-type(6):before { content: ""; }
+  
+  .cancel-btn { padding-left: 0px; }
 }
