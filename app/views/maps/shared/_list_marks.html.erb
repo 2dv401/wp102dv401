@@ -7,8 +7,10 @@
               </span>
           </a>
           <% if mark.map.user === current_user or mark.user === current_user %>
+          <span class="link-icons">
               <%= link_to raw('<i class="foundicon-trash general"></i>'), mark_path(mark), title: "ta bort markering", method: :delete, class: "right delete-mark", remote: true %>
               <%= link_to raw('<i class="foundicon-edit large"></i>'), edit_profile_map_mark_path(mark.map.user.slug, mark.map.slug, mark), title: "Redigera markering", class: "right edit-mark" %>
+            </span>
           <% end %>
           <hr>
         </li>
