@@ -3,21 +3,31 @@
 <% title "Välkommen!" %>
 
 <div class="row" id="navigation">
-  <div class="nine columns">
-    <h1 class="header-name">Kartr - </h1><h2 class="header-name subheader" > Sociala kartor på nätet!</h2>
-    <h3>Beskrivning</h3>
-    <p>
-      En tjänst där man som användare kan skapa en karta som får sin egna sida, med kartan i fokus. På sin kartsida kan användaren sätta ut markeringar med tillhörande beskrivning på en karta. Kartan kan sen delas till andra genom en genererad webbadress eller delas via sociala medier. Kartsidan ska ha ett slags nyhetsflöde där användaren kan skriva kortare statusuppdateringar ala twitter.
-    </p>
-    <p>
-      Användare kan ‘följa/gilla/prenumerera’ på andras kartor och får då möjlighet att tillföra information till kartor, efter skaparens godkännande samt få notiser när valda kartor uppdateras. Tjänsten har alltså många användningsområden; man kan skapa kartor med egna noder för att visa för andra, eller skapa kartor där många andra kan tillföra markeringar och utöka kartorna på detta sätt. Kartans sida ska kunna byggas ut med widgets som instagramflöden, twitter/rss/FB -feeds osv.
-    </p>
-    <h3>Syfte</h3>
-    <p>
-      Arbetet med att utveckla denna karttjänst kommer ske inom ramen för kursen Webbprojekt 2 2DV401 i en del av Webbprogrammerarprogrammet som vi läser vid Linnéuniversitetet. Projektgruppen består av Claes Tillborg, Hans Bentlöv, Linus Persson, Anders Ahlborg, Therese Svensson, Jacob Ottosson, Gunnar Annerstedt och Martin Svensson.
-    </p>
+  <div class="eight columns">
+    <header>
+      <hgroup>
+        <h1 class="header-name">Kartr</h1>
+        <h3 class="header-name subheader"> - sociala kartor på nätet!</h3>
+      </hgroup>
+    </header>
+    
+    <div id="kartr-slideshow">
+      <div data-caption="">
+        <img src="assets/orbit/orbit1.png" />
+      </div>
+      <div data-caption="#captionOne">
+        <img src="assets/orbit/orbit2.png" />
+      </div>
+      <div data-caption="">
+        <img src="assets/orbit/orbit3.png" />
+      </div>
+    </div>
+    
+     <p>
+       <strong>Välkommen!</strong> På kartr.se kan du som användare skapa egna kartor och genom dem dela information om olika platser till andra användare. På kartorna kan du sedan sätta ut markeringar och på så sätt märka ut platser som du vill tipsa om. Kanske vill du berätta om de bästa festivalerna som kommer arrangeras i sommar eller varför inte tipsa om sevärdheter du hittade under din resa genom Europa? Du bestämmer genren - bara fantasin sätter gränser! <%= link_to "Registrera dig här", new_user_registration_path %> för att börja skapa kartor och utforska andras.
+     </p>
   </div>
-  <div class="three columns">
+  <div class="three columns offset-by-one">
     <% unless user_signed_in? %>
         <%= render "users/shared/login_form" %>
         <h4 class="right"><%= link_to "Registrera dig!", new_user_registration_path %></h4>

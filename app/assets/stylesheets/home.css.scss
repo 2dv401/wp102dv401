@@ -2,7 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "shared/_colors.css.scss";
+
 .remember-me { display: inline-block; }
 .loggin { margin-top: 15px; }
 .loggin-fieldset { padding: 15px; margin: 30px 0; }
 .account-login { text-align: center; }
+
+#navigation {
+	header {
+		border-bottom: 3px solid $light-blue;
+	}
+	#kartr-slideshow {
+		margin: 45px 0px 50px 0px;
+	}
+}

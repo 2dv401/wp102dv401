@@ -9,4 +9,9 @@ $(function() {
 	$('#sidebarButton').click( function() {
 		$('body').toggleClass('active');
 	});
+	
+	$("#kartr-slideshow").orbit({
+		captions: true,
+		animationSpeed: 800,
+	});
 });
