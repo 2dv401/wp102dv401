@@ -9,6 +9,8 @@
 
 .map-handler { padding: 20px 0; }
 
+.cancel-btn { padding-left: 10px; }
+
 .map-info-wrapper {
 
   .map-description {
@@ -90,6 +92,7 @@
   }
 }
 
+
 // Sidebar
 
 #sidebar {
@@ -115,7 +118,7 @@
   }
   
   .map-settings {
-    margin-top: 20px;
+  
     
     li {
       display: inline;
@@ -143,7 +146,7 @@
 
 
   hr {
-    width: 90%;
+    width: 98%;
     margin: 10px auto;
     border-style: dotted;
   }
@@ -178,6 +181,7 @@
     margin-top: 8px;
     font-style: italic;
     font-size: 13px;
+    margin-bottom: 20px;
   }
   
   img {
@@ -211,10 +215,16 @@
 
 // Page: Mina kartor
 #my-maps {
+  margin-top: 20px;
+  
   .row {
-    border-bottom: 1px solid $light-light-gray;
     padding: 5px 0px;
     margin-bottom: 13px;
+  }
+  
+  h4 {
+    border-bottom: 3px solid $blue;
+    padding: .4em 0;
   }
   
   .counter {
@@ -225,6 +235,8 @@
   }
   
   .table-maps {
+    margin: 2em 0;
+    
     thead {
       background: $light-blue;
     }
@@ -311,9 +323,7 @@
 
   // Sidebar on mobile
   #sidebar {
-    .twelve.columns {
-      margin-left: 40px;
-    }
+
     img.profile-image-medium {
       float: none;
       height: 120px;
@@ -387,4 +397,6 @@
   .table-maps td:nth-of-type(4):before { content: "Markeringar"; }
   .table-maps td:nth-of-type(5):before { content: "Statusuppdateringar"; }
   .table-maps td:nth-of-type(6):before { content: ""; }
+  
+  .cancel-btn { padding-left: 0px; }
 }

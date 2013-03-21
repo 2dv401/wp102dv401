@@ -26,6 +26,7 @@
 @import "map_comments.css.scss";
 @import "registration.css.scss";
 @import "pages.css.scss";
+@import "profile.css.scss"; 
 
 h1, h2, h3, h4, h5 { color: $gray; }
 
@@ -106,6 +107,12 @@ li.search {
     #footer {
         ul {
             margin-top: 20px;
+        }
+    }
+    
+    #navigation {
+        header {
+            text-align: center;
         }
     }
 }

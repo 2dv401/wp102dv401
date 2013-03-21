@@ -1,13 +1,7 @@
 <section id="my-maps">
-
-  <% if current_user === @user %>
-      <div class="row">
-        <div class="twelve columns">
-          <%= link_to "Ny karta", new_profile_map_path(current_user.slug), class: "button" %>
-        </div>
-      </div>
-  <% end %>
-
+  <h4 class="subheader"><%= @user.name || @user.username %>'s kartor</h4>
+  
+<% if @user.maps.any? %>
  <table class="twelve table-maps">
     <thead>
       <tr>
@@ -68,4 +62,15 @@
     <% end %>
     </tbody>
   </table>
+<% else %>
+  <p>Tyvärr, användaren har inga kartor än.</p>
+<% end %>
+
+<% if current_user === @user %>
+    <div class="row">
+      <div class="twelve columns">
+        <%= link_to "Ny karta", new_profile_map_path(current_user.slug), class: "button" %>
+      </div>
+    </div>
+<% end %>
 </section>

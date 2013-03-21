@@ -1,6 +1,6 @@
 <%= title (@user.name ? @user.name : @user.username) %>
 <div class="row">
-  <div class="six columns">
+  <div class="ten columns">
     <div class="image-container">
       <% if @user.provider? %>
           <img src="<%= @user.profile_image %>" alt="" class="profile-image-large" />
@@ -12,10 +12,14 @@
 
       <% end %>
     </div>
-    <h4><%= @user.name || @user.username %></h4>
+    <div class="profile-info">
+        <h4><%= @user.name || @user.username %></h4>
+        <p class="created-at">Medlem sedan <%= time_ago(@user.created_at) %></p>
+    </div>
   </div>
 </div>
 <% if current_user === @user %>
     <p><%= link_to 'Redigera profil', edit_user_registration_path %></p>
 <% end %>
+
 <%= render "maps/shared/my_maps" %>
